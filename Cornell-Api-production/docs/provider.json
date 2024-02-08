@@ -1,0 +1,761 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "KnowNOW",
+      "description": "KnowNOW spec for Swagger",
+      "termsOfService": "http://swagger.io/terms/"
+    },
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Provider",
+        "description": "API for Provider"
+      }
+    ],
+    "schemes": [
+      "http",
+      "https"
+    ],
+    "consumes": [
+      "multipart/form-data"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/api/v1/login": {
+        "post": {
+          "tags": [
+            "Provider"
+          ],
+          "description": "Patient Login API",
+          "operationId": "for the URL",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [{
+              "name": "email",
+              "in": "formData",
+              "description": "E-mail address",
+              "required": true,
+              "type": "string",
+              "default": "admin@gmail.com"
+            },
+            {
+              "name": "password",
+              "in": "formData",
+              "description": "Password",
+              "required": true,
+              "type": "string",
+              "default": "123456"
+            },
+            {
+              "name": "device_token",
+              "in": "header",
+              "description": "Device token",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "device_type",
+              "in": "header",
+              "description": "Device type",
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Login successfully",
+              "schema": {
+                "$ref": "#/definitions/login200"
+              }
+            },
+            "401": {
+              "description": "No such user found",
+              "schema": {
+                "$ref": "#/definitions/login401"
+              }
+            }
+          }
+        }
+      },
+      "/api/v1/logout": {
+        "post": {
+          "tags": [
+            "Provider"
+          ],
+          "description": "Logout user",
+          "operationId": "Logout user",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [{
+            "name": "access_token",
+            "in": "header",
+            "description": "access token",
+            "required": true,
+            "type": "string"
+          }],
+          "responses": {
+            "200": {
+              "description": "Logged out successfully.",
+              "schema": {
+                "$ref": "#/definitions/logout200"
+              }
+            },
+            "500": {
+              "description": "Internal Server error- Cannot save user",
+              "schema": {
+                "$ref": "#/definitions/logout500"
+              }
+            }
+          }
+        }
+      },      
+      "/api/v1/getProvidersList": {
+        "get": {
+          "tags": [
+            "Provider"
+          ],
+          "description": "Get all provider list",
+          "operationId": "Get all provider list",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [{
+              "name": "access_token",
+              "in": "header",
+              "description": "Access token",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "orderBy",
+              "in": "query",
+              "description": "order by",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "page",
+              "in": "query",
+              "description": "page number",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "query",
+              "in": "query",
+              "description": "search",
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Allergies and medical added",
+              "schema": {
+                "$ref": "#/definitions/getProvidersList200"
+              }
+            },
+            "500": {
+              "description": "Internal Server error- Cannot save user",
+              "schema": {
+                "$ref": "#/definitions/getProvidersList500"
+              }
+            }
+          }
+        }
+      },
+      "/api/v1/providerHome": {
+        "post": {
+          "tags": [
+            "Provider"
+          ],
+          "description": "Provider Home",
+          "operationId": "Provider Home",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [{
+              "name": "access_token",
+              "in": "header",
+              "description": "Access token",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "orderBy",
+              "in": "query",
+              "description": "order by",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "page",
+              "in": "query",
+              "description": "page number",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "query",
+              "in": "query",
+              "description": "search",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "appointmentTime",
+              "in": "formData",
+              "description": "appointment time",
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Data found",
+              "schema": {
+                "$ref": "#/definitions/providerHome200"
+              }
+            },
+            "409": {
+              "description": "Data not found",
+              "schema": {
+                "$ref": "#/definitions/providerHome401"
+              }
+            }
+          }
+        }
+      },
+      "/api/v1/getProvider/{id}": {
+        "get": {
+          "tags": [
+            "Provider"
+          ],
+          "description": "Get Provider details",
+          "operationId": "Get Provider details",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [{
+              "name": "access_token",
+              "in": "header",
+              "description": "Access token",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Provider id",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Allergies and medical added",
+              "schema": {
+                "$ref": "#/definitions/getProviderWithId200"
+              }
+            },
+            "404": {
+              "description": "Provider not Found",
+              "schema": {
+                "$ref": "#/definitions/getProviderWithId404"
+              }
+            },
+            "500": {
+              "description": "Internal Server error",
+              "schema": {
+                "$ref": "#/definitions/getProviderWithId500"
+              }
+            }
+          }
+        }
+      },
+      "/api/v1/updateProvider": {
+        "put": {
+          "tags": [
+            "Provider"
+          ],
+          "description": "Update Provider",
+          "operationId": "Update Provider",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [{
+              "name": "access_token",
+              "in": "header",
+              "description": "Access token",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "firstName",
+              "in": "formData",
+              "description": "First name",
+              "required": true,
+              "type": "string",
+              "default": "demo"
+            },
+            {
+              "name": "lastName",
+              "in": "formData",
+              "description": "Last Name",
+              "required": true,
+              "type": "string",
+              "default": "demo"
+            },
+            {
+              "name": "countryCode",
+              "in": "formData",
+              "description": "Country code of phone number",
+              "required": true,
+              "type": "string",
+              "default": "+1"
+            },
+            {
+              "name": "telephone",
+              "in": "formData",
+              "description": "Telephone number",
+              "required": true,
+              "type": "string",
+              "default": "1245444454"
+            },
+            {
+              "name": "dateOfBirth",
+              "in": "formData",
+              "description": "Date of birth",
+              "required": true,
+              "type": "string",
+              "default": "1982-10-29"
+            },
+            {
+              "name": "gender",
+              "in": "formData",
+              "description": "Provider Gender (e.g Male => 1, Female =2, Other => 3, Not Specified => 4)",
+              "required": true,
+              "type": "string",
+              "default": "1"
+            },
+            {
+              "name": "address",
+              "in": "formData",
+              "description": "Provider Address",
+              "required": true,
+              "type": "string",
+              "default": "New York"
+            },
+            {
+              "name": "country",
+              "in": "formData",
+              "description": "Country Id",
+              "required": true,
+              "type": "string",
+              "default": "1"
+            },
+            {
+              "name": "state",
+              "in": "formData",
+              "description": "State or Province Name",
+              "required": true,
+              "type": "string",
+              "default": "1"
+            },
+            {
+              "name": "city",
+              "in": "formData",
+              "description": "City Name",
+              "required": true,
+              "type": "string",
+              "default": "1"
+            },
+            {
+              "name": "zipCode",
+              "in": "formData",
+              "description": "Zip Code",
+              "required": true,
+              "type": "string",
+              "default": "11211"
+            },
+            {
+              "name": "bio",
+              "in": "formData",
+              "description": "Bio of provider",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "specialization",
+              "in": "formData",
+              "description": "Specialization of provider",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "name": "languageSpeaks",
+              "in": "formData",
+              "description": "Language known",
+              "required": true,
+              "type": "string",
+              "default": "English, German, French"
+            },
+            {
+              "name": "availability",
+              "in": "formData",
+              "description": "Availability of provider",
+              "required": false,
+              "type": "string"
+            },
+            {
+              "name": "fileDescription",
+              "in": "formData",
+              "description": "file description of uploaded file ex. [{\"fileType\":\"profile_image\",\"fileName\":\"1565093919315.png\"}]",
+              "required": false,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Provider updated successfully",
+              "schema": {
+                "$ref": "#/definitions/updateProvider200"
+              }
+            },
+            "409": {
+              "description": "Provider email already exists",
+              "schema": {
+                "$ref": "#/definitions/updateProvider409"
+              }
+            },
+            "500": {
+              "description": "Internal Server error- Cannot update provider",
+              "schema": {
+                "$ref": "#/definitions/updateProvider500"
+              }
+            }
+          }
+        }
+      }
+    },  
+    "definitions": {
+      "login200": {
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "true"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": "Login successfully"
+          },
+          "data": {
+            "type": "object",
+            "example": {
+              "profile": {
+                "email": "utkarsh@mobikasa.com",
+                "role": 3,
+                "createdTimeSpan": "1565783734784",
+                "braintreeCustomerId": null,
+                "countryCode": "+1",
+                "telephone": "1212111111",
+                "firstName": "Utkarsh",
+                "lastName": "Singh",
+                "dateOfBirth": null,
+                "gender": null,
+                "clinicCode": null,
+                "city": 0,
+                "state": 0,
+                "zipCode": "",
+                "address": "",
+                "country": 0,
+                "profileImage": "http://localhost/public/common/patient.png",
+                "profileThumbImage": "http://localhost/public/common/thumb_patient.png"
+              },
+              "insurance_data": {
+                "insurance_images": []
+              },
+              "pharmacy": {
+                "pharmacy_name": null,
+                "pharmacy_address": null,
+                "pharmacy_phone": null
+              },
+              "labs": {
+                "lab_name": null,
+                "lab_address": null,
+                "lab_phone": null
+              },
+              "allergiesMedication": {
+                "medicalCondition": "",
+                "allergies": {
+                  "medicationAllergies": "",
+                  "otherAllergies": ""
+                },
+                "medications": ""
+              }
+            }
+          }
+        }
+      },
+      "login401": {
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "false"
+          },
+          "code": {
+            "type": "integer",
+            "example": "401"
+          },
+          "message": {
+            "type": "string",
+            "example": "No such user found"
+          }
+        }
+      },
+      "createProvider200": {
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "true"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": "Provider created successfully"
+          }
+        }
+      },
+      "createProvider409": {
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "false"
+          },
+          "code": {
+            "type": "integer",
+            "example": "409"
+          },
+          "message": {
+            "type": "string",
+            "example": "Provider already exists"
+          }
+        }
+      },
+      "createProvider500": {
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "false"
+          },
+          "code": {
+            "type": "integer",
+            "example": "500"
+          },
+          "message": {
+            "type": "string",
+            "example": "Internal Server error- Cannot create provider"
+          }
+        }
+      },
+      "updateProvider200": {
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "true"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": "Provider updated successfully"
+          }
+        }
+      },
+      "updateProvider409": {
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "false"
+          },
+          "code": {
+            "type": "integer",
+            "example": "409"
+          },
+          "message": {
+            "type": "string",
+            "example": "Provider email already exists"
+          }
+        }
+      },
+      "updateProvider500": {
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "false"
+          },
+          "code": {
+            "type": "integer",
+            "example": "500"
+          },
+          "message": {
+            "type": "string",
+            "example": "Internal Server error- Cannot update provider"
+          }
+        }
+      },
+      "providerHome200": {
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "true"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": "Data found"
+          },
+          "data": {
+            "type": "object",
+            "example": {
+              "totalRecords": 2,
+              "recordPerPage": 10,
+              "currentPage": 1,
+              "results": [{
+                  "id": "1",
+                  "firstName": "Beulah",
+                  "lastName": "Solomon",
+                  "dateOfBirth": "1997-03-20T00:00:00.000Z",
+                  "gender": "female",
+                  "appointmentTime": "2019-08-19T00:00:00.000Z",
+                  "profileImage": "http://localhost/public/common/patient.png",
+                  "profileThumbImage": "http://localhost/public/common/thumb_patient.png"
+                },
+                {
+                  "id": "3",
+                  "firstName": "Utkarsh",
+                  "lastName": "Singh",
+                  "dateOfBirth": "2019-07-29T00:00:00.000Z",
+                  "gender": "male",
+                  "appointmentTime": "2019-08-19T00:00:00.000Z",
+                  "profileImage": "http://localhost/public/common/patient.png",
+                  "profileThumbImage": "http://localhost/public/common/thumb_patient.png"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "providerHome401": {
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "false"
+          },
+          "code": {
+            "type": "integer",
+            "example": "401"
+          },
+          "message": {
+            "type": "string",
+            "example": "Data not found"
+          }
+        }
+      },
+      "getProvidersList200": {
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "false"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": "Providers Successfully Fetched"
+          },
+          "data": {
+            "type": "object",
+            "example": {
+              "totalRecords": 2,
+              "recordPerPage": 10,
+              "currentPage": 1,
+              "providersCurrentlyAvailable": 0,
+              "result": [{
+                  "firstName": "Hg",
+                  "lastName": "AG",
+                  "gender": "male",
+                  "dateOfBirth": "1982-10-29",
+                  "countryCode": "+1",
+                  "telephone": "1245444454",
+                  "specilization": "asd",
+                  "bio": "asd",
+                  "languageSpeaks": "English, German, French",
+                  "isAvailable": 0,
+                  "id": 10,
+                  "availibility": "",
+                  "profileImage": "http://localhost/public/common/provider.png",
+                  "profileThumbImage": "http://localhost/public/common/thumb_provider.png",
+                  "isFavorite": 0,
+                  "createdTimeSpan": null
+                },
+                {
+                  "firstName": "Provider",
+                  "lastName": "Singh",
+                  "gender": "male",
+                  "dateOfBirth": "1982-10-29",
+                  "countryCode": "+1",
+                  "telephone": "1245444454",
+                  "specilization": "test1",
+                  "bio": "test",
+                  "languageSpeaks": "English, German, French",
+                  "isAvailable": 0,
+                  "id": 9,
+                  "availibility": "",
+                  "profileImage": "http://localhost/public/common/provider.png",
+                  "profileThumbImage": "http://localhost/public/common/thumb_provider.png",
+                  "isFavorite": 0,
+                  "createdTimeSpan": null
+                }
+              ]
+            }
+          }
+        }
+      },
+      "getProvidersList500": {
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "false"
+          },
+          "code": {
+            "type": "integer",
+            "example": "500"
+          },
+          "message": {
+            "type": "string",
+            "example": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }

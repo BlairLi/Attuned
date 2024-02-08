@@ -1,0 +1,782 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "KnowNOW",
+    "description": "KnowNOW spec for Swagger",
+    "termsOfService": "http://swagger.io/terms/"
+  },
+  "basePath": "/",
+  "tags": [{
+      "name": "Admin",
+      "description": "API for Admin"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "multipart/form-data"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths":{
+    "/admin/createAdmin":{
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Sign Up",
+        "operationId": "Sign Up",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "name",
+            "in": "formData",
+            "description": "User name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Password",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "telephoneNumber",
+            "in": "formData",
+            "description": "Telephone Number",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "admin",
+            "in": "formData",
+            "description": "0/1",
+            "required": true,
+            "type": "boolean",
+            "deafault":true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User successfully signed up.",
+            "schema": {
+              "$ref": "#/definitions/signUp200"
+            }
+          },
+          "400": {
+            "description": "User with this email already exists.Please login using your email",
+            "schema": {
+              "$ref": "#/definitions/signUpAlreadyExists400"
+            }
+          }
+        }
+      }
+    },
+    "/admin/saveAccessCode": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Save access code",
+        "operationId": "Save access code",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "formData",
+            "description": "id of access code to be updated",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "accessCode",
+            "in": "formData",
+            "description": "name of access code",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "isEnabled",
+            "in": "formData",
+            "description": "status of access code whether active or not",
+            "required": true,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Access Code Saved Successfully",
+            "schema": {
+              "$ref": "#/definitions/saveAccessCode200"
+            }
+          },
+          "401":{
+            "description": "No such ID found",
+            "schema": {
+              "$ref": "#/definitions/saveAccessCode401"
+            }
+          }
+        }
+      }
+    },
+    "/admin/saveQuestionnaire": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Save/Edit questionnaire",
+        "operationId": "Save/Edit questionnaire",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "access_token",
+            "in": "header",
+            "description": "Access token (Will receive on register api/login api response header)",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "formData",
+            "description": "id of question to be updated",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "question",
+            "in": "formData",
+            "description": "question to be asked!",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "questionType",
+            "in": "formData",
+            "description": "Type of question : 1 -> MCQ,2-> RADIO/SINGLE ANSWERS",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "answerOptions",
+            "in": "formData",
+            "description": "options of answers",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "maxAllowedAnswers",
+            "in": "formData",
+            "description": "Maximum answers allowed answers in case of MCQ otherwise 1 ",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "maxCharacter",
+            "in": "formData",
+            "description": "status of access code whether active or not",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "isDeleted",
+            "in": "formData",
+            "description": "status of question whether active or not",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Question Saved Successfully",
+            "schema": {
+              "$ref": "#/definitions/saveQuestionnaire200"
+            }
+          },
+          "401":{
+            "description": "No such ID found",
+            "schema": {
+              "$ref": "#/definitions/saveQuestionnaire401"
+            }
+          }
+        }
+      }
+    },
+    "/admin/deleteAccessCode/{id}": {
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Delete access code",
+        "operationId": "Delete access code",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "access_token",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Access Code Delelted Successfully",
+            "schema": {
+              "$ref": "#/definitions/deleteAccessCode200"
+            }
+          },
+          "401":{
+            "description": "No such ID found",
+            "schema": {
+              "$ref": "#/definitions/deleteAccessCode401"
+            }
+          }
+        }
+      }
+    },
+    "/admin/deleteQuestionnaire/{id}": {
+      "delete": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Delete question",
+        "operationId": "Delete question",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "access_token",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Question id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Access Code Delelted Successfully",
+            "schema": {
+              "$ref": "#/definitions/deleteQuestionnaire200"
+            }
+          },
+          "401":{
+            "description": "No such ID found",
+            "schema": {
+              "$ref": "#/definitions/deleteQuestionnaire401"
+            }
+          }
+        }
+      }
+    },
+    "/admin/getUsersList":{
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "User List(this api will only work if session is active, else it will render login page)",
+        "operationId": "User List",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Answers Saved Successfully",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer200"
+            }
+          },
+          "400": {
+            "description": "Answers cannot be saved",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer400"
+            }
+          },
+          "401":{
+            "description": "No such user found",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer401"
+            }
+          }
+        }
+      }
+    },
+    "/admin/getQuestions":{
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Question List(this api will only work if session is active, else it will render login page)",
+        "operationId": "Question List",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Answers Saved Successfully",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer200"
+            }
+          },
+          "400": {
+            "description": "Answers cannot be saved",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer400"
+            }
+          },
+          "401":{
+            "description": "No such user found",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer401"
+            }
+          }
+        }
+      }
+    },
+    "/admin/getLessons":{
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Lesson List(this api will only work if session is active, else it will render login page)",
+        "operationId": "Lesson List",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Answers Saved Successfully",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer200"
+            }
+          },
+          "400": {
+            "description": "Answers cannot be saved",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer400"
+            }
+          },
+          "401":{
+            "description": "No such user found",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer401"
+            }
+          }
+        }
+      }
+    },
+    "/admin/getUserDetailsById/{userId}":{
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "User details(this api will only work if session is active, else it will render login page)",
+        "operationId": "User details",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          
+            "name": "userId",
+            "in": "path",
+            "description": "userId",
+            "required": false,
+            "type": "string"
+          
+        }],
+        "responses": {
+          "200": {
+            "description": "Answers Saved Successfully",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer200"
+            }
+          },
+          "400": {
+            "description": "Answers cannot be saved",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer400"
+            }
+          },
+          "401":{
+            "description": "No such user found",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer401"
+            }
+          }
+        }
+      }
+    },
+    "/admin/getQuestionnaireById/{id}":{
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Question details(this api will only work if session is active, else it will render login page)",
+        "operationId": "Question details",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": false,
+            "type": "string"
+          
+        }],
+        "responses": {
+          "200": {
+            "description": "Answers Saved Successfully",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer200"
+            }
+          },
+          "400": {
+            "description": "Answers cannot be saved",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer400"
+            }
+          },
+          "401":{
+            "description": "No such user found",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer401"
+            }
+          }
+        }
+      }
+    },
+    "/admin/getLessonDetails/{id}":{
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Lesson details(this api will only work if session is active, else it will render login page)",
+        "operationId": "Lesson details",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": false,
+            "type": "string"
+          
+        }],
+        "responses": {
+          "200": {
+            "description": "Answers Saved Successfully",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer200"
+            }
+          },
+          "400": {
+            "description": "Answers cannot be saved",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer400"
+            }
+          },
+          "401":{
+            "description": "No such user found",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer401"
+            }
+          }
+        }
+      }
+    },
+    "/admin/uploadFile":{
+      "post": {
+        "tags": [
+          "Common"
+        ],
+        "description": "Upload file(Upload only mp4)",
+        "operationId": "Upload file",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          
+            "name": "file",
+            "in": "formData",
+            "description": "id",
+            "required": false,
+            "type": "file"
+          
+        }],
+        "responses": {
+          "200": {
+            "description": "Answers Saved Successfully",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer200"
+            }
+          },
+          "400": {
+            "description": "Answers cannot be saved",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer400"
+            }
+          },
+          "401":{
+            "description": "No such user found",
+            "schema": {
+              "$ref": "#/definitions/saveAnswer401"
+            }
+          }
+        }
+      }
+    },
+    "/admin/upload":{
+
+    }
+  },
+  "definitions":{
+    "saveAccessCode200":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "true"
+        },
+        "code": {
+          "type": "integer",
+          "example": "200"
+        },
+        "message": {
+          "type": "string",
+          "example": "Access Code Saved Successfully"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    },
+    "saveAccessCode401":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "false"
+        },
+        "code": {
+          "type": "integer",
+          "example": "401"
+        },
+        "message": {
+          "type": "string",
+          "example": "No such ID found"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    },
+    "saveQuestionnaire200":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "true"
+        },
+        "code": {
+          "type": "integer",
+          "example": "200"
+        },
+        "message": {
+          "type": "string",
+          "example": "Question Saved Successfully"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    },
+    "saveQuestionnaire401":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "false"
+        },
+        "code": {
+          "type": "integer",
+          "example": "401"
+        },
+        "message": {
+          "type": "string",
+          "example": "No such ID found"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    },
+    "deleteAccessCode200":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "true"
+        },
+        "code": {
+          "type": "integer",
+          "example": "200"
+        },
+        "message": {
+          "type": "string",
+          "example": "Access Code Deleted Successfully"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    },
+    "deleteAccessCode401":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "false"
+        },
+        "code": {
+          "type": "integer",
+          "example": "401"
+        },
+        "message": {
+          "type": "string",
+          "example": "No such ID found"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    },
+    "deleteQuestionnaire200":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "true"
+        },
+        "code": {
+          "type": "integer",
+          "example": "200"
+        },
+        "message": {
+          "type": "string",
+          "example": "Question Deleted Successfully"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    },
+    "signUpAlreadyExists400":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "false"
+        },
+        "code": {
+          "type": "integer",
+          "example": "401"
+        },
+        "message": {
+          "type": "string",
+          "example": "No such Question ID found"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    },
+    "signUp200":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "false"
+        },
+        "code": {
+          "type": "integer",
+          "example": "200"
+        },
+        "message": {
+          "type": "string",
+          "example": "Admin added Successfully"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    },
+    "deleteQuestionnaire401":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "false"
+        },
+        "code": {
+          "type": "integer",
+          "example": "401"
+        },
+        "message": {
+          "type": "string",
+          "example": "No such Question ID found"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    }
+  }
+}

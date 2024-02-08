@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Log in</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="../assets/plugins/fontawesome-free/css/all.min.css"
+    />
+    <!-- Ionicons -->
+    <link
+      rel="stylesheet"
+      href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"
+    />
+    <!-- icheck bootstrap -->
+    <link
+      rel="stylesheet"
+      href="../assets/plugins/icheck-assets/icheck-bootstrap.min.css"
+    />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css" />
+    <!-- Google Font: Source Sans Pro -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700"
+      rel="stylesheet"
+    />
+    <style>
+      .card-body.login-card-body {
+        font-size: 19px;
+        text-align: center;
+        font-weight: bold;
+        font-family: Source Sans Pro, Arial, sans-serif;
+        color: green;
+      }
+      img {
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body class="hold-transition login-page">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td align="center">
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            style="margin: 0 auto; width: 100%; border-spacing: 0px;"
+          >
+            <tbody>
+              <tr>
+                <td>
+                  <table style="margin: 0 auto;">
+                    <tbody>
+                      <tr>
+                        <td style="margin-bottom: 0px;">
+                          <center>
+                            <img
+                              src="http://d2n7whs191xoml.cloudfront.net/common/1590561192903.png"
+                            />
+                          </center>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            style="width: 100%; margin: 0 auto; background-color: #ffffff;"
+          >
+            <tbody>
+              <tr>
+                <td style="border: 0px; padding: 0px;">
+                  <table style="margin: 0 auto;">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="login-box">
+                            <!-- <div class="login-logo"></div> -->
+                            <!-- /.login-logo -->
+                            <div class="card">
+                              <div class="card-body login-card-body">
+                                <p
+                                  class="login-box-msg"
+                                  style="text-align: center;"
+                                >
+                                  <%- message -%>
+                                </p>
+                              </div>
+                              <!-- /.login-card-body -->
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table
+            cellspacing="0"
+            cellpadding="0"
+            style="width: 100%; margin: 0 auto; background-color: #ffffff;"
+          >
+            <tbody>
+              <tr>
+                <td style="border: 0px; padding: 0px;">
+                  <table style="margin: 0 auto;">
+                    <tbody>
+                      <tr>
+                        <td style="background-color: #ffffff; margin: 0 auto;">
+                          <p
+                            style="
+                              font-family: 'YuGothic';
+                              font-size: 20px;
+                              font-weight: bold;
+                              letter-spacing: -0.48px;
+                              font-stretch: normal;
+                              font-style: normal;
+                              line-height: 1.36;
+                              text-align: center;
+                              color: #666666;
+                              margin-top: 0px;
+                              margin-bottom: 0px;
+                              padding-top: 60px;
+                            "
+                          >
+                            Need Help?
+                          </p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="background-color: #ffffff; margin: 0 auto;">
+                          <p
+                            style="
+                              font-family: 'YuGothic';
+                              font-size: 14px;
+                              font-weight: normal;
+                              font-stretch: normal;
+                              font-style: normal;
+                              line-height: 1.36;
+                              letter-spacing: -0.18px;
+                              text-align: center;
+                              color: #666666;
+                              margin-top: 0px;
+                              margin-bottom: 0px;
+                              padding-bottom: 38px;
+                            "
+                          >
+                            Please send and feeback or bug info<br />
+                            to
+                            <span style="color: #448df7;"
+                              >info@attunedvoice.com</span
+                            >
+                          </p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!-- /.login-box -->
+
+    <!-- jQuery -->
+    <script src="../assets/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../assets/plugins/assets/js/bootstrap.bundle.min.js"></script>
+    <!-- jquery-validation -->
+    <script src="../assets/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../assets/dist/js/adminlte.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        //   $.validator.setDefaults({
+        //     submitHandler: function () {
+        //       alert( "Form successful submitted!" );
+        //     }
+        //   });
+        $("#loginForm").validate({
+          rules: {
+            email: {
+              required: true,
+              email: true,
+            },
+            password: {
+              required: true,
+              minlength: 5,
+            },
+          },
+          messages: {
+            email: {
+              required: "Please enter a email address",
+              email: "Please enter a vaild email address",
+            },
+            password: {
+              required: "Please provide a password",
+              minlength: "Your password must be at least 5 characters long",
+            },
+          },
+          errorElement: "span",
+          errorPlacement: function (error, element) {
+            error.addClass("invalid-feedback");
+            element.closest(".form-group").append(error);
+          },
+          highlight: function (element, errorClass, validClass) {
+            $(element).addClass("is-invalid");
+          },
+          unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass("is-invalid");
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

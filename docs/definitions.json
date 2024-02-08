@@ -1,0 +1,275 @@
+{
+    
+    "saveAnswer200":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "true"
+        },
+        "code": {
+          "type": "integer",
+          "example": "200"
+        },
+        "message": {
+          "type": "string",
+          "example": "Answers Saved Successfully"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    },
+    "saveAnswer400":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "false"
+        },
+        "code": {
+          "type": "integer",
+          "example": "400"
+        },
+        "message": {
+          "type": "string",
+          "example": "Answers cannot be saved"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    },
+    "saveAnswer401":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "false"
+        },
+        "code": {
+          "type": "integer",
+          "example": "401"
+        },
+        "message": {
+          "type": "string",
+          "example": "No such user found"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+          }
+        }
+      }
+    },
+    "login200":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "true"
+        },
+        "code": {
+          "type": "integer",
+          "example": "200"
+        },
+        "message": {
+          "type": "string",
+          "example": "Loggied in Successfully"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+            "id": "5e4dc58f196c6b36601a9030",
+            "email": "manish.mohit2110+6@gmail.com",
+            "telephone": "8004624940",
+            "name": "manish mishra",
+            "answers": []
+          }
+        }
+      }
+    },
+    "login403":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "false"
+        },
+        "code": {
+          "type": "integer",
+          "example": "403"
+        },
+        "message": {
+          "type": "string",
+          "example": "Wrong email or password"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+            "message": "You have entered incorrect email/password"
+          }
+        }
+      }
+    },
+    "forgotPassword200":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "true"
+        },
+        "code": {
+          "type": "integer",
+          "example": "200"
+        },
+        "message": {
+          "type": "string",
+          "example": "Please check your email for reset link"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+            "status": true,
+            "message": "Please check your email for reset link"
+          }
+        }
+      }
+    },
+    "forgotPassword400":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "false"
+        },
+        "code": {
+          "type": "integer",
+          "example": "400"
+        },
+        "message": {
+          "type": "string",
+          "example": "User does not exists"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+            "status": true,
+            "message": "User does not exists"
+          }
+        }
+      }
+    },
+    "PasswordReset200":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "true"
+        },
+        "code": {
+          "type": "integer",
+          "example": "200"
+        },
+        "message": {
+          "type": "string",
+          "example": "Your password has been changed Successfully"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+            "status": false,
+            "message": "Your password has been changed Successfully"
+          }
+        }
+      }
+    },
+    "PasswordReset401":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "false"
+        },
+        "code": {
+          "type": "integer",
+          "example": "401"
+        },
+        "message": {
+          "type": "string",
+          "example": "Your token has expired"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+            "status": true,
+            "message": "Your token has expired"
+          }
+        }
+      }
+    },
+    "PasswordReset403":{
+      "properties": {
+        "status": {
+          "type": "boolean",
+          "example": "false"
+        },
+        "code": {
+          "type": "integer",
+          "example": "403"
+        },
+        "message": {
+          "type": "string",
+          "example": "Your token is invalid"
+        },
+        "data": {
+          "type": "object",
+          "example": {
+            "status": false,
+            "message": "Your token is invalid"
+          }
+        }
+      }
+    },
+    "signUp200":{
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "true"
+          },
+          "code": {
+            "type": "integer",
+            "example": "200"
+          },
+          "message": {
+            "type": "string",
+            "example": "User successfully signed up. Please verify your email"
+          },
+          "data": {
+            "type": "object",
+            "example": {
+              "status": true,
+              "message": ""
+            }
+          }
+        }
+      },
+      "signUp409":{
+        "properties": {
+          "status": {
+            "type": "boolean",
+            "example": "false"
+          },
+          "code": {
+            "type": "integer",
+            "example": "409"
+          },
+          "message": {
+            "type": "string",
+            "example": "User with this email already exists"
+          },
+          "data": {
+            "type": "object",
+            "example": {
+              "status": false,
+              "message": ""
+            }
+          }
+        }
+      }
+  }

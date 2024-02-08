@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Attuned | Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../assets/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="../assets/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="../assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="../assets/plugins/jqvmap/jqvmap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../assets/dist/css/adminlte.min.css">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="../assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="../assets/plugins/daterangepicker/daterangepicker.css">
+  <!-- summernote -->
+  <link rel="stylesheet" href="../assets/plugins/summernote/summernote-bs4.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link rel="icon" href="/assets/dist/img/fav.png" />
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+
+
+
+
+  <div class="wrapper">
+
+    <!-- Navbar -->
+    <%- include('./common/header.ejs') -%>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="index3.html" class="brand-link">
+        <img src="../assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .8">
+        <span class="brand-text font-weight-light">Attuned</span>
+      </a>
+
+      <!-- Sidebar -->
+
+      <%- include('./common/sidebar.ejs') -%>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark">User List</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="dashboard.ejs">Home</a></li>
+                <li class="breadcrumb-item active">Users</li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">User's List</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4 cm-user-table">
+                <div class="row">
+                  <div class="col-sm-12 col-md-6">
+                    <div class="dataTables_length" id="example1_length">
+                      <label>Go To Page:</label>
+                      <select name="example1_length" id="cm-pagination-select"
+                        class="custom-select custom-select-sm form-control form-control-sm">
+                        <option value="1" selected>1</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 col-md-6">
+                    <div id="example1_filter" class="dataTables_filter">
+                      <form id="search_form" action="/admin/getUsersList" method="GET">
+                        <label>Search:<input type="search" name="search" class="form-control form-control-sm"
+                            placeholder="" aria-controls="example1" id="search_input"></label>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
+                      aria-describedby="example1_info">
+                      <thead>
+                        <tr role="row">
+                          <th class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-sort="ascending" aria-label="Rendering engine: activate to sort column descending"
+                            style="width: 270px;">
+                            User's Name
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-label="Browser: activate to sort column ascending" style="width: 342px;">
+                            User's Email
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-label="User Recording" style="width: 342px;">
+                            User's Recording
+                          </th>
+                          <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                            aria-label="Platform(s): activate to sort column ascending" style="width: 305px;">
+                            Action
+                          </th>
+                      </thead>
+                      <tbody>
+                        <% for(var i=0; i < data.userList.length; i++) { %>
+                        <tr role="row" class="isDeleted-<%= data.userList[i].isDeleted %>">
+                          <td data-id="<%= data.userList[i]._id %>"><a
+                              href="/admin/getUserDetailsById/<%= data.userList[i]._id %>"><%= data.userList[i].name %></a>
+                          </td>
+                          <td><%= data.userList[i].email %></td>
+                          <td><div class="maxuserrecording" data-link="/admin/getUserRecording/<%= data.userList[i]._id %>"><i class="fa fa-file-audio-o nav-link"></i>View</div></td>
+                          <td><a href="/admin/deleteUser/<%= data.userList[i]._id %>" class="nav-link delete-user-link">
+                              <i class="nav-icon fas fa-trash"></i></a>
+                            <a href="/admin/disableUser/<%= data.userList[i]._id %>"
+                              class="toggle-user"><% if(data.userList[i].isDeleted) {%>
+                              Enable
+                              <% }else{ %>
+                              Disable
+                              <% } %></a>&nbsp;&nbsp;&nbsp;
+                              <a href="/admin/getUsersLessionsFeedback/<%= data.userList[i]._id %>">Feedbacks</a>
+                          </td>
+
+                        </tr>
+                        <% } %>
+                      </tbody>
+
+
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+
+                <div class="cm-users-info-popup" style="display:none;">
+                  <div class="cm-users-info-inner">
+                  </div>
+                  <span class="cm-close-icon"><i class="fa fa-times"></i></span>
+                </div>
+
+
+
+                <!-- /.row (main row) -->
+              </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+
+    <div class="maxoverlay"></div>
+    <style>
+      div#example1_filter {
+        display: block;
+        text-align: right;
+        margin-bottom: 10px;
+      }
+      .maxoverlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    bottom: 0;
+    z-index: 9999;
+    background-color: rgba(0,0,0,.3);
+}
+      .maxuserrecording i {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.maxuserrecording {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    top: 5px;
+}
+      .fa-file-sound-o:before, .fa-file-audio-o:before {
+    content: "\f1c7";
+}
+
+    </style>
+    <!-- /.content-wrapper -->
+    <!-- <%- include('./common/footer.ejs') -%> -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- jQuery -->
+  <script src="../assets/plugins/jquery/jquery.min.js"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="../assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button)
+  </script>
+  <!-- Bootstrap 4 -->
+  <script src="../assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- ChartJS -->
+  <script src="../assets/plugins/chart.js/Chart.min.js"></script>
+  <!-- Sparkline -->
+  <script src="../assets/plugins/sparklines/sparkline.js"></script>
+  <!-- JQVMap -->
+  <script src="../assets/plugins/jqvmap/jquery.vmap.min.js"></script>
+  <script src="../assets/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+  <!-- jQuery Knob Chart -->
+  <script src="../assets/plugins/jquery-knob/jquery.knob.min.js"></script>
+  <!-- daterangepicker -->
+  <script src="../assets/plugins/moment/moment.min.js"></script>
+  <script src="../assets/plugins/daterangepicker/daterangepicker.js"></script>
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="../assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+  <!-- Summernote -->
+  <script src="../assets/plugins/summernote/summernote-bs4.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="../assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../assets/dist/js/adminlte.js"></script>
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  <script src="../assets/dist/js/pages/dashboard.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../assets/dist/js/demo.js"></script>
+</body>
+
+</html>

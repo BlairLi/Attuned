@@ -1,0 +1,119 @@
+<div class="popupOverlay"></div>
+<div class="popUpWrapper">
+	<div class="popUpText">
+		<span class="closePopUp"></span>
+		<p class="ques-edit-add-title">
+			<div role="add">Add Question</div>
+			<div role="edit">Edit Question</div>
+		</p>
+		<form id="addQuestionForm">
+			<div class="fieldWrapper">
+				<label>Question</label>
+				<input type="text" id="ques" name="ques" required>
+			</div>
+			<div class="fieldWrapper">
+				<label>Question Type</label>
+				<select required class="optionType" id="quesType" name="quesType">
+					<option value="text">Text</option>
+					<option value="mcq">MCQ</option>
+					<option value="radio">Radio</option>
+					<option value="slider">Slider</option>
+
+				</select>
+			</div>
+			<div class="fieldWrapper">
+				<label>Max Allowed Answer</label>
+				<input type="number" required id="maxAns" name="maxAns">
+			</div>
+
+			<div class="fieldWrapper">
+				<label>Max Character</label>
+				<input type="number" id="maxChar" name="maxChar">
+			</div>
+
+			<div class="fieldWrapper">
+				<label>Screen No.</label>
+				<input type="number" id="screen" name="screen">
+			</div>
+			<div class="hideTextFields">
+				<div class="fieldWrapper">
+					<label>Min Value</label>
+					<input type="number" id="minValue" name="minValue">
+				</div>
+				<div class="fieldWrapper">
+					<label>Max Value</label>
+					<input type="number" id="maxValue" name="maxValue">
+				</div>
+				<div class="fieldWrapper">
+					<label>Mid Value</label>
+					<input type="number" id="midValue" name="midValue">
+				</div>
+			</div>
+			<div class="fieldWrapper">
+				<label>Question Order</label>
+				<input type="number" id="quesOrder" name="quesOrder">
+			</div>
+			<div class="hideOptionFields">
+				<div class="addDelQues">
+					<span>Question Options</span>
+					<div class="icons">
+						<span class="add"></span>
+						<!-- <span class="del"></span> -->
+					</div>
+				</div>
+				<div class="fieldWrapper  multipleOptions">
+					<div class="optionWrapper" id="option1" name="option1">
+						<div class="left">
+							<div>
+								<label>value</label>
+								<input type="text" name="value">
+							</div>
+							<div>
+								<label>Option Image</label>
+								<input type="file" accept="image/*" class="uploadImage" name="image">
+							</div>
+							<div>
+								<label>Options Description</label>
+								<textarea name="desc"></textarea>
+							</div>
+						</div>
+						<div class="right addDelQues">
+							<div class="icons">
+								<span class="del"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="btnWrapper">
+				<button id="addBtn" type="submit">Add Questions</button>
+				<span class="submitMsg"></span>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+<div class="clone">
+	<div class="optionWrapper">
+		<div class="left">
+			<div>
+				<label>value</label>
+				<input type="text" required name="value">
+			</div>
+			<div>
+				<label>Option Image</label>
+				<input type="file" accept="image/*" required class="uploadImage" name="image">
+			</div>
+			<div>
+				<label>Options Description</label>
+				<textarea name="desc" required></textarea>
+			</div>
+		</div>
+		<div class="right addDelQues">
+			<div class="icons">
+				<span class="del"></span>
+			</div>
+		</div>
+	</div>
+</div>

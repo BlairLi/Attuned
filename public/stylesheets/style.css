@@ -1,0 +1,251 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+.quesOuterWrapper {
+  margin-bottom: 20px;
+  font-size: 15px;
+  line-height: 28px;
+}
+.innerWrapper{
+margin-bottom: 20px;
+}
+.removeBorder{
+ border-bottom: none;
+}
+.btnWrapper {
+  text-align: right;
+}
+.btnWrapper button{
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 11px 18px;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+@media screen and (min-width:768px){
+  .questionWrapper, .popupContent{  
+    width: calc(100% - 250px);
+    margin-left: auto !important;
+  }
+}
+.popupContent{
+  display: none;
+}
+.popupContent.showPopUp{
+  display: block;
+}
+.popUpWrapper .fieldWrapper, .popUpWrapper .fieldWrapper > div {
+  margin-bottom: 11px;
+}
+.popUpWrapper .fieldWrapper label, .popUpWrapper  span {
+  min-width: 150px;
+  font-size:14px;
+  font-weight: 700;
+  display: inline-block;
+    vertical-align: top;
+}
+.popUpText {
+  padding: 25px;
+}
+.popUpWrapper .popUpText  p {
+  font-size: 22px;
+  text-align: center;
+  display: block;
+}
+.popUpWrapper .fieldWrapper input, .popUpWrapper .fieldWrapper select, .popUpWrapper .fieldWrapper input, .popUpWrapper .fieldWrapper textarea {
+  width: calc(100% - 162px);
+  display: inline-block;
+  max-width: 300px;
+  padding: 6px;
+  border: 1px solid #a3a3a3;
+  font-size: 14px;
+}
+
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 9999;
+}
+
+.popUpWrapper {
+  position: fixed;
+  top: 50%;
+  background: #fff;
+  z-index: 9999;
+  max-width: 501px;
+  max-height: 400px;
+  overflow: auto;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+
+.popUpWrapper .fieldWrapper input[type=number]::-webkit-outer-spin-button,
+.popUpWrapper .fieldWrapper input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.popUpWrapper .fieldWrapper input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.addDelQues .icons {
+  width: calc(100% - 162px);
+  margin-left: auto;
+  display: inline-block;
+}
+
+.addDelQues .icons .add, .addDelQues .icons .del{
+display: inline-block;
+min-width: unset;
+margin-right: 20px;
+margin-bottom: 20px;
+}
+.addDelQues .icons .add:after, .addDelQues .icons .del:after{
+    font-size: 18px;
+    width: 25px;
+    height: 25px;
+    background: #000;
+    color: #fff;
+    display: inline-block;
+    border: 1px solid;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 24px;
+}
+
+.addDelQues .icons .add:after{
+content:'+';
+}
+.addDelQues .icons .del:after{
+  content:'-';
+  line-height: 20px;
+  font-size: 27px;
+  }
+
+  .hideTextFields, .hideOptionFields{
+    display: none;
+  }
+
+  .hideTextFields.showOtherFields, .hideOptionFields.showOtionsFields{
+    display: block;
+  }
+  .optionWrapper div{
+    margin-bottom: 10px;
+  }
+  .optionWrapper div.left {
+    width: 91%;
+    display: inline-block;
+    vertical-align: middle;
+}
+.optionWrapper div.right {
+  width: 8%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.clone .optionWrapper{
+  display:none;
+}
+.fieldWrapper.multipleOptions .optionWrapper{
+display: block;
+}
+
+.popUpWrapper form{
+  -webkit-appearance: none;
+}
+
+select.optionType {
+  -webkit-appearance: none;
+  border-radius: 0;
+  background: url('../assets/dist/img/arrow.png');
+  background-position: right;
+  background-size: 25px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+body.popupOpen{
+  position: fixed;
+    width: 100%;
+}
+
+span.closePopUp {
+  text-align: right;
+  min-width: unset;
+  display: inline-block;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  cursor: pointer;
+}
+.closePopUp:after{
+  content: '';
+  background: url('../assets/dist/img/close.png');
+  background-size: 20px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  background-position: right;
+  width: 30px;
+  height: 30px;
+}
+
+nav.main-header{
+  width: calc(100% - 250px);
+  margin-left: auto !important;
+}
+.hide{
+display:none;
+}
+.show{
+  display: block;
+}
+
+.popupContent.lessonForm, .popupContent.homeworkForm{
+  display: none;
+}
+.popupContent.lessonForm .popUpWrapper, .popupContent.homeworkForm .popUpWrapper{
+  height: 340px;
+}
+.popupContent.lessonForm.showPopUp, .popupContent.homeworkForm.showPopUp{
+  display: block;
+}
+.submitMsg{
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+}
+.submitMsg.error{
+color:red;
+}
+.submitMsg.success{
+color:green;
+}
+@media screen and (max-width:767px){
+  .popUpWrapper .fieldWrapper label, .popUpWrapper span{
+    width: 100%;
+  }
+  .popUpWrapper .fieldWrapper input, .popUpWrapper .fieldWrapper select, .popUpWrapper .fieldWrapper input, .popUpWrapper .fieldWrapper textarea{
+    max-width: unset;
+    width: 100%;
+  }
+  .removePadding{
+    padding: 0;
+  }
+  nav.main-header{
+    width: 100%;
+  }
+}
