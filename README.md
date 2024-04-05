@@ -14,7 +14,7 @@ The independent study project entails the creation and refinement of "Attuned," 
 1. Clone the repository.
 
     ```shell
-    git clone [https://github.com/BlairLi/CISC498_Web-based_Real-time_Explorer.git](https://github.com/BlairLi/Attuned.git)
+    git clone https://github.com/BlairLi/Attuned.git
     cd Attuned
     ```
 1. Install all dependencies with NPM.
