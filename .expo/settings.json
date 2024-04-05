@@ -1,3 +1,6 @@
 {
-  "urlRandomness": "U_ZBML8"
+  "urlRandomness": "U_ZBML8",
+  "dev": true,
+  "minify": false,
+  "https": false
 }
