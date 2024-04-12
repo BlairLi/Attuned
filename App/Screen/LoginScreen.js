@@ -1,31 +1,23 @@
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
-
-import * as React from "react";
+import React, { useCallback } from "react";
+import { View, Text, Image, TouchableOpacity, ImageBackground } from "react-native";
 import image from "./../../assets/images/Splash.jpg";
-import Colors from "./Utils/Colors";
 import google from "./../../assets/images/google.png";
 import * as WebBrowser from "expo-web-browser";
 import { useOAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "./../../hooks/useWarmUpBrowser";
-WebBrowser.maybeCompleteAuthSession();
+import styles from "../../css/LoginScreenStyles";
 
+WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginScreen() {
   useWarmUpBrowser();
- 
+
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
- 
-  const onPress = React.useCallback(async () => {
+
+  const onPress = useCallback(async () => {
     try {
-      const { createdSessionId, signIn, signUp, setActive } =
-        await startOAuthFlow();
- 
+      const { createdSessionId, signIn, signUp, setActive } = await startOAuthFlow();
+
       if (createdSessionId) {
         setActive({ session: createdSessionId });
       } else {
@@ -35,79 +27,16 @@ export default function LoginScreen() {
       console.error("OAuth error", err);
     }
   }, []);
+
   return (
-    <ImageBackground
-      source={image}
-      style={{
-        flex: 1,
-        resizeMode: "cover",
-        justifyContent: "center",
-        width: "100%",
-      }}
-    >
-      <View style={{ display: "flex", alignItems: "center" }}>
-        <View
-          style={{
-            height: 400,
-            width: "100%",
-            marginTop: 100,
-            padding: 20,
-          }}
-        >
-          <Text
-            style={{
-              fontFamily: "outfit-bold",
-              fontSize: 40,
-              color: "white",
-              textAlign: "center",
-            }}
-          >
-            Attuned
-          </Text>
-          <Text
-            style={{
-              fontFamily: "outfit-light",
-              fontSize: 20,
-              color: "white",
-              textAlign: "center",
-              marginTop: 20,
-            }}
-          >
-            Find your voice here
-          </Text>
-          <TouchableOpacity
-            onPress={onPress}
-            style={{
-              backgroundColor: "white",
-              alignSelf: "center",
-              borderRadius: 99,
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 10,
-              justifyContent: "center",
-              padding: 10,
-              marginTop: 30,
-            }}
-          >
-            <Image
-              source={google}
-              style={{
-                width: 50,
-                height: 50,
-                objectFit: "contain",
-              }}
-            />
-            <Text
-              style={{
-                fontFamily: "outfit-semibold",
-                fontSize: 20,
-                color: Colors.PRIMARY_LIGHT,
-                textAlign: "center",
-              }}
-            >
-              Sign in with Google
-            </Text>
+    <ImageBackground source={image} style={styles.backgroundImage}>
+      <View style={styles.centeredView}>
+        <View style={styles.contentView}>
+          <Text style={styles.title}>Attuned</Text>
+          <Text style={styles.subtitle}>Find your voice here</Text>
+          <TouchableOpacity onPress={onPress} style={styles.googleSignInButton}>
+            <Image source={google} style={styles.googleIcon} />
+            <Text style={styles.googleSignInText}>Sign in with Google</Text>
           </TouchableOpacity>
         </View>
       </View>
