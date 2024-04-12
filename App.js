@@ -5,10 +5,28 @@ import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { NavigationContainer } from "@react-navigation/native";
 import TabNavigation from "./App/Navigations/TabNavigation";
 import OpeningScreen from "./App/Screen/OpeningScreen";
+import * as SplashScreen from 'expo-splash-screen';
+import { useEffect } from "react";
 
+SplashScreen.preventAutoHideAsync();
 
 const AppContent = () => {
   const { isSignedIn, isLoaded } = useAuth();
+
+  // load Attuned splash screen for 7 seconds
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 7000));
+        // await performResourceLoading();
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        await SplashScreen.hideAsync();
+      }
+    }
+    prepare();
+  }, []);
 
   if (!isLoaded) {
     return <OpeningScreen />;
