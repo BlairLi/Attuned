@@ -7,7 +7,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import SettingScreen from "../Screen/SettingScreen";
-import ProfileScreen from "../Screen/ProfileScreen";
+
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigation() {
@@ -41,13 +41,13 @@ export default function TabNavigation() {
           <Feather name="settings" size={size} color={color} />
         ),
       }}/>
-      <Tab.Screen name="Profile" component={ProfileScreen} 
+      {/* <Tab.Screen name="Profile" component={ProfileScreen} 
       options={{
         tabBarLabel: 'Profile',
         tabBarIcon: ({ color, size }) => (
           <Feather name="user" size={size} color={color} />
         ),
-      }}/>
+      }}/> */}
     </Tab.Navigator>
   );
 }

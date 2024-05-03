@@ -1,5 +1,6 @@
 import React, { useCallback } from "react";
 import { View, Text, Image, TouchableOpacity, ImageBackground } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import image from "./../../assets/images/Splash.jpg";
 import google from "./../../assets/images/google.png";
 import * as WebBrowser from "expo-web-browser";
@@ -29,17 +30,20 @@ export default function LoginScreen() {
   }, []);
 
   return (
-    <ImageBackground source={image} style={styles.backgroundImage}>
-      <View style={styles.centeredView}>
-        <View style={styles.contentView}>
-          <Text style={styles.title}>Attuned</Text>
-          <Text style={styles.subtitle}>Find your voice here</Text>
-          <TouchableOpacity onPress={onPress} style={styles.googleSignInButton}>
-            <Image source={google} style={styles.googleIcon} />
-            <Text style={styles.googleSignInText}>Sign in with Google</Text>
-          </TouchableOpacity>
+    // TODO: enable the safe area to be transparent
+    <SafeAreaView style={styles.safeArea}>
+      <ImageBackground source={image} style={styles.backgroundImage}>
+        <View style={styles.centeredView}>
+          <View style={styles.contentView}>
+            <Text style={styles.title}>Attuned</Text>
+            <Text style={styles.subtitle}>Find your voice here</Text>
+            <TouchableOpacity onPress={onPress} style={styles.googleSignInButton}>
+              <Image source={google} style={styles.googleIcon} />
+              <Text style={styles.googleSignInText}>Sign in with Google</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    </ImageBackground>
+      </ImageBackground>
+    </SafeAreaView>
   );
 }

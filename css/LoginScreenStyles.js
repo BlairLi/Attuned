@@ -31,6 +31,10 @@ export default StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
   },
+  safeArea: {
+    flex: 1,
+    backgroundColor: 'transparent'
+  },
   googleSignInButton: {
     backgroundColor: "white",
     alignSelf: "center",

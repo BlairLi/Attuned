@@ -1,14 +1,17 @@
 import { StyleSheet, View } from "react-native";
 import { useFonts } from "expo-font";
-import LoginScreen from "./App/Screen/LoginScreen";
 import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from '@react-navigation/stack';
+import { useState, useEffect } from "react";
+import LoginScreen from "./App/Screen/LoginScreen";
 import TabNavigation from "./App/Navigations/TabNavigation";
+import ProfileScreen from "./App/Screen/ProfileScreen";
 import OpeningScreen from "./App/Screen/OpeningScreen";
 import * as SplashScreen from 'expo-splash-screen';
-import { useState, useEffect } from "react";
 
 SplashScreen.preventAutoHideAsync();
+const Stack = createStackNavigator();
 
 const AppContent = () => {
   const { isSignedIn, isLoaded } = useAuth();
@@ -18,7 +21,7 @@ const AppContent = () => {
   useEffect(() => {
     async function prepare() {
       try {
-        await new Promise(resolve => setTimeout(resolve, 7000));
+        await new Promise(resolve => setTimeout(resolve, process.env.SPLASH_TIMEOUT));
       } catch (e) {
         console.warn(e);
       } finally {
@@ -28,10 +31,7 @@ const AppContent = () => {
     prepare();
   }, []);
 
-  // if (!isLoaded) {
-  //   return <OpeningScreen />;
-  // }
-
+  // comment for dev used
   if (!accessGranted) {
     return <OpeningScreen onAccessGranted={() => setAccessGranted(true)} />;
   }
@@ -40,7 +40,11 @@ const AppContent = () => {
     <View style={styles.container}>
       {isSignedIn ? (
         <NavigationContainer>
-          <TabNavigation />
+          {/* <TabNavigation /> */}
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={TabNavigation} />
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+          </Stack.Navigator>
         </NavigationContainer>
       ) : (
         <LoginScreen />
