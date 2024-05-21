@@ -2,5 +2,6 @@
   "urlRandomness": "U_ZBML8",
   "dev": true,
   "minify": false,
-  "https": false
+  "https": false,
+  "devClient": true
 }

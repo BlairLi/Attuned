@@ -15,6 +15,14 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "plugins": [
+      [
+        "expo-av",
+        {
+          "microphone": "We need access to your microphone to detect notes"
+        }
+      ]
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.attuneddev"

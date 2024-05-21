@@ -39,4 +39,10 @@ export default StyleSheet.create({
   blackKeyActive: {
     backgroundColor: '#333', //  would apply this style conditionally when the key is active
   },
+  glview: {
+    width: 300,
+    height: 150,
+    backgroundColor: '#FFF',
+    marginTop: 20,
+  },
 });
