@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 
 export default function TabNavigation() {
   return (
-    <RecordingsProvider>
+      <RecordingsProvider>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
         <Tab.Screen name="Lessons" component={LessonScreen} 
         options={{
@@ -22,20 +22,20 @@ export default function TabNavigation() {
             <MaterialIcons name="play-lesson" size={size} color={color} />
           ),
         }}/>
-        <Tab.Screen name="VoiceTracker" component={VoiceTrackScreen} 
-        options={{
-          tabBarLabel: 'VoiceTracker',
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="sound" size={size} color={color} />
-          ),
-        }}/>
-        <Tab.Screen name="Recordings" component={RecordingScreen} 
-        options={{
-          tabBarLabel: 'Recordings',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="mic" size={size} color={color} />
-          ),
-        }}/>
+          <Tab.Screen name="VoiceTracker" component={VoiceTrackScreen} 
+          options={{
+            tabBarLabel: 'VoiceTracker',
+            tabBarIcon: ({ color, size }) => (
+              <AntDesign name="sound" size={size} color={color} />
+            ),
+          }}/>
+          <Tab.Screen name="Recordings" component={RecordingScreen} 
+          options={{
+            tabBarLabel: 'Recordings',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="mic" size={size} color={color} />
+            ),
+          }}/>
         <Tab.Screen name="Settings" component={SettingScreen} 
         options={{
           tabBarLabel: 'Settings',
@@ -51,6 +51,6 @@ export default function TabNavigation() {
           ),
         }}/> */}
       </Tab.Navigator>
-    </RecordingsProvider>
+      </RecordingsProvider>
   );
 }

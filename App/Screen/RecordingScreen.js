@@ -1,22 +1,34 @@
-import React, { useContext } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { View, Text, FlatList, StyleSheet, Button } from 'react-native';
 import { RecordingsContext } from './RecordingsContext';
 
 export default function RecordingScreen() {
-  const { recordings } = useContext(RecordingsContext);
+  const { recordings, setRecordings } = useContext(RecordingsContext);
+
+
+  function getRecordingLines() {
+    return recordings.map((recordingLine, index) => {
+      return (
+        <View key={index} style={styles.row}>
+          <Text style={styles.fill}>
+            Recording #{index + 1} | {recordingLine.duration}
+          </Text>
+          <Button onPress={() => recordingLine.sound.replayAsync()} title="Play"></Button>
+        </View>
+      );
+    });
+  }
+
+  // TODO: it only remove the recording, not removing the recording from storage
+  function clearRecordings() {
+    setRecordings([])
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Recordings</Text>
-      <FlatList
-        data={recordings}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.recordingItem}>
-            <Text style={styles.recordingText}>{item}</Text>
-          </View>
-        )}
-      />
+      {getRecordingLines()}
+      <Button title={recordings.length > 0 ? 'Clear Recordings' : ''} onPress={clearRecordings} />
     </View>
   );
 }

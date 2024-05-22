@@ -6,12 +6,8 @@ export const RecordingsContext = createContext();
 export const RecordingsProvider = ({ children }) => {
   const [recordings, setRecordings] = useState([]);
 
-  const addRecording = (recording) => {
-    setRecordings((prevRecordings) => [...prevRecordings, recording]);
-  };
-
   return (
-    <RecordingsContext.Provider value={{ recordings, addRecording }}>
+    <RecordingsContext.Provider value={{ recordings, setRecordings }}>
       {children}
     </RecordingsContext.Provider>
   );

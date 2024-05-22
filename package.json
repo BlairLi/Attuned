@@ -18,12 +18,14 @@
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
     "@types/react": "~18.2.45",
+    "dsp.js": "^1.0.1",
     "expo": "~50.0.14",
     "expo-application": "~5.8.3",
     "expo-auth-session": "~5.4.0",
     "expo-av": "~13.10.6",
     "expo-crypto": "~12.8.1",
     "expo-font": "~11.10.3",
+    "expo-gl": "~13.6.0",
     "expo-splash-screen": "^0.26.4",
     "expo-status-bar": "~1.11.1",
     "expo-web-browser": "~12.8.2",
@@ -43,8 +45,7 @@
     "react-native-tab-view": "^3.5.2",
     "react-native-vector-icons": "^10.0.3",
     "react-native-web": "~0.19.6",
-    "typescript": "^5.3.0",
-    "expo-gl": "~13.6.0"
+    "typescript": "^5.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
