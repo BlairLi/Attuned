@@ -32,38 +32,38 @@ const AppContent = () => {
   }, []);
 
   // TODCOMMENT: ONLY for dev purpose START
-  if (!accessGranted) {
-    return <OpeningScreen onAccessGranted={() => setAccessGranted(true)} />;
-  }
+  // if (!accessGranted) {
+  //   return <OpeningScreen onAccessGranted={() => setAccessGranted(true)} />;
+  // }
 
-  return (
-    <View style={styles.container}>
-      {isSignedIn ? (
-        <NavigationContainer>
-          {/* <TabNavigation /> */}
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Home" component={TabNavigation} />
-            <Stack.Screen name="Profile" component={ProfileScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      ) : (
-        <LoginScreen />
-      )}
-    </View>
-  );
-  // TODELETE: Only for dev purpose END
-
-  // TODELETE: Only for dev purpose START
   // return (
   //   <View style={styles.container}>
+  //     {isSignedIn ? (
   //       <NavigationContainer>
+  //         {/* <TabNavigation /> */}
   //         <Stack.Navigator screenOptions={{ headerShown: false }}>
   //           <Stack.Screen name="Home" component={TabNavigation} />
   //           <Stack.Screen name="Profile" component={ProfileScreen} />
   //         </Stack.Navigator>
   //       </NavigationContainer>
+  //     ) : (
+  //       <LoginScreen />
+  //     )}
   //   </View>
-  // )
+  // );
+  // TODCOMMENT: Only for dev purpose END
+
+  // TODELETE: Only for dev purpose START
+  return (
+    <View style={styles.container}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={TabNavigation} />
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+    </View>
+  )
   // TODELETE: Only for dev purpose END
 };
 

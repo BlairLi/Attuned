@@ -6,7 +6,7 @@ const blackKeyWidth = 15;
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#143F6B', // Applied to the body in CSS
+    // backgroundColor: '#143F6B', // Applied to the body in CSS
     justifyContent: 'center',
     alignItems: 'center',
   },

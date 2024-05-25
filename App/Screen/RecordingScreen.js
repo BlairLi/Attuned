@@ -11,7 +11,7 @@ export default function RecordingScreen() {
       return (
         <View key={index} style={styles.row}>
           <Text style={styles.fill}>
-            Recording #{index + 1} | {recordingLine.duration}
+            {recordingLine.name} | {recordingLine.duration}
           </Text>
           <Button onPress={() => recordingLine.sound.replayAsync()} title="Play"></Button>
         </View>
