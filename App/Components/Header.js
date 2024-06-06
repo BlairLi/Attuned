@@ -32,7 +32,7 @@ export default function Header({ navigation }) {
             <Text
               style={{
                 fontSize: 24,
-                fontFamily: "outfit-semibold",
+                // fontFamily: "outfit-semibold",
               }}
             >
               {user?.firstName}

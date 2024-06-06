@@ -25,7 +25,7 @@ export default StyleSheet.create({
     textAlign: "center",
   },
   subtitle: {
-    fontFamily: "outfit-light",
+    // fontFamily: "outfit-light",
     fontSize: 20,
     color: "white",
     textAlign: "center",
@@ -51,7 +51,7 @@ export default StyleSheet.create({
     height: 50,
   },
   googleSignInText: {
-    fontFamily: "outfit-semibold",
+    // fontFamily: "outfit-semibold",
     fontSize: 20,
     color: Colors.PRIMARY_LIGHT,
     textAlign: "center",

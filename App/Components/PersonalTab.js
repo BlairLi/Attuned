@@ -16,7 +16,7 @@ const PersonalTab = () => {
         <TouchableOpacity style={styles.editButton} onPress={() => {}}>
           <Text
           style={{
-            fontFamily: "outfit-semibold",
+            // fontFamily: "outfit-semibold",
           }}>Edit Picture</Text>
         </TouchableOpacity>
         {/* edit name */}
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "bold",
     textDecorationLine: "underline",
-    fontFamily: "outfit-light",
+    // fontFamily: "outfit-light",
   },
 });
 

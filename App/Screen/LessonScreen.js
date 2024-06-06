@@ -91,13 +91,13 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    fontFamily: "outfit-semibold",
+    // fontFamily: "outfit-semibold",
     // Add other styles
   },
   cardTime: {
     fontSize: 16,
     color: "grey",
-    fontFamily: "outfit-light",
+    // fontFamily: "outfit-light",
     // Add other styles
   },
 });

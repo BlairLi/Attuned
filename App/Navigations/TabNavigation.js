@@ -8,6 +8,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import SettingScreen from "../Screen/SettingScreen";
 import { RecordingsProvider } from '../Screen/RecordingsContext';
+import TestingScreen from "../Screen/TestingScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,6 +33,13 @@ export default function TabNavigation() {
           <Tab.Screen name="Recordings" component={RecordingScreen} 
           options={{
             tabBarLabel: 'Recordings',
+            tabBarIcon: ({ color, size }) => (
+              <MaterialIcons name="mic" size={size} color={color} />
+            ),
+          }}/>
+          <Tab.Screen name="Testing" component={TestingScreen} 
+          options={{
+            tabBarLabel: 'Testing',
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name="mic" size={size} color={color} />
             ),

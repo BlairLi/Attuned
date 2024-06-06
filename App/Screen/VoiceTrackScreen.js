@@ -68,24 +68,6 @@ export default function VoiceTrackScreen() {
       setRecording(recording);
       console.log('Recording started');
 
-      // const recordingInterval = setInterval(async () => {
-      //   const { sound } = await recording.createNewLoadedSoundAsync();
-      //   const audioBuffer = await sound.getAudioBufferAsync();
-
-      //   const fft = new FFT(audioBuffer.length);
-      //   const input = audioBuffer.getChannelData(0);
-      //   const out = fft.createComplexArray();
-        
-      //   fft.realTransform(out, input);
-      //   fft.completeSpectrum(out);  // Complete the spectrum if needed
-
-      //   console.log('Frequencies:', out);
-        
-      //   await sound.unloadAsync();  // Clean up sound instance
-      // }, 1000);
-      // return () => {
-      //   clearInterval(recordingInterval);
-      // };
     } catch (err) {
       console.error('Failed to start recording', err);
     };
@@ -104,9 +86,6 @@ export default function VoiceTrackScreen() {
       file: uri
     });
     setRecordings(allRecordings);
-    // const buffer = await fetch(uri).then(response => response.arrayBuffer());
-    // processAudio(buffer);
-    // console.log("ProcessAudio End");
     setRecording(null);
     console.log('Recording stopped');
     setModalVisible(!modalVisible)
@@ -115,9 +94,6 @@ export default function VoiceTrackScreen() {
   const openModal = async () => {
     setModalVisible(true);
     console.log('Stopping recording..');
-    // setRecording(null);
-    // To stop recording - PitchDetector
-    // await PitchDetector.stop(); // Promise<void>
     await recording.stopAndUnloadAsync();
   }
 
@@ -134,7 +110,6 @@ export default function VoiceTrackScreen() {
         Please use the piano keys below to visuliase and practice identifying your baseline pitch and working towards your target pitch by using the skills demonstrated in the exercises.
       </Text>
       <Piano/>
-      {/* <Text>{(note && note.stable) ? hzToNoteString(note.freq): ''}</Text> */}
       <Button title={recording ? 'Stop Recording' : 'Start Recording'} onPress={recording ? openModal : startRecording} />
       <Modal
         animationType="slide"
