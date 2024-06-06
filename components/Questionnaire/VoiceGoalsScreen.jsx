@@ -28,6 +28,16 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
       setSymptoms({ ...symptoms, [name]: value });
     }
   };
+
+  const handleSave = () => {
+    if (Object.values(symptoms).includes(true) || otherType) {
+      console.log("Selected symptoms:", symptoms);
+      console.log("Other type:", otherType);
+      goToNext();
+    } else {
+      alert("Please select an option.");
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
@@ -47,7 +57,7 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
         />
       ))}
 
-      <Text style={styles.subheading}>OR</Text>
+      <Text style={styles.header}>OR</Text>
       <TextInput
         style={styles.input}
         placeholder="Other type here"
@@ -59,7 +69,7 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
         <TouchableOpacity style={styles.backButton} onPress={goToPrevious}>
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.saveButton} onPress={goToNext}>
+        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableOpacity>
       </View>
@@ -145,7 +155,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   saveButton: {
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.orange,
     width: "40%",
     padding: 15,
     borderRadius: 10,

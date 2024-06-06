@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Linking,
 } from "react-native";
-import { Colors } from "@/constants/Colors";
 export default function ContactUsScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -133,7 +132,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: "Outfit-Bold",
     fontSize: 20,
-    color: "gray",
   },
   emailLink: {
     color: "blue",

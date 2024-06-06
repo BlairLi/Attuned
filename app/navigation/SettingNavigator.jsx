@@ -8,6 +8,7 @@ import ChangePasswordScreen from "../screens/Settings/ChangePasswordScreen";
 import ProfileScreen from "../screens/Settings/ProfileScreen";
 import ContactUsScreen from "../screens/Settings/ContactUsScreen";
 import QuestionnaireScreen from "../screens/Settings/QuestionnaireScreen";
+import SignOutScreen from "../screens/Settings/SignOutScreen";
 export default function SettingNavigation() {
   const Stack = createNativeStackNavigator();
   return (
@@ -31,6 +32,7 @@ export default function SettingNavigation() {
       <Stack.Screen name="Change Password" component={ChangePasswordScreen} />
       <Stack.Screen name="Contact Us" component={ContactUsScreen} />
       <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
+      <Stack.Screen name="Sign Out" component={SignOutScreen} />
     </Stack.Navigator>
   );
 }

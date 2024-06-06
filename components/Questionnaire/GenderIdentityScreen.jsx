@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   selectedButton: {
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.orange,
   },
   buttonText: {
     fontFamily: "outfit",
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   saveButton: {
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.orange,
     width: "100%",
     padding: 15,
     borderRadius: 10,

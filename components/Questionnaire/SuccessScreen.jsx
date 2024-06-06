@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TextInput,
 } from "react-native";
 import React from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
@@ -14,7 +13,7 @@ export default function SuccessScreen({ goToPrevious, goBack }) {
       <Text style={styles.successMessage}>
         Your profile has been successfully updated!
       </Text>
-      <Icon name="check-circle" size={100} color="green" />
+      <Icon name="check-circle" size={100} color={Colors.orange} />
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity style={styles.backButton} onPress={goToPrevious}>
           <Text style={styles.backButtonText}>Back</Text>
@@ -53,7 +52,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   saveButton: {
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.orange,
     width: "40%",
     padding: 15,
     borderRadius: 10,

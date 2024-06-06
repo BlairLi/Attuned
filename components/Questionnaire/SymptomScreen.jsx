@@ -31,6 +31,15 @@ export default function SymptomScreen({ goToNext, goToPrevious }) {
     }
   };
 
+  const handleSave = () => {
+    if (Object.values(symptoms).includes(true)) {
+      console.log("Selected symptoms:", symptoms);
+      goToNext();
+    } else {
+      alert("Please select an option.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
@@ -56,7 +65,7 @@ export default function SymptomScreen({ goToNext, goToPrevious }) {
         <TouchableOpacity style={styles.backButton} onPress={goToPrevious}>
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.saveButton} onPress={goToNext}>
+        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableOpacity>
       </View>
@@ -100,7 +109,7 @@ const styles = StyleSheet.create({
     color: "black",
     textAlign: "center",
   },
-  bottomButtonContainer:{
+  bottomButtonContainer: {
     flexDirection: "row",
     position: "absolute",
     bottom: 20,
@@ -121,7 +130,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   saveButton: {
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.orange,
     width: "40%",
     padding: 15,
     borderRadius: 10,
