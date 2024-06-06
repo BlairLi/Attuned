@@ -7,7 +7,6 @@ import {
   Alert,
   ActivityIndicator,
   TouchableOpacity,
-  ImageBackground,
 } from "react-native";
 import { useSignIn } from "@clerk/clerk-expo";
 import { Colors } from "@/constants/Colors";
@@ -17,17 +16,14 @@ const ChangePasswordScreen = ({ navigation }) => {
   const [code, setCode] = useState("");
   const [successfulCreation, setSuccessfulCreation] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const { signIn, setActive } = useSignIn();
 
   const handleSendCode = async () => {
     if (!email || !email.includes("@") || !email.includes(".")) {
-      setError("Please provide a valid email address");
       Alert.alert("Error", "Please provide a valid email address");
       return;
     } else {
       setLoading(true);
-      setError("");
       try {
         await signIn.create({
           strategy: "reset_password_email_code",
@@ -35,7 +31,7 @@ const ChangePasswordScreen = ({ navigation }) => {
         });
         setSuccessfulCreation(true);
       } catch (err) {
-        setError(err.errors[0]?.longMessage || "Failed to send reset code");
+        Alert.alert("Error", "Failed to send reset code");
       } finally {
         setLoading(false);
       }
@@ -44,12 +40,10 @@ const ChangePasswordScreen = ({ navigation }) => {
 
   const handleResetPassword = async () => {
     if (!password || !code) {
-      setError("Please provide a valid code and password");
       Alert.alert("Error", "Please provide a valid code and password");
       return;
     } else {
       setLoading(true);
-      setError("");
       try {
         const result = await signIn.attemptFirstFactor({
           strategy: "reset_password_email_code",
@@ -64,10 +58,10 @@ const ChangePasswordScreen = ({ navigation }) => {
             [{ text: "OK", onPress: () => navigation.navigate("SignIn") }]
           );
         } else {
-          setError("Password reset failed. Please try again.");
+          Alert.alert("Error", "Password reset failed. Please try again.");
         }
       } catch (err) {
-        setError(err.errors[0]?.longMessage || "Failed to reset password");
+        Alert.alert("Error", "Password reset failed. Please try again.");
       } finally {
         setLoading(false);
       }
@@ -95,7 +89,6 @@ const ChangePasswordScreen = ({ navigation }) => {
               <Text style={styles.buttonText}>Send reset code</Text>
             </TouchableOpacity>
           )}
-          {error ? <Text style={styles.newHereText}>{error}</Text> : null}
         </View>
       ) : (
         <View style={styles.inputContainer}>
@@ -127,7 +120,6 @@ const ChangePasswordScreen = ({ navigation }) => {
               <Text style={styles.buttonText}>Reset Password</Text>
             </TouchableOpacity>
           )}
-          {error ? <Text style={styles.newHereText}>{error}</Text> : null}
         </View>
       )}
     </View>

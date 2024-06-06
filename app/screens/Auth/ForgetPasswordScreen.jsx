@@ -99,7 +99,9 @@ const ForgetPasswordScreen = ({ navigation }) => {
                 <Text style={styles.buttonText}>Send reset code</Text>
               </TouchableOpacity>
             )}
-            {error ? <Text style={styles.newHereText}>Erro: {error}</Text> : null}
+            {error ? (
+              <Text style={styles.newHereText}>Erro: {error}</Text>
+            ) : null}
           </View>
         ) : (
           <View style={styles.inputContainer}>
@@ -168,7 +170,7 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     paddingHorizontal: 20,
-    borderColor: "gray",
+    borderColor: "white",
     borderWidth: 2,
     borderRadius: 15,
     color: "gray",
@@ -201,10 +203,12 @@ const styles = StyleSheet.create({
   },
   newHereButton: {
     alignSelf: "center",
+    marginTop: 20,
   },
   newHereText: {
     fontFamily: "Outfit-Bold",
     fontSize: 16,
+    color: "white",
   },
 });
 

@@ -234,6 +234,7 @@ const styles = StyleSheet.create({
   },
   newHereButton: {
     alignSelf: "center",
+    marginTop: 20,
   },
   newHereText: {
     fontFamily: "Outfit-Bold",
@@ -244,7 +245,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
   },
   checkbox: {
     marginRight: 10,

@@ -1,44 +1,34 @@
 import React from "react";
-import { Text, Alert, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { useClerk } from "@clerk/clerk-expo";
 import { Colors } from "@/constants/Colors";
 
-export default function SignOutScreen() {
+export default function SignOutScreen({ navigation }) {
   const { signOut } = useClerk();
-  const handleSignOut = () => {
-    Alert.alert(
-      "Sign Out", // Alert title
-      "Are you sure you want to sign out?", // Alert message
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Signout Cancelled"),
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: async () => {
-            try {
-              await signOut();
-              alert("You have been signed out successfully!");
-            } catch (error) {
-              console.error("Failed to sign out:", error);
-              alert("Failed to sign out. Please try again.");
-            }
-          },
-        },
-      ]
-    );
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      alert("You have been signed out successfully!");
+    } catch (error) {
+      console.error("Failed to sign out:", error);
+      alert("Failed to sign out. Please try again.");
+    }
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Do you want to Sign Out?</Text>
+      <Text style={styles.title}>Do you want to sign out?</Text>
       <Text style={styles.subTitle}>
         Once signed out, your information might be lost, please make your
         desicion carefully.
       </Text>
       <TouchableOpacity style={styles.button} onPress={handleSignOut}>
         <Text style={styles.buttonText}>Sign Out</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.goBack()}
+      >
+        <Text style={styles.buttonText}>Cancel</Text>
       </TouchableOpacity>
     </View>
   );
@@ -57,7 +47,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
     textAlign: "center",
     fontFamily: "Outfit-Bold",
     color: Colors.red,
@@ -99,6 +88,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: "Outfit-Bold",
     fontSize: 20,
+    color: Colors.red,
   },
   emailLink: {
     color: "blue",
