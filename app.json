@@ -1,41 +1,36 @@
 {
   "expo": {
-    "name": "attuned-dev",
-    "slug": "attuned-dev",
+    "name": "attuned-test",
+    "slug": "attuned-test",
     "version": "1.0.0",
-    "scheme": "attuned-dev",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.gif",
+      "image": "./assets/images/splash.gif",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "plugins": [
-      [
-        "expo-av",
-        {
-          "microphone": "We need access to your microphone to detect notes"
-        }
-      ]
-    ],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.attuneddev"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.anonymous.attuneddev"
+      }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
     }
   }
 }
