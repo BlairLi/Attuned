@@ -1,14 +1,21 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { Colors } from "@/constants/Colors";
-
+import Icon from "react-native-vector-icons/FontAwesome5";
 export default function GetStartedScreen({ goToNext }) {
-
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
-        To best serve you, tell us which gender identity best describes you:
+        Please answer the following questions to help us set up your app
       </Text>
+      <Icon
+        name="grin-wink"
+        size={100}
+        color={Colors.orange}
+        style={{
+          marginTop: 20,
+        }}
+      />
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity style={styles.saveButton} onPress={goToNext}>
           <Text style={styles.saveButtonText}>Get Started</Text>
@@ -30,6 +37,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     fontFamily: "outfit-bold",
+    marginVertical: 40,
   },
   button: {
     backgroundColor: "#d3d3d3",

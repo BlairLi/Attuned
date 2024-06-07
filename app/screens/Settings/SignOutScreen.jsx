@@ -77,13 +77,15 @@ const styles = StyleSheet.create({
     height: 100,
   },
   button: {
-    backgroundColor: "lightgray",
+    backgroundColor: "white",
     borderColor: "gray",
     alignItems: "center",
     marginTop: 10,
     padding: 10,
     borderRadius: 15,
     width: "100%",
+    borderWidth: 2,
+    borderColor: Colors.red,
   },
   buttonText: {
     fontFamily: "Outfit-Bold",

@@ -85,9 +85,17 @@ const ChangePasswordScreen = ({ navigation }) => {
           {loading ? (
             <ActivityIndicator size="small" color="#0000ff" />
           ) : (
-            <TouchableOpacity style={styles.button} onPress={handleSendCode}>
-              <Text style={styles.buttonText}>Send reset code</Text>
-            </TouchableOpacity>
+            <>
+              <TouchableOpacity style={styles.button} onPress={handleSendCode}>
+                <Text style={styles.buttonText}>Send reset code</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.goBack()}
+              >
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+            </>
           )}
         </View>
       ) : (
@@ -165,11 +173,12 @@ const styles = StyleSheet.create({
     color: Colors.pink,
   },
   button: {
-    backgroundColor: "lightgray",
+    backgroundColor: "white",
     padding: 10,
     borderRadius: 15,
     alignItems: "center",
-    marginTop: 20,
+    borderColor: Colors.pink,
+    borderWidth: 2,
   },
   buttonText: {
     fontFamily: "outfit-semibold",

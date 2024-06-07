@@ -19,8 +19,8 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
   const [otherType, setOtherType] = useState("");
   const [voice, setVoice] = useState("Gender Neutral");
 
-  // disable checkbox if 3 are already selected
-  const maxSelection = 3;
+  // disable checkbox if max selections are already selected
+  const maxSelection = 1;
   const selectedCount = Object.values(symptoms).filter(Boolean).length;
 
   const handleCheckboxChange = (name, value) => {
@@ -43,10 +43,9 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
       <Text style={styles.header}>
         What are your goals for modifying your voice?
       </Text>
-      <Text style={styles.subheading}>
+      {/* <Text style={styles.subheading}>
         You can select a maximum of {maxSelection}
-      </Text>
-
+      </Text> */}
       {Object.keys(symptoms).map((key) => (
         <SymptomCheckbox
           key={key}
@@ -56,14 +55,6 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
           disabled={!symptoms[key] && selectedCount >= maxSelection}
         />
       ))}
-
-      <Text style={styles.header}>OR</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Other type here"
-        value={otherType}
-        onChangeText={setOtherType}
-      />
 
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity style={styles.backButton} onPress={goToPrevious}>

@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import React from "react";
-import Icon from "react-native-vector-icons/MaterialIcons";
+import Icon from "react-native-vector-icons/FontAwesome5";
 import { Colors } from "@/constants/Colors";
 export default function SuccessScreen({ goToPrevious, goBack }) {
   return (
@@ -13,7 +13,7 @@ export default function SuccessScreen({ goToPrevious, goBack }) {
       <Text style={styles.successMessage}>
         Your profile has been successfully updated!
       </Text>
-      <Icon name="check-circle" size={100} color={Colors.orange} />
+      <Icon name="thumbs-up" size={100} color={Colors.orange} />
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity style={styles.backButton} onPress={goToPrevious}>
           <Text style={styles.backButtonText}>Back</Text>

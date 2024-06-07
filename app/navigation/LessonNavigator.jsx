@@ -6,6 +6,7 @@ import HomeworkScreen from "../screens/Lessons/HomeworkScreen";
 import HomeworkDetailScreen from "../screens/Lessons/HomeworkDetailScreen";
 import NotificationsScreen from "../screens/Settings/NotificationsScreen";
 import ProfileScreen from "../screens/Settings/ProfileScreen";
+import QuestionnaireScreen from "../screens/Settings/QuestionnaireScreen";
 export default function LessonNavigator() {
   const Stack = createNativeStackNavigator();
   return (
@@ -27,6 +28,7 @@ export default function LessonNavigator() {
       <Stack.Screen name="HomeworkDetail" component={HomeworkDetailScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
+      <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
     </Stack.Navigator>
   );
 }
