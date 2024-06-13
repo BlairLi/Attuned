@@ -49,7 +49,7 @@ const TabNavigator = () => {
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Voice Tracker"
         component={VoiceTrackerNavigator}
         options={{
@@ -71,7 +71,7 @@ const TabNavigator = () => {
             </Text>
           ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name="Recordings"
         component={RecordingNavigator}

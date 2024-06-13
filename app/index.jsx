@@ -23,7 +23,7 @@ const tokenCache = {
 };
 export default function Index() {
   useFonts({
-    "outfit": require("./../assets/fonts/Outfit-Regular.ttf"),
+    outfit: require("./../assets/fonts/Outfit-Regular.ttf"),
     "outfit-bold": require("./../assets/fonts/Outfit-Bold.ttf"),
     "outfit-light": require("./../assets/fonts/Outfit-Light.ttf"),
     "outfit-semibold": require("./../assets/fonts/Outfit-SemiBold.ttf"),
@@ -45,8 +45,7 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
-    height: "100%"
-  }
+  },
 });

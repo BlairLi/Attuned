@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import React from "react";
 import image from "../../../assets/images/Splash.jpg";
 import google from "../../../assets/images/google.png";
@@ -109,9 +110,11 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   imageBackground: {
-    width: "100%",
-    height: "100%",
+    flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
   },

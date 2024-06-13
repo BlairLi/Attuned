@@ -17,7 +17,6 @@ const QuestionnaireScreen = ({ navigation }) => {
     <GetStartedScreen goToNext={() => setCurrentScreen(currentScreen + 1)} />,
     <GenderIdentityScreen
       goToNext={() => setCurrentScreen(currentScreen + 1)}
-      goToPrevious={() => setCurrentScreen(currentScreen - 1)}
     />,
     <PronounSelectionScreen
       goToNext={() => setCurrentScreen(currentScreen + 1)}

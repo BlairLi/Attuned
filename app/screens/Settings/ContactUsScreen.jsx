@@ -8,34 +8,33 @@ import {
   TouchableOpacity,
   Linking,
 } from "react-native";
+import { db } from "../../../configs/FirebaseConfig";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+
 export default function ContactUsScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
-  // contact by sending email
-  const handleEmailPress = async () => {
-    const url = "mailto:hq48@cornell.edu";
-    const supported = await Linking.canOpenURL(url);
-    // only send if mail client is supported
-    if (supported) {
-      await Linking.openURL(url);
-    } else {
-      Alert.alert(
-        "Error",
-        "Unable to open email client. Please try install an email client."
-      );
-    }
-  };
-
   // contact by sending form
-  const handleFormSubmit = () => {
+  const handleFormSubmit = async () => {
     if (name && email && message) {
-      Alert.alert("Thank you!", "Your message has been sent.");
-      // Clear the form
-      setName("");
-      setEmail("");
-      setMessage("");
+      try {
+        await addDoc(collection(db, "contact"), {
+          name: name,
+          email: email,
+          message: message,
+          timestamp: serverTimestamp(),
+        });
+        Alert.alert("Thank you!", "Your message has been successfully sent, our team will get back to you soon.");
+        // Clear the form
+        setName("");
+        setEmail("");
+        setMessage("");
+      } catch (error) {
+        console.error("Error adding document: ", error);
+        Alert.alert("Error", "An error occurred. Please try again later.");
+      }
     } else {
       Alert.alert("All fields are required", "Please fill in all fields.");
     }
@@ -51,6 +50,7 @@ export default function ContactUsScreen() {
           placeholder="Name"
           value={name}
           onChangeText={setName}
+          autoCapitalize="none"
         />
         <TextInput
           style={styles.input}
@@ -58,6 +58,7 @@ export default function ContactUsScreen() {
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
+          autoCapitalize="none"
         />
         <TextInput
           style={[styles.input, styles.textArea]}
@@ -66,15 +67,13 @@ export default function ContactUsScreen() {
           onChangeText={setMessage}
           multiline
           numberOfLines={4}
+          autoCapitalize="none"
         />
 
         <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
           <Text style={styles.buttonText}>Send Message</Text>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={handleEmailPress}>
-        <Text style={styles.emailLink}>Or send an email to us </Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -114,7 +113,6 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 2,
     borderRadius: 15,
-    color: "gray",
     fontFamily: "outfit",
   },
   textArea: {
@@ -132,13 +130,5 @@ const styles = StyleSheet.create({
   buttonText: {
     fontFamily: "Outfit-Bold",
     fontSize: 20,
-  },
-  emailLink: {
-    color: "blue",
-    textAlign: "center",
-    fontFamily: "Outfit",
-    fontSize: 18,
-    marginTop: 10,
-    textDecorationLine: "underline",
   },
 });

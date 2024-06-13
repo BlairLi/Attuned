@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
   },
   contactUsText: {
     fontFamily: "Outfit-Light",
-    color: "gray",
     fontSize: 16,
   },
 });

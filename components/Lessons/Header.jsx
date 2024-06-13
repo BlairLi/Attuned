@@ -21,7 +21,7 @@ export default Header = () => {
               style={styles.image}
             />
           </TouchableOpacity>
-          <View>
+          <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
             <Text style={styles.profileText}>
               Good{" "}
               {new Date().getHours() < 12
@@ -33,7 +33,7 @@ export default Header = () => {
             <Text style={styles.profileName}>
               {user?.firstName || user?.primaryEmailAddress.emailAddress}
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View>
           <TouchableOpacity
