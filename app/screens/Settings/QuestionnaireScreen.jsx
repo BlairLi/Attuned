@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Colors } from "@/constants/Colors";
+import GetStartedScreen from "../../../components/Questionnaire/GetStartedScreen";
 import GenderIdentityScreen from "../../../components/Questionnaire/GenderIdentityScreen";
 import PronounSelectionScreen from "../../../components/Questionnaire/PronounSelectionScreen";
 import SuccessScreen from "../../../components/Questionnaire/SuccessScreen";
@@ -13,10 +14,9 @@ import TalkInNoiseScreen from "../../../components/Questionnaire/TalkInNoiseScre
 const QuestionnaireScreen = ({ navigation }) => {
   const [currentScreen, setCurrentScreen] = useState(0);
   const questions = [
+    <GetStartedScreen goToNext={() => setCurrentScreen(currentScreen + 1)} />,
     <GenderIdentityScreen
       goToNext={() => setCurrentScreen(currentScreen + 1)}
-      goToPrevious={() => setCurrentScreen(currentScreen - 1)}
-      isFirstScreen={true}
     />,
     <PronounSelectionScreen
       goToNext={() => setCurrentScreen(currentScreen + 1)}
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   activeDot: {
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.orange,
   },
 });
 

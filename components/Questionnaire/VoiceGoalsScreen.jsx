@@ -19,8 +19,8 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
   const [otherType, setOtherType] = useState("");
   const [voice, setVoice] = useState("Gender Neutral");
 
-  // disable checkbox if 3 are already selected
-  const maxSelection = 3;
+  // disable checkbox if max selections are already selected
+  const maxSelection = 1;
   const selectedCount = Object.values(symptoms).filter(Boolean).length;
 
   const handleCheckboxChange = (name, value) => {
@@ -28,15 +28,24 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
       setSymptoms({ ...symptoms, [name]: value });
     }
   };
+
+  const handleSave = () => {
+    if (Object.values(symptoms).includes(true) || otherType) {
+      console.log("Selected symptoms:", symptoms);
+      console.log("Other type:", otherType);
+      goToNext();
+    } else {
+      alert("Please select an option.");
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
         What are your goals for modifying your voice?
       </Text>
-      <Text style={styles.subheading}>
+      {/* <Text style={styles.subheading}>
         You can select a maximum of {maxSelection}
-      </Text>
-
+      </Text> */}
       {Object.keys(symptoms).map((key) => (
         <SymptomCheckbox
           key={key}
@@ -47,19 +56,11 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
         />
       ))}
 
-      <Text style={styles.subheading}>OR</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Other type here"
-        value={otherType}
-        onChangeText={setOtherType}
-      />
-
       <View style={styles.bottomButtonContainer}>
         <TouchableOpacity style={styles.backButton} onPress={goToPrevious}>
           <Text style={styles.backButtonText}>Back</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.saveButton} onPress={goToNext}>
+        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
           <Text style={styles.saveButtonText}>Save</Text>
         </TouchableOpacity>
       </View>
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   saveButton: {
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.orange,
     width: "40%",
     padding: 15,
     borderRadius: 10,

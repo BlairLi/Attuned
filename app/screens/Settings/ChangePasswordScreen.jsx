@@ -4,154 +4,186 @@ import {
   Text,
   TextInput,
   StyleSheet,
-  TouchableOpacity,
   Alert,
+  ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
+import { useSignIn } from "@clerk/clerk-expo";
+import { Colors } from "@/constants/Colors";
+const ChangePasswordScreen = ({ navigation }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
+  const [successfulCreation, setSuccessfulCreation] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { signIn, setActive } = useSignIn();
 
-const ChangePasswordScreen = () => {
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState({});
-
-  const validateForm = () => {
-    let valid = true;
-    let errors = {};
-
-    // Current password shouldn't be empty
-    if (!currentPassword) {
-      errors.currentPassword = "Current password is required";
-      valid = false;
+  const handleSendCode = async () => {
+    if (!email || !email.includes("@") || !email.includes(".")) {
+      Alert.alert("Error", "Please provide a valid email address");
+      return;
+    } else {
+      setLoading(true);
+      try {
+        await signIn.create({
+          strategy: "reset_password_email_code",
+          identifier: email,
+        });
+        setSuccessfulCreation(true);
+      } catch (err) {
+        Alert.alert("Error", "Failed to send reset code");
+      } finally {
+        setLoading(false);
+      }
     }
-
-    // Check new password length and if it's not the same as the current password
-    if (!newPassword || newPassword.length < 8) {
-      errors.newPassword = "New password must be at least 8 characters long";
-      valid = false;
-    } else if (newPassword === currentPassword) {
-      errors.newPassword =
-        "New password must be different from the current password";
-      valid = false;
-    }
-
-    // Check if confirmation matches the new password
-    if (newPassword !== confirmPassword) {
-      errors.confirmPassword = "Passwords do not match";
-      valid = false;
-    }
-
-    setErrors(errors);
-    return valid;
   };
 
-  const handlePasswordChange = () => {
-    if (validateForm()) {
-      // Call API to change password
-      Alert.alert("Success", "Password successfully changed.");
+  const handleResetPassword = async () => {
+    if (!password || !code) {
+      Alert.alert("Error", "Please provide a valid code and password");
+      return;
+    } else {
+      setLoading(true);
+      try {
+        const result = await signIn.attemptFirstFactor({
+          strategy: "reset_password_email_code",
+          code,
+          password,
+        });
+        if (result.status === "complete") {
+          setActive({ session: result.createdSessionId });
+          Alert.alert(
+            "Password Reset",
+            "Your password has been reset successfully!",
+            [{ text: "OK", onPress: () => navigation.navigate("SignIn") }]
+          );
+        } else {
+          Alert.alert("Error", "Password reset failed. Please try again.");
+        }
+      } catch (err) {
+        Alert.alert("Error", "Password reset failed. Please try again.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          padding: 20,
-        }}
-      >
-        <Text style={styles.label}>Current Password:</Text>
-        <TextInput
-          style={[styles.input, errors.currentPassword && styles.errorInput]}
-          value={currentPassword}
-          onChangeText={(text) => {
-            setCurrentPassword(text);
-            setErrors((prev) => ({ ...prev, currentPassword: null }));
-          }}
-          secureTextEntry
-          placeholder="Enter current password"
-        />
-        {errors.currentPassword && (
-          <Text style={styles.errorText}>{errors.currentPassword}</Text>
-        )}
-
-        <Text style={styles.label}>New Password:</Text>
-        <TextInput
-          style={[styles.input, errors.newPassword && styles.errorInput]}
-          value={newPassword}
-          onChangeText={(text) => {
-            setNewPassword(text);
-            setErrors((prev) => ({ ...prev, newPassword: null }));
-          }}
-          secureTextEntry
-          placeholder="Enter new password"
-        />
-        {errors.newPassword && (
-          <Text style={styles.errorText}>{errors.newPassword}</Text>
-        )}
-
-        <Text style={styles.label}>Confirm New Password:</Text>
-        <TextInput
-          style={[styles.input, errors.confirmPassword && styles.errorInput]}
-          value={confirmPassword}
-          onChangeText={(text) => {
-            setConfirmPassword(text);
-            setErrors((prev) => ({ ...prev, confirmPassword: null }));
-          }}
-          secureTextEntry
-          placeholder="Confirm new password"
-        />
-        {errors.confirmPassword && (
-          <Text style={styles.errorText}>{errors.confirmPassword}</Text>
-        )}
-
-        <TouchableOpacity style={styles.button} onPress={handlePasswordChange}>
-          <Text style={styles.buttonText}>Change Password</Text>
-        </TouchableOpacity>
-      </View>
+      <Text style={styles.title}>Change Password</Text>
+      {!successfulCreation ? (
+        <View style={styles.inputContainer}>
+          <Text style={styles.subTitle}>Please provide your email address</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="e.g john@doe.com"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+          {loading ? (
+            <ActivityIndicator size="small" color="#0000ff" />
+          ) : (
+            <>
+              <TouchableOpacity style={styles.button} onPress={handleSendCode}>
+                <Text style={styles.buttonText}>Send reset code</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.goBack()}
+              >
+                <Text style={styles.buttonText}>Cancel</Text>
+              </TouchableOpacity>
+            </>
+          )}
+        </View>
+      ) : (
+        <View style={styles.inputContainer}>
+          <Text style={styles.subTitle}>Enter your new password</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="New Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+          />
+          <Text style={styles.subTitle}>
+            Enter the password reset code that was sent to your email
+          </Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Reset Code"
+            value={code}
+            onChangeText={setCode}
+            keyboardType="numeric"
+          />
+          {loading ? (
+            <ActivityIndicator size="small" color="#0000ff" />
+          ) : (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleResetPassword}
+            >
+              <Text style={styles.buttonText}>Reset Password</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+    width: "100%",
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
   },
-  label: {
-    fontSize: 16,
-    fontFamily: "outfit-semibold",
-    marginBottom: 5,
+  inputContainer: {
+    margin: 10,
+    gap: 15,
+    width: "100%",
+    paddingHorizontal: 40,
   },
   input: {
-    height: 40,
-    fontFamily: "outfit-regular",
-    marginBottom: 15,
-    borderWidth: 1,
+    height: 50,
+    paddingHorizontal: 20,
     borderColor: "gray",
-    paddingHorizontal: 10,
-    fontSize: 16,
-    borderRadius: 5,
+    borderWidth: 2,
+    borderRadius: 15,
+    fontFamily: "outfit",
   },
-  errorInput: {
-    borderColor: "red",
+  title: {
+    fontFamily: "Outfit-Bold",
+    fontSize: 30,
+    textAlign: "center",
+    color: Colors.pink,
   },
-  errorText: {
-    fontFamily: "outfit-regular",
-    fontSize: 14,
-    color: "red",
-    marginBottom: 10,
+  subTitle: {
+    fontFamily: "Outfit-Light",
+    fontSize: 20,
+    textAlign: "center",
+    marginTop: 10,
+    marginBottom: 20,
+    color: Colors.pink,
   },
   button: {
-    backgroundColor: "#007AFF",
+    backgroundColor: "white",
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 15,
     alignItems: "center",
-    marginTop: 20,
+    borderColor: Colors.pink,
+    borderWidth: 2,
   },
   buttonText: {
-    fontFamily: "outfit-bold",
-    color: "white",
-    fontSize: 16,
+    fontFamily: "outfit-semibold",
+    fontSize: 20,
+    color: Colors.pink,
   },
 });
 

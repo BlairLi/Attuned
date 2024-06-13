@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
-const RecordingDetailScreen = ({ navigation }) => {
+const RecordingDetailScreen = ({ navigation, route }) => {
+  const { recording } = route.params;
   // const handlePlay = () => {
   //   try {
   //     // Play a sound file from the app bundle
@@ -17,9 +18,12 @@ const RecordingDetailScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Recording Detail</Text>
-      <Text style={styles.description}>This is a detailed view of your recording.</Text>
-      <Button title="Play Recording" />
+      {/* <Text style={styles.title}>Recording Detail</Text>
+      <Text style={styles.description}>This is a detailed view of your recording.</Text> */}
+      <Text style={styles.title}>{recording.title}</Text>
+      <Text style={styles.detail}>Time: {recording.time}</Text>
+      <Text style={styles.detail}>Duration: {recording.duration}</Text>
+      <Button title="Play Recording" onPress={() => recording.sound.replayAsync()}/>
       <Button title="Stop Recording" />
       <Button title="Go Back" onPress={() => navigation.goBack()} />
     </View>

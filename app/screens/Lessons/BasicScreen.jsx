@@ -1,12 +1,11 @@
 import { StyleSheet, View, Text } from 'react-native';
 import PagerView from 'react-native-pager-view';
-import Page from './Page';
 import ThankYouPage from './ThankYouPage';
+import Page from './Page';
 
-export default function LessonDetailScreen({ navigation }) {
-  const video1 = require('../../../assets/videos/1.2_Icon_Video.mp4');
-  const video2 = require('../../../assets/videos/1.3_Icon_Video.mp4');
-  const video3 = require('../../../assets/videos/1.4_Disclaimer_Video.mp4');
+export default function BasicScreen({ navigation }) {
+  const video1 = require('../../../assets/videos/2.1.1-Voice_and_Identity.mp4');
+  const video2 = require('../../../assets/videos/2.1.2-Voice_Physiology.mp4');
 
 
   return (
@@ -20,9 +19,6 @@ export default function LessonDetailScreen({ navigation }) {
           <Page navigation={navigation} video={video2}/>
         </View>
         <View key="3">
-          <Page navigation={navigation} video={video3}/>
-        </View>
-        <View key="4">
           <ThankYouPage navigation={navigation}/>
         </View>
       </PagerView>

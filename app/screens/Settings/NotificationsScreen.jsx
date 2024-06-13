@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Colors } from "@/constants/Colors";
 // Enable LayoutAnimation on Android
 if (
   Platform.OS === "android" &&
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     backgroundColor: "red",
   },
   itemContainer: {
-    backgroundColor: "lightgray",
+    backgroundColor: Colors.primary,
     padding: 20,
     borderRadius: 10,
     marginBottom: 10,
@@ -142,11 +143,13 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "outfit-semibold",
     fontSize: 18,
+    color: "white",
   },
   detail: {
     fontFamily: "outfit",
     fontSize: 16,
     marginTop: 5,
+    color: "white",
   },
   rowBack: {
     alignItems: "center",

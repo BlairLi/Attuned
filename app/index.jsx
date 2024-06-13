@@ -5,6 +5,7 @@ import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import AuthNavigator from "./navigation/AuthNavigator";
 import * as SecureStore from "expo-secure-store";
 import TabNavigator from "./navigation/TabNavigator";
+import { RecordingsProvider } from "./screens/Recordings/RecordingsContext";
 const tokenCache = {
   async getToken(key) {
     try {
@@ -22,8 +23,23 @@ const tokenCache = {
   },
 };
 export default function Index() {
+
+    // load Attuned splash screen for 7 seconds
+    // useEffect(() => {
+    //   async function prepare() {
+    //     try {
+    //       await new Promise(resolve => setTimeout(resolve, process.env.SPLASH_TIMEOUT));
+    //     } catch (e) {
+    //       console.warn(e);
+    //     } finally {
+    //       await SplashScreen.hideAsync();
+    //     }
+    //   }
+    //   prepare();
+    // }, []);
+
   useFonts({
-    "outfit": require("./../assets/fonts/Outfit-Regular.ttf"),
+    outfit: require("./../assets/fonts/Outfit-Regular.ttf"),
     "outfit-bold": require("./../assets/fonts/Outfit-Bold.ttf"),
     "outfit-light": require("./../assets/fonts/Outfit-Light.ttf"),
     "outfit-semibold": require("./../assets/fonts/Outfit-SemiBold.ttf"),
@@ -35,7 +51,9 @@ export default function Index() {
       tokenCache={tokenCache}
     >
       <SignedIn style={styles.container}>
-        <TabNavigator />
+        <RecordingsProvider>
+          <TabNavigator />
+        </RecordingsProvider>
       </SignedIn>
       <SignedOut style={styles.container}>
         <AuthNavigator />
@@ -45,8 +63,7 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
-    height: "100%"
-  }
+  },
 });

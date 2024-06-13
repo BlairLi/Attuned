@@ -6,34 +6,6 @@ import { Colors } from "@/constants/Colors";
 import SettingItem from "../../../components/Settings/SettingItem";
 
 const SettingsScreen = ({ navigation }) => {
-  // signout
-  const { signOut } = useClerk();
-  const handleSignOut = () => {
-    Alert.alert(
-      "Sign Out", // Alert title
-      "Are you sure you want to sign out?", // Alert message
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Signout Cancelled"),
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: async () => {
-            try {
-              await signOut();
-              alert("You have been signed out successfully!");
-            } catch (error) {
-              console.error("Failed to sign out:", error);
-              alert("Failed to sign out. Please try again.");
-            }
-          },
-        },
-      ]
-    );
-  };
-
   // push notifications
   const [isPushNotificationsEnabled, setIsPushNotificationsEnabled] =
     useState(false);
@@ -79,14 +51,21 @@ const SettingsScreen = ({ navigation }) => {
         />
         <SettingItem
           iconName="help-circle"
-          color={Colors.light}
+          color={Colors.orange}
           title="Questionnaire"
           onPress={() => navigation.navigate("Questionnaire")}
         />
         <SettingItem
-          iconName="log-out-outline"
+          iconName="key"
+          color={Colors.pink}
+          title="Change Password"
+          onPress={() => navigation.navigate("Change Password")}
+        />
+        <SettingItem
+          iconName="log-out"
+          color={Colors.red}
           title="SignOut"
-          onPress={handleSignOut}
+          onPress={() => navigation.navigate("Sign Out")}
         />
       </View>
       <View style={styles.contactUsContainer}>
@@ -145,7 +124,6 @@ const styles = StyleSheet.create({
   },
   contactUsText: {
     fontFamily: "Outfit-Light",
-    color: "gray",
     fontSize: 16,
   },
 });

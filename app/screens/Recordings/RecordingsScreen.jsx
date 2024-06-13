@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { RecordingsContext } from "./RecordingsContext";
+
 // Enable LayoutAnimation on Android
 if (
   Platform.OS === "android" &&
@@ -19,31 +21,35 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
+
 // replace with data fetched from API
 const RecordingsScreen = ({ navigation }) => {
-  const [recordings, setRecordings] = useState([
-    {
-      id: "1",
-      title: "Recording 1",
-      time: "2 hours ago",
-      duration: "2:30 min",
-    },
-    {
-      id: "2",
-      title: "Recording 2",
-      time: "1 day ago",
-      duration: "5:30 min",
-    },
-    {
-      id: "3",
-      title: "Recording 3",
-      time: "1 week ago",
-      duration: "10:30 min",
-    },
-  ]);
+  // const [recordings, setRecordings] = useState([
+  //   {
+  //     id: "1",
+  //     title: "Recording 1",
+  //     time: "2 hours ago",
+  //     duration: "2:30 min",
+  //   },
+  //   {
+  //     id: "2",
+  //     title: "Recording 2",
+  //     time: "1 day ago",
+  //     duration: "5:30 min",
+  //   },
+  //   {
+  //     id: "3",
+  //     title: "Recording 3",
+  //     time: "1 week ago",
+  //     duration: "10:30 min",
+  //   },
+  // ]);
+
+  const { recordings, setRecordings } = useContext(RecordingsContext);
   // search functionality
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState(recordings);
+
   const handleSearch = (query) => {
     setSearchQuery(query);
     if (query) {
@@ -58,18 +64,21 @@ const RecordingsScreen = ({ navigation }) => {
 
   // delete functionality
   const deleteItem = (id, rowMap) => {
+    console.log("Deleting item with id: ", id);
     if (rowMap[id]) {
       rowMap[id].closeRow();
     }
     const newData = [...recordings].filter((item) => item.id !== id);
+    console.log("New data: ", newData);
     setRecordings(newData);
   };
+
   // render recording item
   const renderItem = (data) => (
     <TouchableOpacity
       style={styles.itemContainer}
       activeOpacity={1}
-      onPress={() => navigation.navigate("RecordingDetail")}
+      onPress={() => navigation.navigate("RecordingDetail", { recording: data.item })}
     >
       <View
         style={{
@@ -116,6 +125,11 @@ const RecordingsScreen = ({ navigation }) => {
       </View>
     );
   };
+
+  // initial/update search results when recordings change
+  useEffect(() => {
+    setSearchResults(recordings);
+  } , [recordings]);
 
   return (
     <View style={styles.container}>

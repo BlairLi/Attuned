@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     fontFamily: "outfit-bold",
   },
   selectedButton: {
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.orange,
   },
   selectedButtonText: {
     color: "white",
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   saveButton: {
-    backgroundColor: Colors.primaryLight,
+    backgroundColor: Colors.orange,
     width: "40%",
     padding: 15,
     borderRadius: 10,

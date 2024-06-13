@@ -47,7 +47,7 @@ export default function SignUpScreen({ navigation }) {
 
     // Check if disclaimer is accepted
     if (!disclaimerAccepted) {
-      Alert.alert("Error", "Please accept the disclaimer to continue.");
+      Alert.alert("To Sign Up", "Please accept the disclaimer to continue.");
       return;
     }
 
@@ -229,11 +229,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    fontFamily: "outfit",
+    fontFamily: "outfit-semibold",
     fontSize: 18,
   },
   newHereButton: {
     alignSelf: "center",
+    marginTop: 20,
   },
   newHereText: {
     fontFamily: "Outfit-Bold",
@@ -244,7 +245,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
   },
   checkbox: {
     marginRight: 10,

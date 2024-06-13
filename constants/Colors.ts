@@ -27,4 +27,7 @@ export const Colors = {
   secondary: "#6acdd1",
   secondaryLight: "#9ACFB0",
   yellow:"#e3c575",
+  orange: "#f5a623",
+  red: "#f55e64",
+  pink: "#f5a2a2",
 };

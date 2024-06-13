@@ -1,57 +1,24 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import { Colors } from "@/constants/Colors";
-
-export default function GenderIdentityScreen({ goToNext }) {
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  const handleOptionPress = (option) => {
-    setSelectedOption(option);
-  };
-
-  const handleSave = () => {
-    if (selectedOption) {
-      console.log("Selected option:", selectedOption);
-      goToNext();
-    } else {
-      alert("Please select an option.");
-    }
-  };
-
-  const options = [
-    "Trans Male",
-    "Trans Female",
-    "Non-Binary",
-    "Gender Non-Conforming",
-  ];
-
+import Icon from "react-native-vector-icons/FontAwesome5";
+export default function GetStartedScreen({ goToNext }) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
-        To best serve you, tell us which gender identity best describes you:
+        Please answer the following questions to help us set up your app
       </Text>
-      {options.map((option) => (
-        <TouchableOpacity
-          key={option}
-          style={[
-            styles.button,
-            selectedOption === option && styles.selectedButton,
-          ]}
-          onPress={() => handleOptionPress(option)}
-        >
-          <Text
-            style={[
-              styles.buttonText,
-              selectedOption === option && styles.selectedButtonText,
-            ]}
-          >
-            {option}
-          </Text>
-        </TouchableOpacity>
-      ))}
+      <Icon
+        name="grin-wink"
+        size={100}
+        color={Colors.orange}
+        style={{
+          marginTop: 20,
+        }}
+      />
       <View style={styles.bottomButtonContainer}>
-        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-          <Text style={styles.saveButtonText}>Save</Text>
+        <TouchableOpacity style={styles.saveButton} onPress={goToNext}>
+          <Text style={styles.saveButtonText}>Get Started</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -70,6 +37,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     fontFamily: "outfit-bold",
+    marginVertical: 40,
   },
   button: {
     backgroundColor: "#d3d3d3",

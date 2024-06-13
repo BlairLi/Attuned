@@ -11,7 +11,7 @@ import {
 import { useUser } from "@clerk/clerk-expo";
 import Icon from "react-native-vector-icons/Ionicons";
 import * as ImagePicker from "expo-image-picker";
-
+import { Colors } from "@/constants/Colors";
 const ProfileScreen = () => {
   const { user, isLoaded, setProfileImage } = useUser();
   const [isEditingName, setIsEditingName] = useState(false);
@@ -134,19 +134,21 @@ const styles = StyleSheet.create({
   editButton: {
     marginTop: 20,
     alignItems: "center",
-    backgroundColor: "lightgray",
+    backgroundColor: "white",
     padding: 15,
     borderRadius: 10,
+    borderColor: Colors.secondary,
+    borderWidth: 1,
   },
   editButtonText: {
-    fontFamily: "outfit-semibold",
-    color: "gray",
+    fontFamily: "outfit-bold",
+    color: Colors.secondary,
   },
   name: {
     fontSize: 22,
-    fontWeight: "bold",
     textDecorationLine: "underline",
-    fontFamily: "outfit-light",
+    fontFamily: "outfit-bold",
+    color: Colors.secondary,
   },
   infoContainer: {
     display: "flex",

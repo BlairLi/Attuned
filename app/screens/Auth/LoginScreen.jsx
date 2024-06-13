@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import React from "react";
 import image from "../../../assets/images/Splash.jpg";
 import google from "../../../assets/images/google.png";
@@ -92,9 +93,12 @@ export default function LoginScreen({ navigation }) {
           >
             <Text style={styles.buttonText}>Sign Up Here</Text>
           </TouchableOpacity>
-        </View>
-        <View style={styles.dashline}>
-          <Text style={styles.dashlineText}> or you can </Text>
+          <TouchableOpacity
+            style={styles.newHereButton}
+            onPress={() => navigation.navigate("Forget Password")}
+          >
+            <Text style={styles.newHereText}>Forget Password?</Text>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.socialLogin} onPress={onPress}>
           <Image source={google} style={styles.socialLoginIcon} />
@@ -106,9 +110,11 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   imageBackground: {
-    width: "100%",
-    height: "100%",
+    flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
   },
@@ -177,15 +183,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    fontFamily: "outfit",
+    fontFamily: "outfit-semibold",
     fontSize: 20,
   },
-  dashline: {
-    margin: 5,
+  newHereButton: {
+    alignSelf: "center",
   },
-  dashlineText: {
+  newHereText: {
     fontFamily: "Outfit-Bold",
-    fontSize: 20,
     color: "white",
+    fontSize: 16,
   },
 });

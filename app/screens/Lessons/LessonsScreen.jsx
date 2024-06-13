@@ -28,19 +28,25 @@ export default function LessonsScreen({ navigation }) {
           time="Time: 04:00 min"
           icon="book-outline"
           locked={false}
-          onPress={() => navigation.navigate("LessonDetail")}
+          onPress={() => navigation.navigate("Introduction")}
         />
         <LessonCard
           title="Basics"
           time="Time: 04:00 min"
-          icon="lock-outline"
-          locked={true}
+          // icon="lock-outline"
+          // locked={true}
+          icon="book-outline"
+          locked={false}
+          onPress={() => navigation.navigate("Basics")}
         />
         <LessonCard
           title="Pitch"
           time="Time: 04:00 min"
-          icon="lock-outline"
-          locked={true}
+          // icon="lock-outline"
+          // locked={true}
+          icon="book-outline"
+          locked={false}
+          onPress={() => navigation.navigate("Pitch")}
         />
       </ScrollView>
     </ImageBackground>
