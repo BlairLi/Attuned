@@ -20,7 +20,7 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
   const [voice, setVoice] = useState("Gender Neutral");
 
   // disable checkbox if max selections are already selected
-  const maxSelection = 1;
+  const maxSelection = 3;
   const selectedCount = Object.values(symptoms).filter(Boolean).length;
 
   const handleCheckboxChange = (name, value) => {
@@ -43,9 +43,9 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
       <Text style={styles.header}>
         What are your goals for modifying your voice?
       </Text>
-      {/* <Text style={styles.subheading}>
+      <Text style={styles.subheading}>
         You can select a maximum of {maxSelection}
-      </Text> */}
+      </Text>
       {Object.keys(symptoms).map((key) => (
         <SymptomCheckbox
           key={key}
