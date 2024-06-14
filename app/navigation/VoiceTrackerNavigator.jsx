@@ -14,11 +14,10 @@ export default function VoiceTrackerNavigator() {
           fontFamily: "outfit-bold",
         },
         headerBackTitleVisible: false,
-        headerShown: false,
       }}
       initialRouteName="VoiceTracker"
     >
-      <Stack.Screen name="screens/VoiceTracker/VoiceTrackerScreen" component={VoiceTrackerScreen} />
+      <Stack.Screen name="VoiceTracker" component={VoiceTrackerScreen} />
     </Stack.Navigator>
   );
 }

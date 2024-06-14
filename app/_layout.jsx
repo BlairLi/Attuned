@@ -1,7 +1,7 @@
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
+import "react-native-reanimated";
 
 // import { useColorScheme } from '@/hooks/useColorScheme';
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
@@ -10,7 +10,6 @@ import * as SecureStore from "expo-secure-store";
 import TabNavigator from "./navigation/TabNavigator";
 import { RecordingsProvider } from "./screens/Recordings/RecordingsContext";
 import { SafeAreaView } from "react-native";
-
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -35,7 +34,7 @@ const tokenCache = {
 export default function RootLayout() {
   // const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   useEffect(() => {
@@ -47,15 +46,13 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
-  
-  // useFonts({
-  //   outfit: require("./../assets/fonts/Outfit-Regular.ttf"),
-  //   "outfit-bold": require("./../assets/fonts/Outfit-Bold.ttf"),
-  //   "outfit-light": require("./../assets/fonts/Outfit-Light.ttf"),
-  //   "outfit-semibold": require("./../assets/fonts/Outfit-SemiBold.ttf"),
-  // });
 
-  
+  useFonts({
+    outfit: require("./../assets/fonts/Outfit-Regular.ttf"),
+    "outfit-bold": require("./../assets/fonts/Outfit-Bold.ttf"),
+    "outfit-light": require("./../assets/fonts/Outfit-Light.ttf"),
+    "outfit-semibold": require("./../assets/fonts/Outfit-SemiBold.ttf"),
+  });
 
   return (
     <ClerkProvider
@@ -63,9 +60,9 @@ export default function RootLayout() {
       tokenCache={tokenCache}
     >
       <SignedIn>
-          <RecordingsProvider>
-            <TabNavigator />
-          </RecordingsProvider>
+        <RecordingsProvider>
+          <TabNavigator />
+        </RecordingsProvider>
       </SignedIn>
       <SignedOut>
         <AuthNavigator />
