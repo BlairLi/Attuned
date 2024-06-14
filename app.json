@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "attuned-test",
-    "slug": "attuned-test",
+    "name": "Attuned",
+    "slug": "Attuned",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -13,8 +13,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.attuned-test"
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {

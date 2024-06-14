@@ -17,8 +17,8 @@ export default function RecordingNavigator() {
       }}
       initialRouteName="Recordings"
     >
-      <Stack.Screen name="Recordings" component={RecordingsScreen} />
-      <Stack.Screen name="RecordingDetail" component={RecordingDetailScreen} />
+      <Stack.Screen name="screens/Recordings/RecordingsScreen" component={RecordingsScreen} />
+      <Stack.Screen name="screens/Recordings/RecordingDetailScreen" component={RecordingDetailScreen} />
     </Stack.Navigator>
   );
 }

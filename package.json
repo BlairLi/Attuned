@@ -1,12 +1,12 @@
 {
-  "name": "attuned-test",
+  "name": "attuned",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
-    "android": "expo run:android",
-    "ios": "expo run:ios",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint"
@@ -18,11 +18,13 @@
     "@clerk/clerk-expo": "^1.1.8",
     "@expo/vector-icons": "^14.0.0",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-community/slider": "4.5.2",
     "@react-navigation/material-top-tabs": "^6.6.13",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "expo": "~51.0.9",
     "expo-auth-session": "~5.5.2",
+    "expo-av": "~14.0.5",
     "expo-checkbox": "^3.0.0",
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.6",
@@ -46,9 +48,7 @@
     "react-native-screens": "3.31.1",
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-tab-view": "^3.5.2",
-    "react-native-web": "~0.19.10",
-    "expo-av": "~14.0.5",
-    "@react-native-community/slider": "4.5.2"
+    "react-native-web": "~0.19.10"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

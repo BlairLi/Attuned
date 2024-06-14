@@ -9,9 +9,12 @@ import HomeworkDetailScreen from "../screens/Lessons/HomeworkDetailScreen";
 import NotificationsScreen from "../screens/Settings/NotificationsScreen";
 import ProfileScreen from "../screens/Settings/ProfileScreen";
 import QuestionnaireScreen from "../screens/Settings/QuestionnaireScreen";
+import { SafeAreaView } from "react-native";
 export default function LessonNavigator() {
   const Stack = createNativeStackNavigator();
   return (
+    <SafeAreaView style={{flex:1}}>
+
     <Stack.Navigator
       screenOptions={{
         headerTitleStyle: {
@@ -21,18 +24,20 @@ export default function LessonNavigator() {
           fontFamily: "outfit-bold",
         },
         headerBackTitleVisible: false,
+        headerShown: false,
       }}
-      initialRouteName="Lessons"
+      initialRouteName="screens/Lessons/LessonsScreen_init"
     >
-      <Stack.Screen name="Lessons" component={LessonsScreen} />
-      <Stack.Screen name="Introduction" component={LessonDetailScreen} />
-      <Stack.Screen name="Basics" component={BasicScreen} />
-      <Stack.Screen name="Pitch" component={PitchScreen} />
-      <Stack.Screen name="Homework" component={HomeworkScreen} />
-      <Stack.Screen name="HomeworkDetail" component={HomeworkDetailScreen} />
-      <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="Notifications" component={NotificationsScreen} />
-      <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
+      <Stack.Screen name="screens/Lessons/LessonsScreen" component={LessonsScreen} />
+      <Stack.Screen name="screens/Lessons/LessonDetailScreen" component={LessonDetailScreen} />
+      <Stack.Screen name="screens/Lessons/BasicScreen" component={BasicScreen} />
+      <Stack.Screen name="screens/Lessons/PitchScreen" component={PitchScreen} />
+      <Stack.Screen name="screens/Lessons/HomeworkScreen" component={HomeworkScreen} />
+      <Stack.Screen name="screens/Lessons/HomeworkDetailScreen" component={HomeworkDetailScreen} />
+      <Stack.Screen name="screens/Settings/ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="screens/Settings/NotificationsScreen" component={NotificationsScreen} />
+      <Stack.Screen name="screens/Settings/QuestionnaireScreen" component={QuestionnaireScreen} />
     </Stack.Navigator>
+    </SafeAreaView>
   );
 }

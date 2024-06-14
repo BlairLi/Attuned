@@ -17,7 +17,7 @@ export default function VoiceTrackerNavigator() {
       }}
       initialRouteName="VoiceTracker"
     >
-      <Stack.Screen name="Voice Tracker" component={VoiceTrackerScreen} />
+      <Stack.Screen name="screens/VoiceTracker/VoiceTrackerScreen" component={VoiceTrackerScreen} />
     </Stack.Navigator>
   );
 }

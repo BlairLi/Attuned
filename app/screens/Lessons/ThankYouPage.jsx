@@ -15,7 +15,7 @@ const ThankYouPage = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Text style={styles.title}>Thank You</Text>
         <Text style={styles.message}>
-          You are done with your Lesson task, please continue with your homework!
+          You are done with your Lesson task, please continue with your homework
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate("Homework")}>
           <View style={styles.card}>
@@ -49,14 +49,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
-    fontFamily: "outfit-semibold",
   },
   message: {
     fontSize: 16,
     textAlign: "center",
     paddingHorizontal: 20,
-    marginBottom: 20,
-    fontFamily: "outfit-light",
   },
   card: {
     width: "95%",

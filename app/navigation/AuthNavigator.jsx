@@ -10,16 +10,18 @@ const Stack = createNativeStackNavigator();
 function AuthNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="screens/Auth/LoginScreen"
+      // initialRouteName="Login"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignUpScreen} />
-      <Stack.Screen name="Disclaimer" component={DisclaimerScreen} />
-      <Stack.Screen name="Forget Password" component={ForgetPasswordScreen} />
-      <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
+      {/* <Stack.Screen name="LoginScreen" component={LoginScreen} /> */}
+      <Stack.Screen name="screens/Auth/LoginScreen" component={LoginScreen} />
+      <Stack.Screen name="screens/Auth/SignUpScreen" component={SignUpScreen} />
+      <Stack.Screen name="screens/Settings/DisclaimerScreen" component={DisclaimerScreen} />
+      <Stack.Screen name="screens/Auth/ForgetPasswordScreen" component={ForgetPasswordScreen} />
+      <Stack.Screen name="screens/Settings/QuestionnaireScreen" component={QuestionnaireScreen} />
     </Stack.Navigator>
   );
 }

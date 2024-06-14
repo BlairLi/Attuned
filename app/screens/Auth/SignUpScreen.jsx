@@ -137,7 +137,7 @@ export default function SignUpScreen({ navigation }) {
                 style={styles.checkbox}
               />
               <TouchableOpacity
-                onPress={() => navigation.navigate("Disclaimer")}
+                onPress={() => navigation.navigate("screens/Settings/DisclaimerScreen")}
               >
                 <Text style={styles.checkboxLabel}>
                   I accept the disclaimer
@@ -150,7 +150,7 @@ export default function SignUpScreen({ navigation }) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.newHereButton}
-              onPress={() => navigation.navigate("Login")}
+              onPress={() => navigation.navigate("screens/Auth/LoginScreen")}
             >
               <Text style={styles.newHereText}>
                 Already have an account? Login

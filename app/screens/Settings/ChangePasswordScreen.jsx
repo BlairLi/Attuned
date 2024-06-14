@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     paddingHorizontal: 20,
-    borderColor: Colors.pink,
+    borderColor: "gray",
     borderWidth: 2,
     borderRadius: 15,
     fontFamily: "outfit",

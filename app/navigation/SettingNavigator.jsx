@@ -24,15 +24,15 @@ export default function SettingNavigation() {
       }}
       initialRouteName="Settings"
     >
-      <Stack.Screen name="Settings" component={SettingsScreen} />
-      <Stack.Screen name="Disclaimer" component={DisclaimerScreen} />
-      <Stack.Screen name="Notifications" component={NotificationsScreen} />
-      <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="Reminder" component={ReminderScreen} />
-      <Stack.Screen name="Change Password" component={ChangePasswordScreen} />
-      <Stack.Screen name="Contact Us" component={ContactUsScreen} />
-      <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
-      <Stack.Screen name="Sign Out" component={SignOutScreen} />
+      <Stack.Screen name="screens/Settings/SettingsScreen" component={SettingsScreen} />
+      <Stack.Screen name="screens/Settings/DisclaimerScreen" component={DisclaimerScreen} />
+      <Stack.Screen name="screens/Settings/NotificationsScreen" component={NotificationsScreen} />
+      <Stack.Screen name="screens/Settings/ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen name="screens/Settings/ReminderScreen" component={ReminderScreen} />
+      <Stack.Screen name="screens/Settings/ChangePasswordScreen" component={ChangePasswordScreen} />
+      <Stack.Screen name="screens/Settings/ContactUsScreen" component={ContactUsScreen} />
+      <Stack.Screen name="screens/Settings/QuestionnaireScreen" component={QuestionnaireScreen} />
+      <Stack.Screen name="screens/Settings/SignOutScreen" component={SignOutScreen} />
     </Stack.Navigator>
   );
 }

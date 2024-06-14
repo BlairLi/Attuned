@@ -1,4 +1,3 @@
-import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -27,7 +26,7 @@ const TabNavigator = () => {
       }}
     >
       <Tab.Screen
-        name="Lessons"
+        name="screens/Lessons/LessonsScreen"
         component={LessonNavigator}
         options={{
           tabBarIcon: ({ focused, size }) => (
@@ -50,7 +49,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Voice Tracker"
+        name="screens/VoiceTracker/VoiceTrackerScreen"
         component={VoiceTrackerNavigator}
         options={{
           tabBarIcon: ({ focused, size }) => (
@@ -73,7 +72,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Recordings"
+        name="screens/Recordings/RecordingsScreen"
         component={RecordingNavigator}
         options={{
           tabBarIcon: ({ focused, size }) => (
@@ -96,7 +95,7 @@ const TabNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Settings"
+        name="screens/Settings/SettingsScreen"
         component={SetttingNavigator}
         options={{
           tabBarIcon: ({ focused, size }) => (
