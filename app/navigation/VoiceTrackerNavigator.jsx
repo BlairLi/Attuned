@@ -14,6 +14,7 @@ export default function VoiceTrackerNavigator() {
           fontFamily: "outfit-bold",
         },
         headerBackTitleVisible: false,
+        headerShown: false,
       }}
       initialRouteName="VoiceTracker"
     >

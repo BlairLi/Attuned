@@ -27,6 +27,7 @@ const TabNavigator = () => {
     >
       <Tab.Screen
         name="screens/Lessons/LessonsScreen"
+        // name="Lessons"
         component={LessonNavigator}
         options={{
           tabBarIcon: ({ focused, size }) => (
