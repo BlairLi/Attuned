@@ -110,13 +110,15 @@ export default function LoginScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
+  // safeArea: {
+  //   flex: 1,
+  // },
   imageBackground: {
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
+    width: '100%',
+    height: '100%',
   },
   container: {
     display: "flex",
