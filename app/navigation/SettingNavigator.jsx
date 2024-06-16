@@ -25,7 +25,7 @@ export default function SettingNavigation() {
         }}
         initialRouteName="Settings"
       >
-        <Stack.Screen name="screens/Settings/SettingsScreen" component={SettingsScreen} />
+        <Stack.Screen name="Settings" component={SettingsScreen} />
         <Stack.Screen name="Disclaimer" component={DisclaimerScreen} />
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
@@ -33,7 +33,7 @@ export default function SettingNavigation() {
         <Stack.Screen name="Change Password" component={ChangePasswordScreen} />
         <Stack.Screen name="Contact Us" component={ContactUsScreen} />
         <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
-        <Stack.Screen name="screens/Settings/SignOutScreen" component={SignOutScreen} />
+        <Stack.Screen name="Sign Out" component={SignOutScreen} />
       </Stack.Navigator>
   );
 }
