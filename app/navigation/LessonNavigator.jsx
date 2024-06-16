@@ -9,11 +9,10 @@ import HomeworkDetailScreen from "../screens/Lessons/HomeworkDetailScreen";
 import NotificationsScreen from "../screens/Settings/NotificationsScreen";
 import ProfileScreen from "../screens/Settings/ProfileScreen";
 import QuestionnaireScreen from "../screens/Settings/QuestionnaireScreen";
-import { SafeAreaView } from "react-native";
 export default function LessonNavigator() {
   const Stack = createNativeStackNavigator();
   return (
-    <SafeAreaView style={{flex:1}}>
+    
       <Stack.Navigator
         screenOptions={{
           headerTitleStyle: {
@@ -22,8 +21,8 @@ export default function LessonNavigator() {
             padding: 20,
             fontFamily: "outfit-bold",
           },
+          headerBackButtonMenuEnabled: true,
           headerBackTitleVisible: false,
-          headerShown: false,
         }}
         initialRouteName="Lessons"
       >
@@ -35,9 +34,9 @@ export default function LessonNavigator() {
         <Stack.Screen name="Homework" component={HomeworkScreen} />
         <Stack.Screen name="HomeworkDetail" component={HomeworkDetailScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="Notification" component={NotificationsScreen} />
+        <Stack.Screen name="Notifications" component={NotificationsScreen} />
         <Stack.Screen name="Questionnarie" component={QuestionnaireScreen} />
       </Stack.Navigator>
-    </SafeAreaView>
+    
   );
 }

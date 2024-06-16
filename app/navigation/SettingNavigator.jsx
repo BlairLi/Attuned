@@ -9,12 +9,10 @@ import ProfileScreen from "../screens/Settings/ProfileScreen";
 import ContactUsScreen from "../screens/Settings/ContactUsScreen";
 import QuestionnaireScreen from "../screens/Settings/QuestionnaireScreen";
 import SignOutScreen from "../screens/Settings/SignOutScreen";
-import { SafeAreaView } from "react-native";
 
 export default function SettingNavigation() {
   const Stack = createNativeStackNavigator();
   return (
-    <SafeAreaView style={{flex:1}}>
       <Stack.Navigator
         screenOptions={{
           headerTitleStyle: {
@@ -24,7 +22,6 @@ export default function SettingNavigation() {
             fontFamily: "outfit-bold",
           },
           headerBackTitleVisible: false,
-          headerShown: false,
         }}
         initialRouteName="Settings"
       >
@@ -38,6 +35,5 @@ export default function SettingNavigation() {
         <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
         <Stack.Screen name="screens/Settings/SignOutScreen" component={SignOutScreen} />
       </Stack.Navigator>
-    </SafeAreaView>
   );
 }

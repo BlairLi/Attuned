@@ -65,7 +65,7 @@ const SettingsScreen = ({ navigation }) => {
           iconName="log-out"
           color={Colors.red}
           title="SignOut"
-          onPress={() => navigation.navigate("screens/Settings/SignOutScreen")}
+          onPress={() => navigation.navigate("Sign Out")}
         />
       </View>
       <View style={styles.contactUsContainer}>

@@ -6,12 +6,11 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
-  Linking,
 } from "react-native";
 import { db } from "../../../configs/FirebaseConfig";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
-export default function ContactUsScreen() {
+export default function ContactUsScreen({ navigation}) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -72,6 +71,9 @@ export default function ContactUsScreen() {
 
         <TouchableOpacity style={styles.button} onPress={handleFormSubmit}>
           <Text style={styles.buttonText}>Send Message</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.goBack()}>
+          <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
       </View>
     </View>
