@@ -1,117 +1,120 @@
-import { View, Text, TextInput, Modal, Pressable, StyleSheet, Button, TurboModuleRegistry } from 'react-native';
-import React from 'react';
-import { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import { View, Text, TextInput, Modal, Pressable, StyleSheet, Button } from 'react-native';
 import { Audio } from 'expo-av';
+import axios from 'axios';
 import { RecordingsContext } from '../Recordings/RecordingsContext';
 import Piano from './Piano';
-// import { PitchDetector } from 'react-native-pitch-detector';
-
-
-// // To get current status
-// await PitchDetector.isRecording(); // Promise<true | false>
-
-// // To listener results
-// const subscription = PitchDetector.addListener(console.log) // { frequency: 440.14782, tone: "C#" }
-
-// // To stop listen results
-// PitchDetector.removeListener()
-
 
 export default function VoiceTrackScreen() {
   const [recording, setRecording] = useState(null);
-  const {recordings, setRecordings} = useContext(RecordingsContext);
-  const [note, setNote] = useState('Null');
+  const { recordings, setRecordings } = useContext(RecordingsContext);
+  const [Frequency, setminFrequency] = useState((0,0));
   const [hasPermission, setHasPermission] = useState(false);
-  const noteDetector = useRef(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const [recording_name, setRecordingName] = useState('Recording');
-
+  const [recordingName, setRecordingName] = useState('Recording');
 
   useEffect(() => {
     const requestPermissions = async () => {
       const { status } = await Audio.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     };
-
     requestPermissions();
   }, []);
-
 
   const startRecording = async () => {
     if (!hasPermission) {
       console.log('No permission to record audio');
       return;
     }
-
     try {
-      console.log('Requesting permissions..');
       const { status } = await Audio.requestPermissionsAsync();
       if (status !== 'granted') {
         console.log('Permission to access microphone is required!');
         return;
       }
-
-      console.log('Starting recording..');
-
-
-      // To start recording - PitchDetector
-      // await PitchDetector.start(); // Promise<void>
-
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
       });
-
       const { recording } = await Audio.Recording.createAsync(
         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
       );
       setRecording(recording);
       console.log('Recording started');
-
     } catch (err) {
       console.error('Failed to start recording', err);
-    };
-  }
-  
+    }
+  };
+
   const stopRecording = async () => {
-    setRecordingName(recording_name);
+    setRecordingName(recordingName);
     const uri = recording.getURI();
     console.log('Recording stopped and stored at', uri);
+
+    // Upload the recording
+    frequency = await uploadRecording(uri);
+    
     let allRecordings = [...recordings];
     const { sound, status } = await recording.createNewLoadedSoundAsync();
     allRecordings.push({
       id: allRecordings.length + 1,
-      title: recording_name,
+      title: recordingName,
       time: new Date().toLocaleString(),
       sound: sound,
       duration: getDurationFormatted(status.durationMillis),
-      file: uri
+      file: uri,
+      frequency: frequency,
+      // maxfrequency: Frequency,
     });
     setRecordings(allRecordings);
     setRecording(null);
     console.log('Recording stopped');
-    setModalVisible(!modalVisible)
+    setModalVisible(!modalVisible);
+
+  };
+
+  const uploadRecording = async (uri) => {
+    const formData = new FormData();
+    formData.append('file', {
+      uri,
+      name: 'recording.m4a',
+      type: 'audio/m4a',
+    });
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Frequency analysis:', response.data);
+      const frequency= response.data
+      const min = frequency['min_frequency']
+      const max = frequency['max_frequency']
+      setminFrequency((min,max));
+      return frequency;
+    } catch (error) {
+      console.error('Failed to upload recording:', error);
+    }
   };
 
   const openModal = async () => {
     setModalVisible(true);
     console.log('Stopping recording..');
     await recording.stopAndUnloadAsync();
-  }
+  };
 
   function getDurationFormatted(milliseconds) {
     const minutes = milliseconds / 1000 / 60;
     const seconds = Math.round((minutes - Math.floor(minutes)) * 60);
-    return seconds < 10 ? `${Math.floor(minutes)}:0${seconds}` : `${Math.floor(minutes)}:${seconds}`
+    return seconds < 10 ? `${Math.floor(minutes)}:0${seconds}` : `${Math.floor(minutes)}:${seconds}`;
   }
-
 
   return (
     <View style={styles.container}>
       <Text style={styles.textBox}>
-        Please use the piano keys below to visuliase and practice identifying your baseline pitch and working towards your target pitch by using the skills demonstrated in the exercises.
+        Please use the piano keys below to visualize and practice identifying your baseline pitch and working towards your target pitch by using the skills demonstrated in the exercises.
       </Text>
-      <Piano/>
+      <Piano />
       <Button title={recording ? 'Stop Recording' : 'Start Recording'} onPress={recording ? openModal : startRecording} />
       <Modal
         animationType="slide"
@@ -126,11 +129,10 @@ export default function VoiceTrackScreen() {
             <TextInput
               style={styles.textBox}
               onChangeText={setRecordingName}
-              value={recording_name}
-              placeholder="Recording Name"/>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={stopRecording}>
+              value={recordingName}
+              placeholder="Recording Name"
+            />
+            <Pressable style={[styles.button, styles.buttonClose]} onPress={stopRecording}>
               <Text style={styles.textStyle}>Save</Text>
             </Pressable>
           </View>
@@ -143,7 +145,6 @@ export default function VoiceTrackScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#143F6B',
     justifyContent: 'center',
     alignItems: 'center',
   },
