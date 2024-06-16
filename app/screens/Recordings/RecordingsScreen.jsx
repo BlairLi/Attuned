@@ -12,6 +12,7 @@ import {
 import { SwipeListView } from "react-native-swipe-list-view";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { RecordingsContext } from "./RecordingsContext";
+import { SelectedRecordingContext } from "./SelectedRecordingContext";
 
 // Enable LayoutAnimation on Android
 if (
@@ -46,6 +47,7 @@ const RecordingsScreen = ({ navigation }) => {
   // ]);
 
   const { recordings, setRecordings } = useContext(RecordingsContext);
+  const { setSelectedRecording } = useContext(SelectedRecordingContext);
   // search functionality
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState(recordings);
@@ -78,7 +80,10 @@ const RecordingsScreen = ({ navigation }) => {
     <TouchableOpacity
       style={styles.itemContainer}
       activeOpacity={1}
-      onPress={() => navigation.navigate("RecordingDetail", { recording: data.item })}
+      onPress={() => {
+        setSelectedRecording(data.item);
+        navigation.navigate("RecordingDetail");
+      }}
     >
       <View
         style={{

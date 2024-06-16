@@ -1,31 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
+import { SelectedRecordingContext } from './SelectedRecordingContext';
 
-const RecordingDetailScreen = ({ navigation, route }) => {
-  const { recording } = route.params;
-  // const handlePlay = () => {
-  //   try {
-  //     // Play a sound file from the app bundle
-  //     SoundPlayer.playSoundFile('my_sound', 'mp3');
-  //   } catch (e) {
-  //     console.log(`cannot play the sound file`, e);
-  //   }
-  // };
+const RecordingDetailScreen = ({ navigation }) => {
+  // const { recording } = route.params;
+  const { selectedRecording } = useContext(SelectedRecordingContext);
 
-  // const handleStop = () => {
-  //   SoundPlayer.stop();
-  // };
+  if (!selectedRecording) {
+    return (
+      <View style={styles.container}>
+        <Text>No recording selected</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       {/* <Text style={styles.title}>Recording Detail</Text>
       <Text style={styles.description}>This is a detailed view of your recording.</Text> */}
-      <Text style={styles.title}>{recording.title}</Text>
-      <Text style={styles.detail}>Time: {recording.time}</Text>
-      <Text style={styles.detail}>Min Frequency: {recording.min_frequency}</Text>
-      <Text style={styles.detail}>Max Frequency: {recording.max_frequency}</Text>
-      <Text style={styles.detail}>Duration: {recording.duration}</Text>
-      <Button title="Play Recording" onPress={() => recording.sound.replayAsync()}/>
+      <Text style={styles.title}>{selectedRecording.title}</Text>
+      <Text style={styles.detail}>Time: {selectedRecording.time}</Text>
+      <Text style={styles.detail}>Min Frequency: {selectedRecording.min_frequency}</Text>
+      <Text style={styles.detail}>Max Frequency: {selectedRecording.max_frequency}</Text>
+      <Text style={styles.detail}>Duration: {selectedRecording.duration}</Text>
+      <Button title="Play Recording" onPress={() => selectedRecording.sound.replayAsync()}/>
       <Button title="Stop Recording" />
       <Button title="Go Back" onPress={() => navigation.goBack()} />
     </View>
