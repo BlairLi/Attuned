@@ -159,9 +159,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textBox: {
+    fontFamily: "Outfit-Light",
+    fontSize: 18,
     width: 300,
     height: 150,
-    marginTop: 40,
+    marginTop: 20,
   },
   centeredView: {
     flex: 1,

@@ -9,7 +9,6 @@ import AuthNavigator from "./navigation/AuthNavigator";
 import * as SecureStore from "expo-secure-store";
 import TabNavigator from "./navigation/TabNavigator";
 import { RecordingsProvider } from "./screens/Recordings/RecordingsContext";
-import { SafeAreaView } from "react-native";
 
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
