@@ -11,14 +11,15 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 def analyze_audio(file_path):
     try:
         y, sr = librosa.load(file_path, sr=None)
-        stft = np.abs(librosa.stft(y))
-        freqs = librosa.fft_frequencies(sr=sr)
         
-        # Aggregate the STFT result across time to get an average or max energy value per frequency bin
-        stft_mean = np.mean(stft, axis=1)
+        # Use librosa.pyin to extract fundamental frequencies
+        f0, voiced_flag, voiced_probs = librosa.pyin(y, fmin=librosa.note_to_hz('C2'), fmax=librosa.note_to_hz('C7'))
         
-        max_freq = freqs[np.argmax(stft_mean)]
-        min_freq = freqs[np.argmin(stft_mean[stft_mean > 0])]
+        # Filter out unvoiced frequencies
+        voiced_f0 = f0[voiced_flag]
+        
+        min_freq = np.min(voiced_f0)
+        max_freq = np.max(voiced_f0)
         
         return min_freq, max_freq
     except Exception as e:

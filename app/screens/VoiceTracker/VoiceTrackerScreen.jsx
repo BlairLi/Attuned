@@ -8,7 +8,6 @@ import Piano from './Piano';
 export default function VoiceTrackScreen() {
   const [recording, setRecording] = useState(null);
   const { recordings, setRecordings } = useContext(RecordingsContext);
-  const [Frequency, setminFrequency] = useState((0,0));
   const [hasPermission, setHasPermission] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [recordingName, setRecordingName] = useState('Recording');
@@ -48,14 +47,27 @@ export default function VoiceTrackScreen() {
 
   const stopRecording = async () => {
     setRecordingName(recordingName);
-    const uri = recording.getURI();
-    console.log('Recording stopped and stored at', uri);
-
-    // Upload the recording
-    frequency = await uploadRecording(uri);
     
     let allRecordings = [...recordings];
     const { sound, status } = await recording.createNewLoadedSoundAsync();
+    const duration = getDurationFormatted(status.durationMillis);
+    console.log('Duration:', duration);
+    
+    // Check if the recording duration is 0:00
+    if (duration == '0:00') {
+      alert('Your recording is too short! Please try again.');
+      setRecording(null);
+      setModalVisible(!modalVisible);
+      return;
+    }
+
+    const uri = recording.getURI();
+    console.log('Recording stopped and stored at', uri);
+      
+    // Upload the recording
+    const [min, max] = await uploadRecording(uri);
+    console.log('Min:', min, 'Max:', max);
+    
     allRecordings.push({
       id: allRecordings.length + 1,
       title: recordingName,
@@ -63,14 +75,13 @@ export default function VoiceTrackScreen() {
       sound: sound,
       duration: getDurationFormatted(status.durationMillis),
       file: uri,
-      frequency: frequency,
-      // maxfrequency: Frequency,
+      min_frequency: min,
+      max_frequency: max,
     });
     setRecordings(allRecordings);
     setRecording(null);
     console.log('Recording stopped');
     setModalVisible(!modalVisible);
-
   };
 
   const uploadRecording = async (uri) => {
@@ -90,8 +101,7 @@ export default function VoiceTrackScreen() {
       const frequency= response.data
       const min = frequency['min_frequency']
       const max = frequency['max_frequency']
-      setminFrequency((min,max));
-      return frequency;
+      return [min, max];
     } catch (error) {
       console.error('Failed to upload recording:', error);
     }

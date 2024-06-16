@@ -22,6 +22,8 @@ const RecordingDetailScreen = ({ navigation, route }) => {
       <Text style={styles.description}>This is a detailed view of your recording.</Text> */}
       <Text style={styles.title}>{recording.title}</Text>
       <Text style={styles.detail}>Time: {recording.time}</Text>
+      <Text style={styles.detail}>Min Frequency: {recording.min_frequency}</Text>
+      <Text style={styles.detail}>Max Frequency: {recording.max_frequency}</Text>
       <Text style={styles.detail}>Duration: {recording.duration}</Text>
       <Button title="Play Recording" onPress={() => recording.sound.replayAsync()}/>
       <Button title="Stop Recording" />
