@@ -1,22 +1,20 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import PagerView from "react-native-pager-view";
-import Page from "./Page";
-import ThankYouPage from "./ThankYouPage";
+import Page from "../Page";
+import IntonationThankyouScreen from "./IntonationThankyouScreen";
 import React, { useState, useRef } from "react";
 import { Colors } from "@/constants/Colors";
 export default function BasicScreen({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const pagerRef = useRef(null);
   const videos = [
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1626190767682.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1626190774164.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667313593149.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667313636315.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1626191089744.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1626191112923.mp4" },
   ];
 
   const pages = [
     ...videos.map((video) => <Page navigation={navigation} video={video} />),
-    <ThankYouPage navigation={navigation} />,
+    <IntonationThankyouScreen navigation={navigation} />,
   ];
 
   const handlePageChange = (position) => {
@@ -72,6 +70,7 @@ export default function BasicScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   progressContainer: {
     flexDirection: "row",
@@ -97,22 +96,23 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     padding: 20,
-    flexDirection: "row",
     position: "absolute",
-    bottom: 20,
+    bottom: 10,
     width: "100%",
-    justifyContent: "space-between",
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
-    width: "40%",
+    width: "80%",
     backgroundColor: Colors.primary,
-    padding: 10,
+    padding: 15,
     borderRadius: 10,
+    margin: 10,
   },
   buttonText: {
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 18,
   },
 });

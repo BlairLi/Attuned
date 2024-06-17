@@ -1,21 +1,24 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import PagerView from "react-native-pager-view";
-import Page from "./Page";
-import ThankYouPage from "./ThankYouPage";
+import Page from "../Page";
+import HomeworkThankyouScreen from "./HomeworkThankyouScreen";
 import React, { useState, useRef } from "react";
 import { Colors } from "@/constants/Colors";
-export default function PitchScreen({ navigation }) {
+export default function BasicHomework({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const pagerRef = useRef(null);
   const videos = [
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1626191028009.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667304408670.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667305544906.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1626190919975.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1626190934621.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1626190941977.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1626190955746.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1626190968899.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1626190978465.mp4" },
   ];
 
   const pages = [
     ...videos.map((video) => <Page navigation={navigation} video={video} />),
-    <ThankYouPage navigation={navigation} />,
+    <HomeworkThankyouScreen navigation={navigation} />,
   ];
 
   const handlePageChange = (position) => {
@@ -71,6 +74,7 @@ export default function PitchScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   progressContainer: {
     flexDirection: "row",
@@ -96,22 +100,23 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     padding: 20,
-    flexDirection: "row",
     position: "absolute",
-    bottom: 20,
+    bottom: 10,
     width: "100%",
-    justifyContent: "space-between",
+    justifyContent: "center",
+    alignItems: "center",
   },
   button: {
-    width: "40%",
+    width: "80%",
     backgroundColor: Colors.primary,
-    padding: 10,
+    padding: 15,
     borderRadius: 10,
+    margin: 10,
   },
   buttonText: {
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 18,
   },
 });

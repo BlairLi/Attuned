@@ -8,16 +8,15 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-
-const ThankYouPage = ({ navigation }) => {
+const BasicThankyouScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Text style={styles.title}>Thank You</Text>
         <Text style={styles.message}>
-          You are done with your Lesson task, please continue with your homework
+          You are done with your Lesson task, please continue with your homework.
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Homework")}>
+        <TouchableOpacity onPress={() => navigation.navigate("PitchHomework")}>
           <View style={styles.card}>
             <Icon name="book-outline" size={30} color="grey" />
             <View style={styles.cardContent}>
@@ -85,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ThankYouPage;
+export default BasicThankyouScreen;

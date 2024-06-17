@@ -26,7 +26,7 @@ const Page = ({ navigation, video }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "white",
   },
   video: {
     width: "100%",

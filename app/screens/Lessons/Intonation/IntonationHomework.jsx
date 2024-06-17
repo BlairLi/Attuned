@@ -1,22 +1,25 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import PagerView from "react-native-pager-view";
-import Page from "./Page";
-import ThankYouPage from "./ThankYouPage";
+import Page from "../Page";
+import HomeworkThankyouScreen from "./HomeworkThankyouScreen";
 import React, { useState, useRef } from "react";
 import { Colors } from "@/constants/Colors";
-export default function LessonDetailScreen({ navigation }) {
+export default function IntonationHomework({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const pagerRef = useRef(null);
   const videos = [
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667301596025.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667302237600.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667302310773.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667302487282.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1626191149164.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667326194558.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667326720030.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667326787733.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667326839855.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667306808241.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667327213985.mp4" },
   ];
 
   const pages = [
     ...videos.map((video) => <Page navigation={navigation} video={video} />),
-    <ThankYouPage navigation={navigation} />,
+    <HomeworkThankyouScreen navigation={navigation} />,
   ];
 
   const handlePageChange = (position) => {
@@ -98,11 +101,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     padding: 20,
-    alignItems: "center",
     position: "absolute",
-    bottom: 20,
+    bottom: 10,
     width: "100%",
     justifyContent: "center",
+    alignItems: "center",
   },
   button: {
     width: "80%",
@@ -110,7 +113,6 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     margin: 10,
-
   },
   buttonText: {
     color: "white",
