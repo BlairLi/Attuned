@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,7 +9,12 @@ import {
 import SymptomCheckbox from "./SymptomCheckbox";
 import { Colors } from "@/constants/Colors";
 
-export default function SymptomScreen({ goToNext, goToPrevious }) {
+export default function SymptomScreen({
+  goToNext,
+  goToPrevious,
+  updateAnswer,
+  currentAnswer,
+}) {
   const [symptoms, setSymptoms] = useState({
     hoarseness: false,
     breathiness: false,
@@ -22,6 +27,11 @@ export default function SymptomScreen({ goToNext, goToPrevious }) {
     heartburn: false,
   });
 
+  useEffect(() => {
+    if (currentAnswer) {
+      setSymptoms(currentAnswer);
+    }
+  }, [currentAnswer]);
   const maxSelection = 3;
   const selectedCount = Object.values(symptoms).filter(Boolean).length;
 
@@ -33,7 +43,7 @@ export default function SymptomScreen({ goToNext, goToPrevious }) {
 
   const handleSave = () => {
     if (Object.values(symptoms).includes(true)) {
-      console.log("Selected symptoms:", symptoms);
+      updateAnswer(symptoms);
       goToNext();
     } else {
       alert("Please select an option.");

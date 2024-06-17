@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "@/constants/Colors";
 import SymptomCheckbox from "./SymptomCheckbox";
-export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
+export default function VoiceGoalsScreen({
+  goToNext,
+  goToPrevious,
+  updateAnswer,
+  currentAnswer,
+}) {
   const [symptoms, setSymptoms] = useState({
     pitch: false,
     control: false,
@@ -16,11 +15,14 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
     consistency: false,
     authentic: false,
   });
-  const [otherType, setOtherType] = useState("");
-  const [voice, setVoice] = useState("Gender Neutral");
+  useEffect(() => {
+    if (currentAnswer) {
+      setSymptoms(currentAnswer);
+    }
+  }, [currentAnswer]);
 
   // disable checkbox if max selections are already selected
-  const maxSelection = 1;
+  const maxSelection = 3;
   const selectedCount = Object.values(symptoms).filter(Boolean).length;
 
   const handleCheckboxChange = (name, value) => {
@@ -30,9 +32,8 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
   };
 
   const handleSave = () => {
-    if (Object.values(symptoms).includes(true) || otherType) {
-      console.log("Selected symptoms:", symptoms);
-      console.log("Other type:", otherType);
+    if (Object.values(symptoms).includes(true)) {
+      updateAnswer(symptoms);
       goToNext();
     } else {
       alert("Please select an option.");
@@ -43,9 +44,9 @@ export default function VoiceGoalsScreen({ goToNext, goToPrevious }) {
       <Text style={styles.header}>
         What are your goals for modifying your voice?
       </Text>
-      {/* <Text style={styles.subheading}>
+      <Text style={styles.subheading}>
         You can select a maximum of {maxSelection}
-      </Text> */}
+      </Text>
       {Object.keys(symptoms).map((key) => (
         <SymptomCheckbox
           key={key}
