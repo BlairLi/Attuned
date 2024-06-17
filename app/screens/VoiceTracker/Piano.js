@@ -41,7 +41,22 @@ export default function Piano() {
     const [sound, setSound] = useState(null);
 
     //   const blackKeyPositions = [25, 50, 75, 125, 150, 200, 225, 250, 300, 325];
-    const whiteKeys = ['F2', 'G2', 'A2', 'B2', 'C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4', 'D4', 'E4'];
+    const whiteKeys = [
+        { note: 'F2', freq: 87 },
+        { note: 'G2', freq: 97 },
+        { note: 'A2', freq: 110 },
+        { note: 'B2', freq: 123 },
+        { note: 'C3', freq: 130 },
+        { note: 'D3', freq: 146 },
+        { note: 'E3', freq: 164 },
+        { note: 'F3', freq: 174 },
+        { note: 'G3', freq: 195 },
+        { note: 'A3', freq: 220 },
+        { note: 'B3', freq: 246 },
+        { note: 'C4', freq: 261 },
+        { note: 'D4', freq: 293 },
+        { note: 'E4', freq: 329 },
+      ];
     const blackKeyPositions = {
         1: 'F#2',
         2: 'G#2',
@@ -85,14 +100,15 @@ export default function Piano() {
     return (
         <View style={styles.piano}>
             {/* White keys */}
-            {whiteKeys.map((note) => (
+            {whiteKeys.map(({ note, freq }, index) => (
                 <TouchableOpacity
                     key={note}
                     style={[styles.whiteKey, activeKeys[note] && styles.whiteKeyActive]}
                     onPress={() => handleKeyPress(note)}
                 >
                     <Text style={styles.keyLabel}>{note}</Text>
-                </TouchableOpacity>
+                    <Text style={styles.freqLabel}>{freq}</Text>
+            </TouchableOpacity>
             ))}
             {/* Black keys */}
             {Object.keys(blackKeyPositions).map((key, index) => (
@@ -126,7 +142,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
         paddingBottom: 5,
-    },
+        position: 'relative',
+      },
     whiteKeyActive: {
         backgroundColor: '#CCC',
     },
@@ -134,6 +151,12 @@ const styles = StyleSheet.create({
         fontSize: 10,
         color: 'black',
     },
+    freqLabel: {
+        fontSize: 10,
+        color: 'black',
+        position: 'absolute',
+        bottom: -15,
+      },      
     blackKey: {
         position: 'absolute',
         backgroundColor: 'black',
