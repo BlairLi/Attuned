@@ -5,11 +5,22 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Colors } from "@/constants/Colors";
-export default function PronounSelectionScreen({ goToNext, goToPrevious }) {
+export default function PronounSelectionScreen({
+  goToNext,
+  goToPrevious,
+  updateAnswer,
+  currentAnswer,
+}) {
   const [customPronoun, setCustomPronoun] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
+
+  useEffect(() => {
+    if (currentAnswer) {
+      setSelectedOption(currentAnswer);
+    }
+  }, [currentAnswer]);
 
   const handleOptionPress = (option) => {
     setSelectedOption(option);
@@ -17,7 +28,7 @@ export default function PronounSelectionScreen({ goToNext, goToPrevious }) {
 
   const handleSave = () => {
     if (selectedOption || customPronoun) {
-      console.log("Selected option:", selectedOption);
+      updateAnswer(selectedOption || customPronoun);
       goToNext();
     } else {
       alert("Please select an option.");

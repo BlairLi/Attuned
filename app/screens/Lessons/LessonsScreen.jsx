@@ -48,6 +48,78 @@ export default function LessonsScreen({ navigation }) {
           locked={false}
           onPress={() => navigation.navigate("Pitch")}
         />
+        <LessonCard
+          title="Intonation"
+          time="Time: 04:00 min"
+          // icon="lock-outline"
+          // locked={true}
+          icon="book-outline"
+          locked={false}
+          onPress={() => navigation.navigate("Intonation")}
+        />
+        <LessonCard
+          title="Resonance"
+          time="Time: 04:00 min"
+          // icon="lock-outline"
+          // locked={true}
+          icon="book-outline"
+          locked={false}
+          onPress={() => navigation.navigate("Resonance")}
+        />
+        <LessonCard
+          title="Put Basics together"
+          time="Time: 04:00 min"
+          // icon="lock-outline"
+          // locked={true}
+          icon="book-outline"
+          locked={false}
+          onPress={() => navigation.navigate("PutBasic")}
+        />
+        <LessonCard
+          title="Advanced Pitch"
+          time="Time: 04:00 min"
+          // icon="lock-outline"
+          // locked={true}
+          icon="book-outline"
+          locked={false}
+          onPress={() => navigation.navigate("AdvancedPitch")}
+        />
+        <LessonCard
+          title="Volume"
+          time="Time: 04:00 min"
+          // icon="lock-outline"
+          // locked={true}
+          icon="book-outline"
+          locked={false}
+          onPress={() => navigation.navigate("Volume")}
+        />
+        <LessonCard
+          title="Articulation"
+          time="Time: 04:00 min"
+          // icon="lock-outline"
+          // locked={true}
+          icon="book-outline"
+          locked={false}
+          onPress={() => navigation.navigate("Articulation")}
+        />
+        <LessonCard
+          title="Syntax"
+          time="Time: 04:00 min"
+          // icon="lock-outline"
+          // locked={true}
+          icon="book-outline"
+          locked={false}
+          onPress={() => navigation.navigate("Syntax")}
+        />
+        <LessonCard
+          title="Put everything together"
+          time="Time: 04:00 min"
+          // icon="lock-outline"
+          // locked={true}
+          icon="book-outline"
+          locked={false}
+          onPress={() => navigation.navigate("PutEverything")}
+        />
       </ScrollView>
     </ImageBackground>
   );

@@ -1,15 +1,24 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Colors } from "@/constants/Colors";
-export default function TalkInNoiseScreen({ goToNext, goToPrevious }) {
+export default function TalkInNoiseScreen({
+  goToNext,
+  goToPrevious,
+  updateAnswer,
+  currentAnswer,
+}) {
   const [selectedOption, setSelectedOption] = useState(null);
-
+  useEffect(() => {
+    if (currentAnswer) {
+      setSelectedOption(currentAnswer);
+    }
+  }, [currentAnswer]);
   const handleOptionPress = (option) => {
     setSelectedOption(option);
   };
   const handleSave = () => {
     if (selectedOption) {
-      console.log("Selected option:", selectedOption);
+      updateAnswer(selectedOption);
       goToNext();
     } else {
       alert("Please select an option.");
