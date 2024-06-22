@@ -16,6 +16,9 @@ import IntonationHomework from "../screens/Lessons/Intonation/IntonationHomework
 import IntonationThankyouScreen from "../screens/Lessons/Intonation/IntonationThankyouScreen";
 
 import ResonanceScreen from "../screens/Lessons/Resonance/ResonanceScreen";
+import ResonanceThankyouScreen from "../screens/Lessons/Resonance/ResonanceThankyouScreen";
+import ResonanceHomework from "../screens/Lessons/Resonance/ResonanceHomework";
+
 import VolumeScreen from "../screens/Lessons/Volume/VolumeScreen";
 import ArticulationScreen from "../screens/Lessons/Articulation/ArticulationScreen";
 import PutBasicScreen from "../screens/Lessons/PutBasic/PutBasicScreen";

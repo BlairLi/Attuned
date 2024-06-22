@@ -1,6 +1,13 @@
 import React from "react";
-import { StyleSheet, View, Text, ScrollView } from "react-native";
-
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+import { Colors } from "@/constants/Colors";
+import RecordingCard from "@/components/Lessons/RecordingCard";
 export default function HomeworkScreen({ navigation }) {
   return (
     <View style={styles.container}>
@@ -21,6 +28,13 @@ export default function HomeworkScreen({ navigation }) {
         <Text style={styles.text}>
           3) Walk us through your morning routine.
         </Text>
+
+        <View style={styles.buttonContainer}>
+          <RecordingCard />
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Mark as completed</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );
@@ -62,5 +76,21 @@ const styles = StyleSheet.create({
     borderLeftWidth: 3,
     borderLeftColor: "#ffa500",
     fontFamily: "outfit-regular",
+  },
+  buttonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    backgroundColor: Colors.primary,
+    padding: 20,
+    borderRadius: 10,
+    margin: 10,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 16,
   },
 });
