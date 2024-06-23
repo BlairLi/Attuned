@@ -14,7 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { RecordingsContext } from "./RecordingsContext";
 import { SelectedRecordingContext } from "./SelectedRecordingContext";
-
+import { Colors } from "@/constants/Colors";
 // Enable LayoutAnimation on Android
 if (
   Platform.OS === "android" &&
@@ -149,7 +149,6 @@ const RecordingsScreen = ({ navigation }) => {
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
           disableRightSwipe
-          contentContainerStyle={styles.listContainer}
         />
       )}
     </View>

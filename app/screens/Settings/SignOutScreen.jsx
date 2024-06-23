@@ -18,8 +18,8 @@ export default function SignOutScreen({ navigation }) {
     <View style={styles.container}>
       <Text style={styles.title}>Do you want to sign out?</Text>
       <Text style={styles.subTitle}>
-        Once signed out, your information might be lost, please make your
-        desicion carefully.
+        Once signed out, your information might be lost, please make sure to
+        save your data before signing out.
       </Text>
       <TouchableOpacity style={styles.button} onPress={handleSignOut}>
         <Text style={styles.buttonText}>Sign Out</Text>

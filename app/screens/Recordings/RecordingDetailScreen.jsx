@@ -1,10 +1,75 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { SelectedRecordingContext } from "./SelectedRecordingContext";
 import { Colors } from "@/constants/Colors";
+import { Audio } from "expo-av";
+import Slider from "@react-native-community/slider";
+import Icon from "react-native-vector-icons/Ionicons";
 
-const RecordingDetailScreen = ({ navigation }) => {
+const RecordingDetailScreen = () => {
   const { selectedRecording } = useContext(SelectedRecordingContext);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [sound, setSound] = useState(null);
+  const [duration, setDuration] = useState(0);
+  const [position, setPosition] = useState(0);
+
+  useEffect(() => {
+    const loadSound = async () => {
+      if (selectedRecording) {
+        try {
+          const { sound: newSound, status } = await Audio.Sound.createAsync(
+            { uri: selectedRecording.file },
+            { shouldPlay: false }
+          );
+          setSound(newSound);
+          setDuration(status.durationMillis);
+        } catch (error) {
+          console.error("Error loading sound:", error);
+        }
+      }
+    };
+
+    loadSound();
+
+    return () => {
+      if (sound) {
+        sound.unloadAsync();
+      }
+    };
+  }, [selectedRecording]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (sound && isPlaying) {
+        sound.getStatusAsync().then((status) => {
+          setPosition(status.positionMillis);
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [sound, isPlaying]);
+
+  const togglePlayback = async () => {
+    try {
+      if (sound) {
+        if (isPlaying) {
+          await sound.pauseAsync();
+        } else {
+          await sound.playAsync();
+        }
+        setIsPlaying(!isPlaying);
+      }
+    } catch (error) {
+      console.error("Failed to toggle playback:", error);
+    }
+  };
+
+  const formatTime = (milliseconds) => {
+    const minutes = Math.floor(milliseconds / 1000 / 60);
+    const seconds = Math.floor((milliseconds / 1000) % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
 
   if (!selectedRecording) {
     return (
@@ -23,28 +88,41 @@ const RecordingDetailScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{selectedRecording.title}</Text>
-      <Text style={styles.detail}>Time: {selectedRecording.time}</Text>
-      <Text style={styles.detail}>
-        Min Frequency: {selectedRecording.min_frequency}
-      </Text>
-      <Text style={styles.detail}>
-        Max Frequency: {selectedRecording.max_frequency}
-      </Text>
-      <Text style={styles.detail}>Duration: {selectedRecording.duration}</Text>
-      <TouchableOpacity
-        style={styles.playButton}
-        onPress={() => selectedRecording.sound.replayAsync()}
-      >
-        <Text style={styles.buttonText}>Play Recording</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.stopButton}>
-        <Text style={styles.buttonText}>Stop Recording</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.buttonText}>Go Back</Text>
+      <View style={styles.detailContainer}>
+        <Text style={styles.detail}>
+          Min Frequency: {selectedRecording.min_frequency} Hz
+        </Text>
+        <Text style={styles.detail}>
+          Max Frequency: {selectedRecording.max_frequency} Hz
+        </Text>
+      </View>
+      <View style={styles.sliderContainer}>
+        <Slider
+          style={styles.slider}
+          minimumValue={0}
+          maximumValue={duration}
+          value={position}
+          minimumTrackTintColor={Colors.secondaryLight}
+          maximumTrackTintColor='black'
+          thumbTintColor={Colors.secondaryLight}
+          onValueChange={async (value) => {
+            if (sound) {
+              await sound.setPositionAsync(value);
+              setPosition(value);
+            }
+          }}
+        />
+        <View style={styles.timeContainer}>
+          <Text style={styles.timeText}>{formatTime(position)}</Text>
+          <Text style={styles.timeText}>{formatTime(duration)}</Text>
+        </View>
+      </View>
+      <TouchableOpacity style={styles.playButton} onPress={togglePlayback}>
+        <Icon
+          name={isPlaying ? "pause-circle" : "play-circle"}
+          size={64}
+          color={Colors.secondaryLight}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -66,43 +144,39 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: Colors.primary,
     marginBottom: 16,
     textAlign: "center",
   },
+  detailContainer: {
+    alignItems: "center",
+  },
   detail: {
-    fontSize: 18,
-    color: Colors.secondary,
-    marginBottom: 8,
+    fontSize: 16,
+    color: "grey",
+    marginVertical: 4,
+  },
+  sliderContainer: {
+    width: "80%",
+    alignItems: "center",
+    marginVertical: 20,
+  },
+  slider: {
+    width: "100%",
+    height: 40,
+  },
+  timeContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  timeText: {
+    fontSize: 14,
+    color: "grey",
   },
   playButton: {
-    backgroundColor: Colors.primary,
-    padding: 12,
-    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 20,
-    width: "80%",
-    alignItems: "center",
-  },
-  stopButton: {
-    backgroundColor: Colors.red,
-    padding: 12,
-    borderRadius: 10,
-    marginTop: 10,
-    width: "80%",
-    alignItems: "center",
-  },
-  backButton: {
-    backgroundColor: Colors.secondaryLight,
-    padding: 12,
-    borderRadius: 10,
-    marginTop: 10,
-    width: "80%",
-    alignItems: "center",
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });
 

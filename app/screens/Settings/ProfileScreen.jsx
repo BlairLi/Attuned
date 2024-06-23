@@ -7,11 +7,15 @@ import {
   Image,
   TextInput,
   Alert,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useUser } from "@clerk/clerk-expo";
 import Icon from "react-native-vector-icons/Ionicons";
 import * as ImagePicker from "expo-image-picker";
 import { Colors } from "@/constants/Colors";
+
 const ProfileScreen = () => {
   const { user, isLoaded, setProfileImage } = useUser();
   const [isEditingName, setIsEditingName] = useState(false);
@@ -68,50 +72,55 @@ const ProfileScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.profileSection}>
-        <TouchableOpacity onPress={pickImage}>
-          <Image source={{ uri: user?.imageUrl }} style={styles.image} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.editButton} onPress={pickImage}>
-          <Text style={styles.editButtonText}>Edit Picture</Text>
-        </TouchableOpacity>
-        <View style={styles.infoContainer}>
-          {isEditingName ? (
-            <>
-              <TextInput
-                style={styles.input}
-                value={newUsername}
-                onChangeText={setNewUsername}
-                placeholder="Enter new username"
-              />
-              <TouchableOpacity onPress={handleEditUsername}>
-                <Icon name="checkmark" size={25} color="green" />
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.profileSection}>
+          <TouchableOpacity onPress={pickImage}>
+            <Image source={{ uri: user?.imageUrl }} style={styles.image} />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.editButton} onPress={pickImage}>
+            <Text style={styles.editButtonText}>Edit Picture</Text>
+          </TouchableOpacity>
+          <View style={styles.infoContainer}>
+            {isEditingName ? (
+              <>
+                <TextInput
+                  style={styles.input}
+                  value={newUsername}
+                  onChangeText={setNewUsername}
+                  placeholder="Enter new username"
+                />
+                <TouchableOpacity onPress={handleEditUsername}>
+                  <Icon name="checkmark" size={25} color="green" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setIsEditingName(false)}>
+                  <Icon name="close" size={25} color="red" />
+                </TouchableOpacity>
+              </>
+            ) : (
+              <TouchableOpacity
+                style={styles.nameContainer}
+                onPress={() => setIsEditingName(true)}
+              >
+                <Text style={styles.name}>
+                  {user?.username || "Click to add your username"}
+                </Text>
+                <Icon name="create" size={25} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => setIsEditingName(false)}>
-                <Icon name="close" size={25} color="red" />
-              </TouchableOpacity>
-            </>
-          ) : (
-            <TouchableOpacity
-              style={styles.nameContainer}
-              onPress={() => setIsEditingName(true)}
-            >
-              <Text style={styles.name}>
-                {user?.username || "Click to add your username"}
-              </Text>
-              <Icon name="create" size={25} />
-            </TouchableOpacity>
-          )}
+            )}
+          </View>
+          <View style={styles.infoContainer}>
+            <Text style={styles.name}>
+              {user?.primaryEmailAddress?.emailAddress}
+            </Text>
+          </View>
+          {isLoading && <Text style={styles.loading}>Updating...</Text>}
         </View>
-        <View style={styles.infoContainer}>
-          <Text style={styles.name}>
-            {user?.primaryEmailAddress?.emailAddress}
-          </Text>
-        </View>
-        {isLoading && <Text style={styles.loading}>Updating...</Text>}
-      </View>
-    </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -119,6 +128,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: "center",
   },
   profileSection: {

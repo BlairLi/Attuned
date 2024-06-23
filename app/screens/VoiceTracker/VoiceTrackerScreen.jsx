@@ -13,7 +13,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RecordingsContext } from "../Recordings/RecordingsContext";
 import Piano from "./Piano";
 import { Colors } from "@/constants/Colors";
-
+import Toast from "react-native-toast-message";
 export default function VoiceTrackScreen() {
   const [recording, setRecording] = useState(null);
   const { recordings, setRecordings } = useContext(RecordingsContext);
@@ -81,6 +81,11 @@ export default function VoiceTrackScreen() {
         "recordings",
         JSON.stringify(updatedRecordings)
       );
+      // Show toast message
+      Toast.show({
+        type: "success",
+        text1: "Recording saved successfully!",
+      });
 
       setRecording(null);
       setModalVisible(false);
