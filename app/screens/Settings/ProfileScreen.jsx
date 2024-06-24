@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -14,28 +14,60 @@ import {
 import { useUser } from "@clerk/clerk-expo";
 import Icon from "react-native-vector-icons/Ionicons";
 import * as ImagePicker from "expo-image-picker";
+import * as ImageManipulator from "expo-image-manipulator";
 import { Colors } from "@/constants/Colors";
+import { storage } from "@/configs/FirebaseConfig";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const ProfileScreen = () => {
-  const { user, isLoaded, setProfileImage } = useUser();
+  const { user, isLoaded } = useUser();
   const [isEditingName, setIsEditingName] = useState(false);
   const [newUsername, setNewUsername] = useState(user?.username || "");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const requestPermission = async () => {
+      const { status } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert(
+          "Permission Denied",
+          "Sorry, we need camera roll permissions to make this work!"
+        );
+      }
+    };
+    requestPermission();
+  }, []);
 
   if (!isLoaded) {
     return <Text style={styles.loading}>Loading...</Text>;
   }
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
 
-    if (!result.canceled) {
-      uploadImage(result.assets[0].uri);
+      if (!result.canceled) {
+        const uri = result.assets ? result.assets[0].uri : result.uri;
+        if (typeof uri !== "string") {
+          throw new Error("Invalid URI");
+        }
+        const resizedImage = await ImageManipulator.manipulateAsync(
+          uri,
+          [{ resize: { width: 300, height: 300 } }], // Resize image
+          { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
+        );
+
+        uploadImage(resizedImage.uri);
+      }
+    } catch (error) {
+      console.error("Error picking image:", error);
+      Alert.alert("Error", `Failed to pick image: ${error.message}`);
     }
   };
 
@@ -44,8 +76,14 @@ const ProfileScreen = () => {
     try {
       const response = await fetch(uri);
       const blob = await response.blob();
+      const storageRef = ref(storage, `profileImages/${user.id}`);
 
-      const imageResource = await user.setProfileImage({ file: blob });
+      const snapshot = await uploadBytes(storageRef, blob);
+      const downloadURL = await getDownloadURL(snapshot.ref);
+
+      // Update user profile with the new image URL
+      user.imageUrl = downloadURL;
+
       Alert.alert("Success", "Profile picture updated successfully!");
     } catch (error) {
       console.error("Error updating profile picture:", error);
@@ -78,18 +116,19 @@ const ProfileScreen = () => {
     >
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profileSection}>
-          <TouchableOpacity onPress={pickImage}>
+          <TouchableOpacity>
             <Image source={{ uri: user?.imageUrl }} style={styles.image} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.editButton} onPress={pickImage}>
+          {/* <TouchableOpacity style={styles.editButton} onPress={pickImage}>
             <Text style={styles.editButtonText}>Edit Picture</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <View style={styles.infoContainer}>
             {isEditingName ? (
               <>
                 <TextInput
                   style={styles.input}
                   value={newUsername}
+                  autoCapitalize="none"
                   onChangeText={setNewUsername}
                   placeholder="Enter new username"
                 />
