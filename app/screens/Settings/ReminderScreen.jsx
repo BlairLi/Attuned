@@ -26,8 +26,6 @@ const ReminderScreen = () => {
   const [isReminderEnabled, setIsReminderEnabled] = useState(false);
   const [reminderMessage, setReminderMessage] = useState("");
   const [date, setDate] = useState(new Date());
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [showTimePicker, setShowTimePicker] = useState(false);
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -89,6 +87,10 @@ const ReminderScreen = () => {
   };
 
   const scheduleReminder = async () => {
+    if (!reminderMessage) {
+      Alert.alert("Reminder Message Required", "Please enter your reminder message.");
+      return;
+    }
     if (!isReminderEnabled) {
       Alert.alert("Reminder is disabled");
       return;
@@ -126,7 +128,7 @@ const ReminderScreen = () => {
       <View style={styles.setting}>
         <Text style={styles.settingText}>Enable Reminder:</Text>
         <Switch
-          trackColor={{ false: "#767577", true: 'gray' }}
+          trackColor={{ false: "#767577", true: "gray" }}
           thumbColor={isReminderEnabled ? Colors.secondaryLight : "#f4f3f4"}
           ios_backgroundColor="#3e3e3e"
           onValueChange={toggleSwitch}
@@ -135,7 +137,7 @@ const ReminderScreen = () => {
       </View>
       {isReminderEnabled && (
         <>
-          <View style={styles.inputContainer}>
+          <View style={styles.inputMesgContainer}>
             <Text style={styles.inputLabel}>Reminder Message:</Text>
             <TextInput
               style={styles.input}
@@ -146,41 +148,25 @@ const ReminderScreen = () => {
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.inputLabel}>Select Date:</Text>
-            <TouchableOpacity
-              style={styles.datePickerButton}
-              onPress={() => setShowDatePicker(true)}
-            >
-              <Text style={styles.datePickerButtonText}>Pick Date</Text>
-            </TouchableOpacity>
-            {showDatePicker && (
-              <View style={styles.pickerContainer}>
-                <DateTimePicker
-                  value={date}
-                  mode="date"
-                  display="default"
-                  onChange={handleDateChange}
-                />
-              </View>
-            )}
+            <View style={styles.pickerContainer}>
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+              />
+            </View>
           </View>
           <View style={styles.inputContainer}>
             <Text style={styles.inputLabel}>Select Time:</Text>
-            <TouchableOpacity
-              style={styles.datePickerButton}
-              onPress={() => setShowTimePicker(true)}
-            >
-              <Text style={styles.datePickerButtonText}>Pick Time</Text>
-            </TouchableOpacity>
-            {showTimePicker && (
-              <View style={styles.pickerContainer}>
-                <DateTimePicker
-                  value={date}
-                  mode="time"
-                  display="default"
-                  onChange={handleTimeChange}
-                />
-              </View>
-            )}
+            <View style={styles.pickerContainer}>
+              <DateTimePicker
+                value={date}
+                mode="time"
+                display="default"
+                onChange={handleTimeChange}
+              />
+            </View>
           </View>
           <TouchableOpacity
             onPress={scheduleReminder}
@@ -210,8 +196,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "outfit-bold",
   },
+  inputMesgContainer: {
+    marginBottom: 20,
+  },
   inputContainer: {
     marginBottom: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   inputLabel: {
     fontSize: 16,
@@ -226,19 +218,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 16,
     borderRadius: 5,
-  },
-  datePickerButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: Colors.secondaryLight,
-    borderRadius: 5,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  datePickerButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontFamily: "outfit-bold",
   },
   pickerContainer: {
     justifyContent: "center",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -7,8 +7,23 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Colors } from "@/constants/Colors";
+import { LessonsContext } from "@/contexts/LessonsContext";
 import RecordingCard from "@/components/Lessons/RecordingCard";
 export default function HomeworkScreen({ navigation }) {
+  const { setLessonCompleted, completedLessons } = useContext(LessonsContext);
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  useEffect(() => {
+    if (completedLessons.includes("Intro")) {
+      setIsCompleted(true);
+    }
+  }, [completedLessons]);
+
+  const handleMarkAsCompleted = () => {
+    setLessonCompleted("Intro");
+    setIsCompleted(true);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Record your pre-Attuned voice</Text>
@@ -28,12 +43,25 @@ export default function HomeworkScreen({ navigation }) {
         <Text style={styles.text}>
           3) Walk us through your morning routine.
         </Text>
-
         <View style={styles.buttonContainer}>
           <RecordingCard />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Mark as completed</Text>
-          </TouchableOpacity>
+          {!isCompleted ? (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleMarkAsCompleted}
+            >
+              <Text style={styles.buttonText}>Mark as completed</Text>
+            </TouchableOpacity>
+          ) : (
+            <>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate("Basics")}
+              >
+                <Text style={styles.buttonText}>Go to Next Lesson</Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </ScrollView>
     </View>
@@ -89,8 +117,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontWeight: "bold",
     textAlign: "center",
     fontSize: 16,
+    fontFamily: "outfit-bold",
   },
 });

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -6,33 +6,52 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { LessonsContext } from "@/contexts/LessonsContext";
 import { Colors } from "@/constants/Colors";
+import Icon from "react-native-vector-icons/FontAwesome5";
+import ConfettiCannon from "react-native-confetti-cannon";
+
 const HomeworkThankyouScreen = ({ navigation }) => {
   const { setLessonCompleted, completedLessons } = useContext(LessonsContext);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isLocked, setIsLocked] = useState(true);
+  const confettiRef = useRef(null);
+
   useEffect(() => {
-    if (completedLessons.includes("Intonation")) {
+    if (completedLessons.includes("PutEverything")) {
       setIsCompleted(true);
     }
   }, [completedLessons]);
 
   const handleMarkAsCompleted = () => {
-    setLessonCompleted("Intonation");
+    setLessonCompleted("PutEverything");
     setIsCompleted(true);
     setIsLocked(false);
+    confettiRef.current.start();
   };
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={styles.title}>Congratulations!</Text>
-        <Text style={styles.message}>
-          You are done with homework, please mark this lesson as completed then
-          continue with the next lesson.
-        </Text>
+        {isLocked ? (
+          <>
+            <Text style={styles.title}>Congratulations!</Text>
+            <Text style={styles.message}>
+              You've completed all lessons and homework, please go back to
+              lessons screen.
+            </Text>
+          </>
+        ) : (
+          <Icon
+            name="glass-cheers"
+            size={100}
+            color={Colors.primary}
+            style={{
+              marginTop: 20,
+              marginBottom: 20,
+            }}
+          />
+        )}
         {isLocked && (
           <View style={styles.buttonContainer}>
             <TouchableOpacity
@@ -44,23 +63,21 @@ const HomeworkThankyouScreen = ({ navigation }) => {
           </View>
         )}
         {!isLocked && (
-          <TouchableOpacity onPress={() => navigation.navigate("Resonance")}>
-            <View style={styles.card}>
-              <Icon
-                name="book-outline"
-                size={30}
-                color={isLocked ? "grey" : "orange"}
-              />
-              <View style={styles.cardContent}>
-                <Text style={styles.cardTitle}>Resonance</Text>
-                <Text style={styles.cardTime}>Time: 04:00 min</Text>
-              </View>
-              <TouchableOpacity>
-                <Icon name="play-circle" size={30} color="orange" />
-              </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate("Lessons")}
+            >
+              <Text style={styles.buttonText}>Go Back To Lessons</Text>
+            </TouchableOpacity>
+          </>
         )}
+        <ConfettiCannon
+          count={200}
+          origin={{ x: -10, y: 0 }}
+          ref={confettiRef}
+          fadeOut={true}
+        />
       </ScrollView>
     </View>
   );

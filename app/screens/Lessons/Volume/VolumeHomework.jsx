@@ -1,23 +1,32 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import PagerView from "react-native-pager-view";
 import Page from "../Page";
-import PutEverythingThankyouScreen from "./PutEverythingThankyouScreen";
+import HomeworkThankyouScreen from "./HomeworkThankyouScreen";
 import React, { useState, useRef } from "react";
 import { Colors } from "@/constants/Colors";
+import RecordingCard from "@/components/Lessons/RecordingCard";
 
-export default function PutEverythingScreen({ navigation }) {
+export default function VolumeHomework({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const pagerRef = useRef(null);
   const videos = [
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667402935609.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667403413219.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667529214778.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667403626342.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667317237651.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667317249460.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667317409164.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667317415089.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667317430170.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667317484582.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667317527050.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667317611073.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667317700093.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667317711994.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667317725171.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667317858821.mp4" },
   ];
 
   const pages = [
     ...videos.map((video) => <Page navigation={navigation} video={video} />),
-    <PutEverythingThankyouScreen navigation={navigation} />,
+    <HomeworkThankyouScreen navigation={navigation} />,
   ];
 
   const handlePageChange = (position) => {
@@ -50,6 +59,7 @@ export default function PutEverythingScreen({ navigation }) {
       </PagerView>
 
       <View style={styles.buttonContainer}>
+        {currentPage < pages.length - 1 && <RecordingCard />}
         {currentPage > 0 && (
           <TouchableOpacity
             style={styles.button}
@@ -100,8 +110,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     padding: 20,
     position: "absolute",
-    width: "100%",
     bottom: 0,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -114,8 +124,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
+    fontFamily: "outfit-bold",
     textAlign: "center",
     fontSize: 16,
-    fontFamily: "outfit-bold",
   },
 });

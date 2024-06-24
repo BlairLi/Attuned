@@ -11,7 +11,7 @@ import {
 import { Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Colors } from "@/constants/Colors";
-import { RecordingsContext } from '../../app/screens/Recordings/RecordingsContext';
+import { RecordingsContext } from '../../contexts/RecordingsContext';
 const RecordingCard = () => {
   const [recording, setRecording] = useState(null);
   const { recordings, setRecordings } = useContext(RecordingsContext);
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   recordButtonText: {
     color: "white",
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "outfit-bold",
   },
   centeredView: {
     flex: 1,
@@ -213,8 +213,8 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: "white",
-    fontWeight: "bold",
     textAlign: "center",
+    fontFamily: "outfit-bold",
   },
   modalText: {
     marginBottom: 15,
@@ -229,6 +229,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginBottom: 20,
+    fontFamily: "outfit-regular",
   },
 });
 

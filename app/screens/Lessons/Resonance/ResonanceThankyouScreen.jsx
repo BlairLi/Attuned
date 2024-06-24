@@ -9,10 +9,10 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const ResonanceThankyouScreen = ({ navigation }) => {
-  return (
+  return ( 
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={styles.title}>Thank You</Text>
+        <Text style={styles.title}>Great Job!</Text>
         <Text style={styles.message}>
           You are done with your Lesson task, please continue with your homework.
         </Text>

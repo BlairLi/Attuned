@@ -12,9 +12,9 @@ import {
 import { SwipeListView } from "react-native-swipe-list-view";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { RecordingsContext } from "./RecordingsContext";
-import { SelectedRecordingContext } from "./SelectedRecordingContext";
-import { Colors } from "@/constants/Colors";
+import { RecordingsContext } from "@/contexts/RecordingsContext";
+import { SelectedRecordingContext } from "@/contexts/SelectedRecordingContext";
+
 // Enable LayoutAnimation on Android
 if (
   Platform.OS === "android" &&

@@ -14,13 +14,13 @@ const HomeworkThankyouScreen = ({ navigation }) => {
   const [isCompleted, setIsCompleted] = useState(false);
   const [isLocked, setIsLocked] = useState(true);
   useEffect(() => {
-    if (completedLessons.includes("Intonation")) {
+    if (completedLessons.includes("AdvancedPitch")) {
       setIsCompleted(true);
     }
   }, [completedLessons]);
 
   const handleMarkAsCompleted = () => {
-    setLessonCompleted("Intonation");
+    setLessonCompleted("AdvancedPitch");
     setIsCompleted(true);
     setIsLocked(false);
   };
@@ -44,7 +44,7 @@ const HomeworkThankyouScreen = ({ navigation }) => {
           </View>
         )}
         {!isLocked && (
-          <TouchableOpacity onPress={() => navigation.navigate("Resonance")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Volume")}>
             <View style={styles.card}>
               <Icon
                 name="book-outline"
@@ -52,7 +52,7 @@ const HomeworkThankyouScreen = ({ navigation }) => {
                 color={isLocked ? "grey" : "orange"}
               />
               <View style={styles.cardContent}>
-                <Text style={styles.cardTitle}>Resonance</Text>
+                <Text style={styles.cardTitle}>Volume</Text>
                 <Text style={styles.cardTime}>Time: 04:00 min</Text>
               </View>
               <TouchableOpacity>

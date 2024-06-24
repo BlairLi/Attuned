@@ -9,18 +9,19 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { LessonsContext } from "@/contexts/LessonsContext";
 import { Colors } from "@/constants/Colors";
+
 const HomeworkThankyouScreen = ({ navigation }) => {
   const { setLessonCompleted, completedLessons } = useContext(LessonsContext);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isLocked, setIsLocked] = useState(true);
   useEffect(() => {
-    if (completedLessons.includes("Intonation")) {
+    if (completedLessons.includes("Volume")) {
       setIsCompleted(true);
     }
   }, [completedLessons]);
 
   const handleMarkAsCompleted = () => {
-    setLessonCompleted("Intonation");
+    setLessonCompleted("Volume");
     setIsCompleted(true);
     setIsLocked(false);
   };
@@ -44,7 +45,7 @@ const HomeworkThankyouScreen = ({ navigation }) => {
           </View>
         )}
         {!isLocked && (
-          <TouchableOpacity onPress={() => navigation.navigate("Resonance")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Articulation")}>
             <View style={styles.card}>
               <Icon
                 name="book-outline"
@@ -52,7 +53,7 @@ const HomeworkThankyouScreen = ({ navigation }) => {
                 color={isLocked ? "grey" : "orange"}
               />
               <View style={styles.cardContent}>
-                <Text style={styles.cardTitle}>Resonance</Text>
+                <Text style={styles.cardTitle}>Articulation</Text>
                 <Text style={styles.cardTime}>Time: 04:00 min</Text>
               </View>
               <TouchableOpacity>

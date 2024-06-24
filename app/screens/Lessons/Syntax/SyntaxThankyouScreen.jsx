@@ -9,18 +9,19 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { LessonsContext } from "@/contexts/LessonsContext";
 import { Colors } from "@/constants/Colors";
-const HomeworkThankyouScreen = ({ navigation }) => {
+
+const SyntaxThankyouScreen = ({ navigation }) => {
   const { setLessonCompleted, completedLessons } = useContext(LessonsContext);
   const [isCompleted, setIsCompleted] = useState(false);
   const [isLocked, setIsLocked] = useState(true);
   useEffect(() => {
-    if (completedLessons.includes("Intonation")) {
+    if (completedLessons.includes("Syntax")) {
       setIsCompleted(true);
     }
   }, [completedLessons]);
 
   const handleMarkAsCompleted = () => {
-    setLessonCompleted("Intonation");
+    setLessonCompleted("Syntax");
     setIsCompleted(true);
     setIsLocked(false);
   };
@@ -30,7 +31,7 @@ const HomeworkThankyouScreen = ({ navigation }) => {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Text style={styles.title}>Congratulations!</Text>
         <Text style={styles.message}>
-          You are done with homework, please mark this lesson as completed then
+          You are done with this lesson, please mark this lesson as completed then
           continue with the next lesson.
         </Text>
         {isLocked && (
@@ -44,7 +45,7 @@ const HomeworkThankyouScreen = ({ navigation }) => {
           </View>
         )}
         {!isLocked && (
-          <TouchableOpacity onPress={() => navigation.navigate("Resonance")}>
+          <TouchableOpacity onPress={() => navigation.navigate("PutEverything")}>
             <View style={styles.card}>
               <Icon
                 name="book-outline"
@@ -52,7 +53,7 @@ const HomeworkThankyouScreen = ({ navigation }) => {
                 color={isLocked ? "grey" : "orange"}
               />
               <View style={styles.cardContent}>
-                <Text style={styles.cardTitle}>Resonance</Text>
+                <Text style={styles.cardTitle}>Put Everything Together</Text>
                 <Text style={styles.cardTime}>Time: 04:00 min</Text>
               </View>
               <TouchableOpacity>
@@ -134,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeworkThankyouScreen;
+export default SyntaxThankyouScreen;

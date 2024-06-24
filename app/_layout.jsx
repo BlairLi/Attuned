@@ -6,8 +6,8 @@ import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import AuthNavigator from "./navigation/AuthNavigator";
 import * as SecureStore from "expo-secure-store";
 import TabNavigator from "./navigation/TabNavigator";
-import { RecordingsProvider } from "./screens/Recordings/RecordingsContext";
-
+import { RecordingsProvider } from "../contexts/RecordingsContext";
+import { LessonsProvider } from "@/contexts/LessonsContext";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -54,7 +54,9 @@ export default function RootLayout() {
     >
       <SignedIn>
         <RecordingsProvider>
-          <TabNavigator />
+          <LessonsProvider>
+            <TabNavigator />
+          </LessonsProvider>
         </RecordingsProvider>
       </SignedIn>
       <SignedOut>

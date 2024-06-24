@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { SelectedRecordingContext } from "./SelectedRecordingContext";
+import { SelectedRecordingContext } from "@/contexts/SelectedRecordingContext";
 import { Colors } from "@/constants/Colors";
 import { Audio } from "expo-av";
 import Slider from "@react-native-community/slider";

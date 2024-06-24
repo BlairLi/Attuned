@@ -2,7 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import RecordingsScreen from "../screens/Recordings/RecordingsScreen";
 import RecordingDetailScreen from "../screens/Recordings/RecordingDetailScreen";
-import { SelectedRecordingProvider } from "../screens/Recordings/SelectedRecordingContext";
+import { SelectedRecordingProvider } from "../../contexts/SelectedRecordingContext";
 
 export default function RecordingNavigator() {
   const Stack = createNativeStackNavigator();

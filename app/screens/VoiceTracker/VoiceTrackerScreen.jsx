@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { RecordingsContext } from "../Recordings/RecordingsContext";
+import { RecordingsContext } from "../../../contexts/RecordingsContext";
 import Piano from "./Piano";
 import { Colors } from "@/constants/Colors";
 import Toast from "react-native-toast-message";

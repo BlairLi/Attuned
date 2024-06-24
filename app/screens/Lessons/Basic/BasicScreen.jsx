@@ -4,6 +4,7 @@ import Page from "../Page";
 import BasicThankyouScreen from "./BasicThankyouScreen";
 import React, { useState, useRef } from "react";
 import { Colors } from "@/constants/Colors";
+
 export default function BasicScreen({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const pagerRef = useRef(null);
@@ -99,8 +100,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     padding: 20,
     position: "absolute",
-    bottom: 10,
     width: "100%",
+    bottom: 0,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -113,8 +114,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontWeight: "bold",
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: "outfit-bold",
   },
 });

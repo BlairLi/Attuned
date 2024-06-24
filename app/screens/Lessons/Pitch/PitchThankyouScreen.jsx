@@ -12,7 +12,7 @@ const BasicThankyouScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={styles.title}>Thank You</Text>
+        <Text style={styles.title}>Great Job!</Text>
         <Text style={styles.message}>
           You are done with your Lesson task, please continue with your homework.
         </Text>
@@ -21,7 +21,7 @@ const BasicThankyouScreen = ({ navigation }) => {
             <Icon name="book-outline" size={30} color="grey" />
             <View style={styles.cardContent}>
               <Text style={styles.cardTitle}>Homework</Text>
-              <Text style={styles.cardTime}>Time: 04:00 min</Text>
+              <Text style={styles.cardTime}>Time: 11:00 min</Text>
             </View>
             <TouchableOpacity>
               <Icon name="play-circle" size={30} color="orange" />

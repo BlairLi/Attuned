@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     padding: 20,
     position: "absolute",
-    bottom: 10,
+    bottom: 0,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontWeight: "bold",
+    fontFamily: "outfit-bold",
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 16,
   },
 });
