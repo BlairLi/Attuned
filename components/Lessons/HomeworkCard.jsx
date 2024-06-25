@@ -2,21 +2,20 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const HomeworkCard = ({ title, time, onPress }) => (
-  <TouchableOpacity onPress={onPress}>
+const HomeworkCard = ({ title, onPress, time, icon, locked }) => (
+  <TouchableOpacity onPress={onPress} disabled={locked}>
     <View style={styles.card}>
-      <Icon name="book-outline" size={30} color="grey" />
+      <Icon name={icon} size={30} color={locked ? "grey" : "orange"} />
       <View style={styles.cardContent}>
         <Text style={styles.cardTitle}>{title}</Text>
         <Text style={styles.cardTime}>{time}</Text>
       </View>
-      <TouchableOpacity>
+      <TouchableOpacity disabled={locked}>
         <Icon name="play-circle" size={30} color="orange" />
       </TouchableOpacity>
     </View>
   </TouchableOpacity>
 );
-
 const styles = StyleSheet.create({
   card: {
     width: "95%",

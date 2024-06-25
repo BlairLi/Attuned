@@ -1,12 +1,21 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-expo";
 import { useNavigation } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Colors } from "@/constants/Colors";
+
 export default Header = () => {
   const { isLoaded, user } = useUser();
   const navigation = useNavigation();
+  const [imageUrl, setImageUrl] = useState(null);
+
+  useEffect(() => {
+    if (isLoaded && user) {
+      setImageUrl(user.imageUrl);
+    }
+  }, [isLoaded, user]);
+
   return (
     isLoaded && (
       <View style={styles.container}>
@@ -14,9 +23,7 @@ export default Header = () => {
           <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
             <Image
               source={{
-                uri:
-                  user?.imageUrl ||
-                  "https://avatar.iran.liara.run/public/boy?username=Ash",
+                uri: user?.imageUrl,
               }}
               style={styles.image}
             />
@@ -31,7 +38,7 @@ export default Header = () => {
                 : "Evening"}
             </Text>
             <Text style={styles.profileName}>
-              {user?.firstName || user?.primaryEmailAddress.emailAddress}
+              {user?.username || user?.primaryEmailAddress.emailAddress}
             </Text>
           </TouchableOpacity>
         </View>

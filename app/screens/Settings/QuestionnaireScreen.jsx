@@ -14,6 +14,8 @@ import TalkInNoiseScreen from "../../../components/Questionnaire/TalkInNoiseScre
 import { db } from "../../../configs/FirebaseConfig";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { useUser } from "@clerk/clerk-expo";
+
+
 const QuestionnaireScreen = ({ navigation }) => {
   const { user } = useUser();
   const userEmailAddress = user?.primaryEmailAddress.emailAddress;
@@ -42,6 +44,7 @@ const QuestionnaireScreen = ({ navigation }) => {
     const sanitizedAnswers = Object.fromEntries(
       Object.entries(answers).filter(([_, value]) => value !== undefined)
     );
+  
 
     try {
       await addDoc(collection(db, "questionnaireAnswers"), {

@@ -1,23 +1,29 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import PagerView from "react-native-pager-view";
 import Page from "../Page";
-import PutEverythingThankyouScreen from "./PutEverythingThankyouScreen";
+import HomeworkThankyouScreen from "./HomeworkThankyouScreen";
 import React, { useState, useRef } from "react";
 import { Colors } from "@/constants/Colors";
+import RecordingCard from "@/components/Lessons/RecordingCard";
 
-export default function PutEverythingScreen({ navigation }) {
+export default function AdvancedPitchHomework({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const pagerRef = useRef(null);
   const videos = [
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667402935609.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667403413219.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667529214778.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667403626342.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667314546161.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667390567591.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667390738901.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667390753379.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667390760390.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667390817890.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667390846831.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667390912586.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667391206197.mp4" },
   ];
 
   const pages = [
     ...videos.map((video) => <Page navigation={navigation} video={video} />),
-    <PutEverythingThankyouScreen navigation={navigation} />,
+    <HomeworkThankyouScreen navigation={navigation} />,
   ];
 
   const handlePageChange = (position) => {
@@ -50,6 +56,7 @@ export default function PutEverythingScreen({ navigation }) {
       </PagerView>
 
       <View style={styles.buttonContainer}>
+        {currentPage < pages.length - 1 && <RecordingCard />}
         {currentPage > 0 && (
           <TouchableOpacity
             style={styles.button}
@@ -100,8 +107,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     padding: 20,
     position: "absolute",
-    width: "100%",
     bottom: 0,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -114,8 +121,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
+    fontFamily: "outfit-bold",
     textAlign: "center",
     fontSize: 16,
-    fontFamily: "outfit-bold",
   },
 });

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
 import {
   View,
   Text,
@@ -7,27 +7,60 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-
+import { LessonsContext } from "@/contexts/LessonsContext";
+import { Colors } from "@/constants/Colors";
 const HomeworkThankyouScreen = ({ navigation }) => {
+  const { setLessonCompleted, completedLessons } = useContext(LessonsContext);
+  const [isCompleted, setIsCompleted] = useState(false);
+  const [isLocked, setIsLocked] = useState(true);
+  useEffect(() => {
+    if (completedLessons.includes("Basics")) {
+      setIsCompleted(true);
+    }
+  }, [completedLessons]);
+
+  const handleMarkAsCompleted = () => {
+    setLessonCompleted("Basics");
+    setIsCompleted(true);
+    setIsLocked(false);
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={styles.title}>Thank You</Text>
+        <Text style={styles.title}>Congratulations!</Text>
         <Text style={styles.message}>
-            You are done with homework, please continue with next lesson.
+          You are done with homework, please mark this lesson as completed then
+          continue with the next lesson.
         </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Pitch")}>
-          <View style={styles.card}>
-            <Icon name="book-outline" size={30} color="grey" />
-            <View style={styles.cardContent}>
-              <Text style={styles.cardTitle}>Pitch</Text>
-              <Text style={styles.cardTime}>Time: 04:00 min</Text>
-            </View>
-            <TouchableOpacity>
-              <Icon name="play-circle" size={30} color="orange" />
+        {isLocked && (
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleMarkAsCompleted}
+            >
+              <Text style={styles.buttonText}>Mark as completed</Text>
             </TouchableOpacity>
           </View>
-        </TouchableOpacity>
+        )}
+        {!isLocked && (
+          <TouchableOpacity onPress={() => navigation.navigate("Pitch")}>
+            <View style={styles.card}>
+              <Icon
+                name="book-outline"
+                size={30}
+                color={isLocked ? "grey" : "orange"}
+              />
+              <View style={styles.cardContent}>
+                <Text style={styles.cardTitle}>Pitch</Text>
+                <Text style={styles.cardTime}>Time: 04:00 min</Text>
+              </View>
+              <TouchableOpacity>
+                <Icon name="play-circle" size={30} color="orange" />
+              </TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+        )}
       </ScrollView>
     </View>
   );
@@ -37,6 +70,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+    padding: 10,
   },
   scrollViewContent: {
     flexGrow: 1,
@@ -56,6 +90,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginBottom: 20,
     fontFamily: "outfit-light",
+  },
+  buttonContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    backgroundColor: Colors.primary,
+    padding: 20,
+    borderRadius: 10,
+    margin: 10,
+  },
+  buttonText: {
+    color: "white",
+    fontFamily: "outfit-bold",
+    textAlign: "center",
+    fontSize: 16,
   },
   card: {
     width: "95%",

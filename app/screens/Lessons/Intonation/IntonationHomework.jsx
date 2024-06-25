@@ -4,6 +4,7 @@ import Page from "../Page";
 import HomeworkThankyouScreen from "./HomeworkThankyouScreen";
 import React, { useState, useRef } from "react";
 import { Colors } from "@/constants/Colors";
+import RecordingCard from "@/components/Lessons/RecordingCard";
 export default function IntonationHomework({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const pagerRef = useRef(null);
@@ -52,6 +53,7 @@ export default function IntonationHomework({ navigation }) {
       </PagerView>
 
       <View style={styles.buttonContainer}>
+        {currentPage < pages.length - 1 && <RecordingCard />}
         {currentPage > 0 && (
           <TouchableOpacity
             style={styles.button}
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     padding: 20,
     position: "absolute",
-    bottom: 10,
+    bottom: 0,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
@@ -116,8 +118,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
-    fontWeight: "bold",
+    fontFamily: "outfit-bold",
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 16,
   },
 });

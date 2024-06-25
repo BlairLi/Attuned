@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: "center",
     position: "absolute",
-    bottom: 20,
+    bottom: 0,
     width: "100%",
     justifyContent: "center",
   },
@@ -110,12 +110,11 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     margin: 10,
-
   },
   buttonText: {
     color: "white",
-    fontWeight: "bold",
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: "outfit-bold",
   },
 });

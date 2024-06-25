@@ -10,9 +10,10 @@ import {
   TextInput,
 } from "react-native";
 import { SwipeListView } from "react-native-swipe-list-view";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { RecordingsContext } from "./RecordingsContext";
-import { SelectedRecordingContext } from "./SelectedRecordingContext";
+import { RecordingsContext } from "@/contexts/RecordingsContext";
+import { SelectedRecordingContext } from "@/contexts/SelectedRecordingContext";
 
 // Enable LayoutAnimation on Android
 if (
@@ -22,40 +23,58 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-
-// replace with data fetched from API
 const RecordingsScreen = ({ navigation }) => {
 
   const { recordings, setRecordings } = useContext(RecordingsContext);
   const { setSelectedRecording } = useContext(SelectedRecordingContext);
-  // search functionality
+
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState(recordings);
 
+  // Load recordings from AsyncStorage when component mounts
+  useEffect(() => {
+    const loadRecordings = async () => {
+      try {
+        const storedRecordings = await AsyncStorage.getItem("recordings");
+        if (storedRecordings) {
+          setRecordings(JSON.parse(storedRecordings));
+        }
+      } catch (error) {
+        console.error("Failed to load recordings from AsyncStorage", error);
+      }
+    };
+    loadRecordings();
+  }, []);
+
+  // Update search results when recordings change
+  useEffect(() => {
+    setSearchResults(recordings);
+  }, [recordings]);
+
+  // Search recordings by title
   const handleSearch = (query) => {
     setSearchQuery(query);
     if (query) {
-      const newData = recordings.filter((item) => {
-        return item.title.toLowerCase().includes(query.toLowerCase());
-      });
+      const newData = recordings.filter((item) =>
+        item.title.toLowerCase().includes(query.toLowerCase())
+      );
       setSearchResults(newData);
     } else {
       setSearchResults(recordings);
     }
   };
 
-  // delete functionality
-  const deleteItem = (id, rowMap) => {
+  // Delete recording from list and AsyncStorage
+  const deleteItem = async (id, rowMap) => {
     console.log("Deleting item with id: ", id);
     if (rowMap[id]) {
       rowMap[id].closeRow();
     }
-    const newData = [...recordings].filter((item) => item.id !== id);
-    console.log("New data: ", newData);
+    const newData = recordings.filter((item) => item.id !== id);
     setRecordings(newData);
+    await AsyncStorage.setItem("recordings", JSON.stringify(newData));
   };
 
-  // render recording item
   const renderItem = (data) => (
     <TouchableOpacity
       style={styles.itemContainer}
@@ -84,7 +103,6 @@ const RecordingsScreen = ({ navigation }) => {
     </TouchableOpacity>
   );
 
-  // Delete item on swipe
   const renderHiddenItem = (data, rowMap) => {
     const handleDelete = () => {
       Alert.alert(
@@ -111,11 +129,6 @@ const RecordingsScreen = ({ navigation }) => {
     );
   };
 
-  // initial/update search results when recordings change
-  useEffect(() => {
-    setSearchResults(recordings);
-  } , [recordings]);
-
   return (
     <View style={styles.container}>
       <TextInput
@@ -124,17 +137,21 @@ const RecordingsScreen = ({ navigation }) => {
         value={searchQuery}
         onChangeText={handleSearch}
       />
-
-      <SwipeListView
-        data={searchResults}
-        renderItem={renderItem}
-        renderHiddenItem={renderHiddenItem}
-        rightOpenValue={-75}
-        keyExtractor={(item) => item.id}
-        showsVerticalScrollIndicator={false}
-        disableRightSwipe
-        contentContainerStyle={styles.container}
-      />
+      {searchResults.length === 0 ? (
+        <View style={styles.noRecordingsContainer}>
+          <Text style={styles.noRecordingsText}>No recordings</Text>
+        </View>
+      ) : (
+        <SwipeListView
+          data={searchResults}
+          renderItem={renderItem}
+          renderHiddenItem={renderHiddenItem}
+          rightOpenValue={-75}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          disableRightSwipe
+        />
+      )}
     </View>
   );
 };
@@ -162,6 +179,16 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     margin: 10,
     borderRadius: 10,
+  },
+  noRecordingsContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noRecordingsText: {
+    fontSize: 20,
+    color: "gray",
+    fontFamily: "outfit-light",
   },
   detail: {
     fontFamily: "outfit-light",

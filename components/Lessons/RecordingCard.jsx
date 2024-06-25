@@ -1,20 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   View,
   Text,
-  TextInput,
-  Modal,
-  StyleSheet,
   TouchableOpacity,
+  Modal,
+  TextInput,
+  StyleSheet,
   Alert,
 } from "react-native";
 import { Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { RecordingsContext } from "../../../contexts/RecordingsContext";
-import Piano from "./Piano";
 import { Colors } from "@/constants/Colors";
-import Toast from "react-native-toast-message";
-export default function VoiceTrackScreen() {
+import { RecordingsContext } from '../../contexts/RecordingsContext';
+const RecordingCard = () => {
   const [recording, setRecording] = useState(null);
   const { recordings, setRecordings } = useContext(RecordingsContext);
   const [hasPermission, setHasPermission] = useState(false);
@@ -81,11 +79,6 @@ export default function VoiceTrackScreen() {
         "recordings",
         JSON.stringify(updatedRecordings)
       );
-      // Show toast message
-      Toast.show({
-        type: "success",
-        text1: "Recording saved successfully!",
-      });
 
       setRecording(null);
       setModalVisible(false);
@@ -94,20 +87,14 @@ export default function VoiceTrackScreen() {
     }
   };
 
-  function getDurationFormatted(milliseconds) {
+  const getDurationFormatted = (milliseconds) => {
     const minutes = Math.floor(milliseconds / 1000 / 60);
     const seconds = Math.round((milliseconds / 1000) % 60);
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-  }
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.instructions}>
-        Please use the piano keys below to visualize and practice identifying
-        your baseline pitch and working towards your target pitch by using the
-        skills demonstrated in the exercises.
-      </Text>
-      <Piano />
+    <View style={styles.card}>
       <TouchableOpacity
         style={[
           styles.recordButton,
@@ -160,22 +147,13 @@ export default function VoiceTrackScreen() {
       </Modal>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  instructions: {
-    fontFamily: "outfit",
-    fontSize: 18,
-    color: Colors.primaryDark,
-    textAlign: "center",
+  card: {
+    borderRadius: 10,
     marginBottom: 20,
+    alignItems: "center",
   },
   startRecordingButton: {
     backgroundColor: Colors.secondary,
@@ -189,13 +167,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     marginTop: 20,
-    position: "absolute",
-    bottom: 50,
   },
   recordButtonText: {
     color: "white",
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "outfit-bold",
   },
   centeredView: {
     flex: 1,
@@ -237,8 +213,8 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: "white",
-    fontWeight: "bold",
     textAlign: "center",
+    fontFamily: "outfit-bold",
   },
   modalText: {
     marginBottom: 15,
@@ -253,5 +229,8 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginBottom: 20,
+    fontFamily: "outfit-regular",
   },
 });
+
+export default RecordingCard;

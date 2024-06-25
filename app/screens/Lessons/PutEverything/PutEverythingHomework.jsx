@@ -1,23 +1,27 @@
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import PagerView from "react-native-pager-view";
 import Page from "../Page";
-import PutEverythingThankyouScreen from "./PutEverythingThankyouScreen";
+import HomeworkThankyouScreen from "./HomeworkThankyouScreen";
 import React, { useState, useRef } from "react";
 import { Colors } from "@/constants/Colors";
+import RecordingCard from "@/components/Lessons/RecordingCard";
 
-export default function PutEverythingScreen({ navigation }) {
+export default function PutEverythingHomework({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const pagerRef = useRef(null);
   const videos = [
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667402935609.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667403413219.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667529214778.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667403626342.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667403764891.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667528985078.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667430821252.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667430831754.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667406290057.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667529108340.mp4" },
+    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667405666510.mp4" },
   ];
 
   const pages = [
     ...videos.map((video) => <Page navigation={navigation} video={video} />),
-    <PutEverythingThankyouScreen navigation={navigation} />,
+    <HomeworkThankyouScreen navigation={navigation} />,
   ];
 
   const handlePageChange = (position) => {
@@ -50,6 +54,7 @@ export default function PutEverythingScreen({ navigation }) {
       </PagerView>
 
       <View style={styles.buttonContainer}>
+        {currentPage < pages.length - 1 && <RecordingCard />}
         {currentPage > 0 && (
           <TouchableOpacity
             style={styles.button}
@@ -100,8 +105,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     padding: 20,
     position: "absolute",
-    width: "100%",
     bottom: 0,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -114,8 +119,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "white",
+    fontFamily: "outfit-bold",
     textAlign: "center",
     fontSize: 16,
-    fontFamily: "outfit-bold",
   },
 });

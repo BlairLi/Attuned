@@ -1,17 +1,70 @@
 import React, { useState } from "react";
-import { Text, Alert, View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Text,
+  Alert,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+  Platform,
+} from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useClerk } from "@clerk/clerk-expo";
 import { Colors } from "@/constants/Colors";
 import SettingItem from "../../../components/Settings/SettingItem";
+import * as Notifications from "expo-notifications";
 
 const SettingsScreen = ({ navigation }) => {
-  // push notifications
   const [isPushNotificationsEnabled, setIsPushNotificationsEnabled] =
     useState(false);
 
-  const toggleSwitch = () =>
-    setIsPushNotificationsEnabled((previousState) => !previousState);
+  const toggleSwitch = async () => {
+    const newValue = !isPushNotificationsEnabled;
+    setIsPushNotificationsEnabled(newValue);
+
+    if (newValue) {
+      const { status } = await Notifications.getPermissionsAsync();
+      let finalStatus = status;
+      if (status !== "granted") {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        Alert.alert(
+          "Permission Required",
+          "Please enable notifications in your settings.",
+          [
+            { text: "Cancel", style: "cancel" },
+            { text: "Open Settings", onPress: openSettings },
+          ]
+        );
+        setIsPushNotificationsEnabled(false);
+      } else {
+        console.log("Push notifications enabled");
+        await scheduleNotification();
+      }
+    } else {
+      console.log("Push notifications disabled");
+    }
+  };
+
+  // Schedule a notification to be displayed after 2 seconds when push notifications are enabled
+  const scheduleNotification = async () => {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Push Notifications Enabled",
+        body: "You have successfully enabled push notifications.",
+      },
+      trigger: { seconds: 2 },
+    });
+  };
+
+  const openSettings = () => {
+    if (Platform.OS === "ios") {
+      Linking.openURL("app-settings:");
+    } else {
+      Linking.openSettings();
+    }
+  };
 
   return (
     <View style={styles.container}>

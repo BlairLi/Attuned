@@ -21,26 +21,8 @@ if (
 }
 
 const NotificationsScreen = () => {
-  const [notifications, setNotifications] = useState([
-    {
-      id: "1",
-      title: "New Feature",
-      detail: "Check out the new feature now available on your app.",
-      expanded: false,
-    },
-    {
-      id: "2",
-      title: "System Update",
-      detail: "Your system will update tonight at 12:00 AM.",
-      expanded: false,
-    },
-    {
-      id: "3",
-      title: "Account Alert",
-      detail: "Unusual activity detected in your account.",
-      expanded: false,
-    },
-  ]);
+  // Import notifications data
+  const [notifications, setNotifications] = useState([]);
 
   const toggleExpand = (id) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -105,16 +87,22 @@ const NotificationsScreen = () => {
   };
   return (
     <View style={styles.container}>
-      <SwipeListView
-        data={notifications}
-        renderItem={renderItem}
-        renderHiddenItem={renderHiddenItem}
-        rightOpenValue={-75}
-        keyExtractor={(item) => item.id}
-        showsVerticalScrollIndicator={false}
-        disableRightSwipe
-        contentContainerStyle={styles.container}
-      />
+      {notifications.length === 0 ? (
+        <View style={styles.noNotificationContainer}>
+          <Text style={styles.noNotificationText}>No Notifications</Text>
+        </View>
+      ) : (
+        <SwipeListView
+          data={notifications}
+          renderItem={renderItem}
+          renderHiddenItem={renderHiddenItem}
+          rightOpenValue={-75}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          disableRightSwipe
+          contentContainerStyle={styles.container}
+        />
+      )}
     </View>
   );
 };
@@ -139,6 +127,16 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     marginBottom: 10,
+  },
+  noNotificationContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  noNotificationText: {
+    fontFamily: "outfit-light",
+    fontSize: 20,
+    color: "gray",
   },
   title: {
     fontFamily: "outfit-semibold",
