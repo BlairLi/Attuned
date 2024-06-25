@@ -45,7 +45,7 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
-
+// TODO: Error: Rendered more hooks than during the previous render.
   // useFonts({
   //   outfit: require("./../assets/fonts/Outfit-Regular.ttf"),
   //   "outfit-bold": require("./../assets/fonts/Outfit-Bold.ttf"),

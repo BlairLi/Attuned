@@ -25,26 +25,6 @@ if (
 
 // replace with data fetched from API
 const RecordingsScreen = ({ navigation }) => {
-  // const [recordings, setRecordings] = useState([
-  //   {
-  //     id: "1",
-  //     title: "Recording 1",
-  //     time: "2 hours ago",
-  //     duration: "2:30 min",
-  //   },
-  //   {
-  //     id: "2",
-  //     title: "Recording 2",
-  //     time: "1 day ago",
-  //     duration: "5:30 min",
-  //   },
-  //   {
-  //     id: "3",
-  //     title: "Recording 3",
-  //     time: "1 week ago",
-  //     duration: "10:30 min",
-  //   },
-  // ]);
 
   const { recordings, setRecordings } = useContext(RecordingsContext);
   const { setSelectedRecording } = useContext(SelectedRecordingContext);
@@ -82,7 +62,7 @@ const RecordingsScreen = ({ navigation }) => {
       activeOpacity={1}
       onPress={() => {
         setSelectedRecording(data.item);
-        navigation.navigate("RecordingDetail");
+        navigation.navigate("Recording Details");
       }}
     >
       <View

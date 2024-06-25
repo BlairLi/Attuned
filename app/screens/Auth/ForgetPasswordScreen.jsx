@@ -62,7 +62,8 @@ const ForgetPasswordScreen = ({ navigation }) => {
           Alert.alert(
             "Password Reset",
             "Your password has been reset successfully!",
-            [{ text: "OK", onPress: () => navigation.navigate("SignIn") }]
+            // [{ text: "OK", onPress: () => navigation.navigate("SignIn") }]
+            [{ text: "OK", onPress: () => navigation.navigate("screens/Auth/LoginScreen") }]
           );
         } else {
           setError("Password reset failed. Please try again.");
@@ -138,7 +139,7 @@ const ForgetPasswordScreen = ({ navigation }) => {
         )}
         <TouchableOpacity
           style={styles.newHereButton}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => navigation.goBack()}
         >
           <Text style={styles.newHereText}>Go Back to Login</Text>
         </TouchableOpacity>
