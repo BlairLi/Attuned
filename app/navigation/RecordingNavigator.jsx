@@ -23,7 +23,7 @@ export default function RecordingNavigator() {
         {/* <Stack.Screen name="screens/Recordings/RecordingsScreen" component={RecordingsScreen} /> */}
         <Stack.Screen name="Recordings" component={RecordingsScreen} />
         <Stack.Screen
-          name="RecordingDetail"
+          name="Recording Details"
           component={RecordingDetailScreen}
         />
       </Stack.Navigator>

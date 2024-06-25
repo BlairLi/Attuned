@@ -134,7 +134,7 @@ const ReminderScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.setting}>
-        <Text style={styles.settingText}>Enable Reminder:</Text>
+        <Text style={styles.settingText}>Enable Reminders:</Text>
         <Switch
           trackColor={{ false: "#767577", true: "gray" }}
           thumbColor={isReminderEnabled ? Colors.secondaryLight : "#f4f3f4"}

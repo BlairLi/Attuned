@@ -29,7 +29,7 @@ export default function SettingNavigation() {
         <Stack.Screen name="Disclaimer" component={DisclaimerScreen} />
         <Stack.Screen name="Notifications" component={NotificationsScreen} />
         <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="Reminder" component={ReminderScreen} />
+        <Stack.Screen name="Reminders" component={ReminderScreen} />
         <Stack.Screen name="Change Password" component={ChangePasswordScreen} />
         <Stack.Screen name="Contact Us" component={ContactUsScreen} />
         <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />

@@ -93,8 +93,8 @@ const SettingsScreen = ({ navigation }) => {
         <SettingItem
           iconName="alarm"
           color={Colors.secondaryLight}
-          title="Reminder"
-          onPress={() => navigation.navigate("Reminder")}
+          title="Reminders"
+          onPress={() => navigation.navigate("Reminders")}
         />
         <SettingItem
           iconName="document"

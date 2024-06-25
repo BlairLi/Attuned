@@ -24,6 +24,7 @@ if (
 }
 
 const RecordingsScreen = ({ navigation }) => {
+
   const { recordings, setRecordings } = useContext(RecordingsContext);
   const { setSelectedRecording } = useContext(SelectedRecordingContext);
 
@@ -80,7 +81,7 @@ const RecordingsScreen = ({ navigation }) => {
       activeOpacity={1}
       onPress={() => {
         setSelectedRecording(data.item);
-        navigation.navigate("RecordingDetail");
+        navigation.navigate("Recording Details");
       }}
     >
       <View
