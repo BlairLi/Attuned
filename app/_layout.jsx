@@ -8,6 +8,8 @@ import * as SecureStore from "expo-secure-store";
 import TabNavigator from "./navigation/TabNavigator";
 import { RecordingsProvider } from "../contexts/RecordingsContext";
 import { LessonsProvider } from "@/contexts/LessonsContext";
+import Toast from "react-native-toast-message";
+import CustomToast from "@/components/VoiceTracker/CustomToast";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -62,6 +64,12 @@ export default function RootLayout() {
       <SignedOut>
         <AuthNavigator />
       </SignedOut>
+      <Toast
+        config={{
+          success: (props) => <CustomToast {...props} />,
+          error: (props) => <CustomToast {...props} />,
+        }}
+      />
     </ClerkProvider>
   );
 }

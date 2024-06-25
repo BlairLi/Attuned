@@ -7,6 +7,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -14,12 +16,14 @@ import { RecordingsContext } from "../../../contexts/RecordingsContext";
 import Piano from "./Piano";
 import { Colors } from "@/constants/Colors";
 import Toast from "react-native-toast-message";
+
 export default function VoiceTrackScreen() {
   const [recording, setRecording] = useState(null);
   const { recordings, setRecordings } = useContext(RecordingsContext);
   const [hasPermission, setHasPermission] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [recordingName, setRecordingName] = useState("Recording");
+  const [recordingUri, setRecordingUri] = useState(null);
 
   useEffect(() => {
     const requestPermissions = async () => {
@@ -33,6 +37,10 @@ export default function VoiceTrackScreen() {
     if (!hasPermission) {
       Alert.alert("No permission to record audio");
       return;
+    }
+    if (recording) {
+      console.log("Stopping existing recording before starting a new one");
+      await stopRecording(); // Ensure the existing recording is stopped before starting a new one
     }
     try {
       await Audio.setAudioModeAsync({
@@ -50,29 +58,44 @@ export default function VoiceTrackScreen() {
   };
 
   const stopRecording = async () => {
+    if (!recording) return;
     try {
       await recording.stopAndUnloadAsync();
-      const { sound, status } = await recording.createNewLoadedSoundAsync();
+      const { status } = await recording.createNewLoadedSoundAsync();
       const duration = getDurationFormatted(status.durationMillis);
       console.log("Duration:", duration);
 
-      if (duration == "0:00") {
+      if (duration === "0:00") {
         Alert.alert("Your recording is too short! Please try again.");
         setRecording(null);
-        setModalVisible(!modalVisible);
+        setModalVisible(false);
         return;
       }
 
       const uri = recording.getURI();
+      setRecordingUri(uri);
       console.log("Recording stopped and stored at", uri);
+      setModalVisible(true);
+    } catch (error) {
+      console.error("Failed to stop recording", error);
+      setRecording(null);
+    }
+  };
+
+  const saveRecording = async () => {
+    if (!recordingUri) return;
+
+    try {
+      const { sound, status } = await recording.createNewLoadedSoundAsync();
+      const duration = getDurationFormatted(status.durationMillis);
 
       const newRecording = {
         id: new Date().toISOString(),
         title: recordingName,
         time: new Date().toLocaleString(),
         sound: sound,
-        duration: getDurationFormatted(status.durationMillis),
-        file: uri,
+        duration: duration,
+        file: recordingUri,
       };
 
       const updatedRecordings = [...recordings, newRecording];
@@ -81,17 +104,29 @@ export default function VoiceTrackScreen() {
         "recordings",
         JSON.stringify(updatedRecordings)
       );
+
       // Show toast message
       Toast.show({
         type: "success",
         text1: "Recording saved successfully!",
+        visibilityTime: 3000,
       });
 
       setRecording(null);
+      setRecordingUri(null);
       setModalVisible(false);
     } catch (error) {
-      console.error("Failed to stop recording", error);
+      console.error("Failed to save recording", error);
     }
+  };
+
+  const cancelRecording = () => {
+    if (recording) {
+      recording.stopAndUnloadAsync().catch(() => {}); // Ensure recording is stopped
+      setRecording(null);
+      setRecordingUri(null);
+    }
+    setModalVisible(false);
   };
 
   function getDurationFormatted(milliseconds) {
@@ -113,12 +148,13 @@ export default function VoiceTrackScreen() {
           styles.recordButton,
           recording ? styles.stopRecordingButton : styles.startRecordingButton,
         ]}
-        onPress={recording ? () => setModalVisible(true) : startRecording}
+        onPress={recording ? stopRecording : startRecording}
       >
         <Text style={styles.recordButtonText}>
           {recording ? "Stop Recording" : "Start Recording"}
         </Text>
       </TouchableOpacity>
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -127,36 +163,38 @@ export default function VoiceTrackScreen() {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>
-              Enter the name of your Recording
-            </Text>
-            <TextInput
-              style={styles.textInput}
-              onChangeText={setRecordingName}
-              value={recordingName}
-              placeholder="Recording Name"
-            />
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={[styles.button, styles.buttonCancel]}
-                onPress={() => {
-                  setRecording(null);
-                  setModalVisible(false);
-                }}
-              >
-                <Text style={styles.textStyle}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, styles.buttonSave]}
-                onPress={stopRecording}
-              >
-                <Text style={styles.textStyle}>Save</Text>
-              </TouchableOpacity>
+        <KeyboardAvoidingView
+          style={styles.centeredView}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>
+                Enter the name of your Recording
+              </Text>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={setRecordingName}
+                value={recordingName}
+                placeholder="Recording Name"
+              />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonCancel]}
+                  onPress={cancelRecording}
+                >
+                  <Text style={styles.textStyle}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonSave]}
+                  onPress={saveRecording}
+                >
+                  <Text style={styles.textStyle}>Save</Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   );
@@ -195,7 +233,7 @@ const styles = StyleSheet.create({
   recordButtonText: {
     color: "white",
     fontSize: 16,
-    fontWeight: "bold",
+    fontFamily: "outfit-bold",
   },
   centeredView: {
     flex: 1,
@@ -237,14 +275,14 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: "white",
-    fontWeight: "bold",
+    fontFamily: "outfit-bold",
     textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
     textAlign: "center",
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 20,
+    fontFamily: "outfit-bold",
   },
   textInput: {
     width: 300,
@@ -253,5 +291,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginBottom: 20,
+    fontFamily: "outfit",
   },
 });
