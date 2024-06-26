@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import VideoPlayer from "expo-video-player";
 import { ResizeMode } from "expo-av";
 
-// Fixed Warning: VideoPlayer: Support for defaultProps will be removed
+// TODO: Fixed Warning: VideoPlayer: Support for defaultProps will be removed
 // from function components in a future major release.
 // Use JavaScript default parameters instead.
 const Page = ({ navigation, video }) => {

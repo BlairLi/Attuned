@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import {
   View,
   Image,
@@ -24,6 +24,7 @@ import { Colors } from "@/constants/Colors";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { LessonsContext } from "@/contexts/LessonsContext";
 import { useUserData } from "@/contexts/UserContext"; // Import the context
+import { useFocusEffect } from "@react-navigation/native"; // Import the hook
 const bannerImage = require("../../../assets/images/banner.png");
 
 export default function LessonsScreen({ navigation }) {
@@ -35,8 +36,7 @@ export default function LessonsScreen({ navigation }) {
   const { completedLessons } = useContext(LessonsContext);
   const { userData, setUserData } = useUserData(); // Use the context
 
-  useEffect(() => {
-    const checkQuestionnaireCompletion = async () => {
+  const checkQuestionnaireCompletion = useCallback(async () => {
       if (userEmailAddress) {
         try {
           const userRef = collection(db, "questionnaireAnswers");
@@ -65,13 +65,20 @@ export default function LessonsScreen({ navigation }) {
           console.error("Error fetching user data:", error);
         }
       }
-    };
+  }, [userEmailAddress, setUserData]);
 
+  useEffect(() => {
     if (isInitialLoad) {
       checkQuestionnaireCompletion();
       setIsInitialLoad(false);
     }
-  }, [userEmailAddress, navigation, isInitialLoad]);
+  }, [isInitialLoad, checkQuestionnaireCompletion]);
+
+  useFocusEffect(
+    useCallback(() => {
+      checkQuestionnaireCompletion();
+    }, [checkQuestionnaireCompletion])
+  );
 
   const closeModalAndNavigate = () => {
     setModalVisible(false);
@@ -81,8 +88,8 @@ export default function LessonsScreen({ navigation }) {
   return (
     <>
       <Modal
-        animationType="slide"
-        transparent={true}
+        animationType="fade"
+        transparent={false}
         visible={modalVisible}
         onRequestClose={() => setModalVisible(false)}
       >
@@ -96,7 +103,7 @@ export default function LessonsScreen({ navigation }) {
               size={100}
               color={Colors.orange}
               style={{
-                marginTop: 20,
+                paddingBottom: 70,
               }}
             />
             <View style={modalStyles.bottomButtonContainer}>
