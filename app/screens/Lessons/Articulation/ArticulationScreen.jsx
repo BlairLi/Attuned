@@ -4,14 +4,47 @@ import Page from "../Page";
 import ArticulationThankyouScreen from "./ArticulationThankyouScreen";
 import React, { useState, useRef } from "react";
 import { Colors } from "@/constants/Colors";
+import { useUserData } from "@/contexts/UserContext";
 
 export default function ArticulationScreen({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const pagerRef = useRef(null);
-  const videos = [
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318326029.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318369634.mp4" },
-  ];
+  const { userData } = useUserData(); // Use the context to get user data
+  const allVideos = {
+    default: [
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318326029.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318369634.mp4" },
+    ],
+    transFemale: [
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318436803.mp4" },
+    ],
+    transMale: [
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318574747.mp4" },
+    ],
+    nonBinary: [
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318436803.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318574747.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318727367.mp4" },
+    ],
+  };
+
+  // Determine the set of videos to use based on gender identity
+  let videos;
+  switch (userData?.genderIdentity) {
+    case "Trans Female":
+      videos = [...allVideos.default, ...allVideos.transFemale];
+      break;
+    case "Trans Male":
+      videos = [...allVideos.default, ...allVideos.transMale];
+      break;
+    case "Non-Binary":
+    case "Gender Non-Conforming":
+      videos = [...allVideos.default, ...allVideos.nonBinary];
+      break;
+    default:
+      videos = allVideos.default;
+      break;
+  }
 
   const pages = [
     ...videos.map((video) => <Page navigation={navigation} video={video} />),

@@ -23,6 +23,7 @@ import LessonCard from "../../../components/Lessons/LessonCard";
 import { Colors } from "@/constants/Colors";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { LessonsContext } from "@/contexts/LessonsContext";
+import { useUserData } from "@/contexts/UserContext"; // Import the context
 const bannerImage = require("../../../assets/images/banner.png");
 
 export default function LessonsScreen({ navigation }) {
@@ -30,18 +31,18 @@ export default function LessonsScreen({ navigation }) {
   const userEmailAddress = user?.primaryEmailAddress.emailAddress;
   const [locked, setLocked] = useState(true);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const [genderIdentity, setGenderIdentity] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const { completedLessons } = useContext(LessonsContext); 
+  const { completedLessons } = useContext(LessonsContext);
+  const { userData, setUserData } = useUserData(); // Use the context
 
   useEffect(() => {
     const checkQuestionnaireCompletion = async () => {
       if (userEmailAddress) {
         try {
-          const userRef = collection(db, "users");
+          const userRef = collection(db, "questionnaireAnswers");
           const q = query(
             userRef,
-            where("email", "==", userEmailAddress),
+            where("user", "==", userEmailAddress),
             orderBy("timestamp", "desc"),
             limit(1)
           );
@@ -54,9 +55,9 @@ export default function LessonsScreen({ navigation }) {
             querySnapshot.forEach((doc) => {
               const userData = doc.data();
               const { genderIdentity } = userData;
-              // Store genderIdentity in state
               console.log(`User gender identity: ${genderIdentity}`);
-              setGenderIdentity(genderIdentity);
+              // Store genderIdentity in context
+              setUserData(userData);
               setLocked(false); // Unlock the lessons
             });
           }

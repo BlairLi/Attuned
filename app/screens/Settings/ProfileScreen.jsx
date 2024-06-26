@@ -18,7 +18,7 @@ import * as ImageManipulator from "expo-image-manipulator";
 import { Colors } from "@/constants/Colors";
 import { storage } from "@/configs/FirebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
+import Toast from "react-native-toast-message";
 const ProfileScreen = () => {
   const { user, isLoaded } = useUser();
   const [isEditingName, setIsEditingName] = useState(false);
@@ -43,65 +43,75 @@ const ProfileScreen = () => {
     return <Text style={styles.loading}>Loading...</Text>;
   }
 
-  const pickImage = async () => {
-    try {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
-      });
+  // const pickImage = async () => {
+  //   try {
+  //     let result = await ImagePicker.launchImageLibraryAsync({
+  //       mediaTypes: ImagePicker.MediaTypeOptions.Images,
+  //       allowsEditing: true,
+  //       aspect: [1, 1],
+  //       quality: 1,
+  //     });
 
-      if (!result.canceled) {
-        const uri = result.assets ? result.assets[0].uri : result.uri;
-        if (typeof uri !== "string") {
-          throw new Error("Invalid URI");
-        }
-        const resizedImage = await ImageManipulator.manipulateAsync(
-          uri,
-          [{ resize: { width: 300, height: 300 } }], // Resize image
-          { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
-        );
+  //     if (!result.canceled) {
+  //       const uri = result.assets ? result.assets[0].uri : result.uri;
+  //       if (typeof uri !== "string") {
+  //         throw new Error("Invalid URI");
+  //       }
+  //       const resizedImage = await ImageManipulator.manipulateAsync(
+  //         uri,
+  //         [{ resize: { width: 300, height: 300 } }], // Resize image
+  //         { compress: 0.7, format: ImageManipulator.SaveFormat.JPEG }
+  //       );
 
-        uploadImage(resizedImage.uri);
-      }
-    } catch (error) {
-      console.error("Error picking image:", error);
-      Alert.alert("Error", `Failed to pick image: ${error.message}`);
-    }
-  };
+  //       uploadImage(resizedImage.uri);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error picking image:", error);
+  //     Alert.alert("Error", `Failed to pick image: ${error.message}`);
+  //   }
+  // };
 
-  const uploadImage = async (uri) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(uri);
-      const blob = await response.blob();
-      const storageRef = ref(storage, `profileImages/${user.id}`);
+  // const uploadImage = async (uri) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await fetch(uri);
+  //     const blob = await response.blob();
+  //     const storageRef = ref(storage, `profileImages/${user.id}`);
 
-      const snapshot = await uploadBytes(storageRef, blob);
-      const downloadURL = await getDownloadURL(snapshot.ref);
+  //     const snapshot = await uploadBytes(storageRef, blob);
+  //     const downloadURL = await getDownloadURL(snapshot.ref);
 
-      // Update user profile with the new image URL
-      user.imageUrl = downloadURL;
+  //     // Update user profile with the new image URL
+  //     user.imageUrl = downloadURL;
 
-      Alert.alert("Success", "Profile picture updated successfully!");
-    } catch (error) {
-      console.error("Error updating profile picture:", error);
-      Alert.alert("Error", `Failed to update profile picture:${error.message}`);
-    }
-    setIsLoading(false);
-  };
+  //     Alert.alert("Success", "Profile picture updated successfully!");
+  //   } catch (error) {
+  //     console.error("Error updating profile picture:", error);
+  //     Alert.alert("Error", `Failed to update profile picture:${error.message}`);
+  //   }
+  //   setIsLoading(false);
+  // };
 
   const handleEditUsername = async () => {
     if (newUsername.trim() === "") {
       Alert.alert("Error", "Username cannot be empty.");
       return;
     }
+
+    // Transform the username to a valid format (e.g., replacing spaces with underscores)
+    const transformedUsername = newUsername
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, "_");
     try {
-      await user.update({ username: newUsername });
+      await user.update({ username: transformedUsername });
 
       setIsEditingName(false);
-      Alert.alert("Success", "Username updated successfully!");
+      Toast.show({
+        type: "success",
+        text1: "Username updated successfully!",
+        visibilityTime: 3000,
+      });
     } catch (error) {
       console.error("Error updating username:", error);
       console.log(user.username);

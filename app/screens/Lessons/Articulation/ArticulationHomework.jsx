@@ -5,17 +5,78 @@ import HomeworkThankyouScreen from "./HomeworkThankyouScreen";
 import React, { useState, useRef } from "react";
 import { Colors } from "@/constants/Colors";
 import RecordingCard from "@/components/Lessons/RecordingCard";
+import { useUserData } from "@/contexts/UserContext";
 
 export default function ArticulationHomework({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const pagerRef = useRef(null);
-  const videos = [
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667319230358.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667319275887.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667389413071.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667389435765.mp4" },
-  ];
+  const { userData } = useUserData(); // Use the context to get user data
+  const allVideos = {
+    default: [
+      // Exercises - Onset & Linking
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667319230358.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667319275887.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667389413071.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667389435765.mp4" },
+      // Swipe left to proceed to the next section: "Vowel Production"
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318813802.mp4" },
+      // Exercises - Vowel Production
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318931171.mp4" },
+      // Swipe left to proceed to the next section: "Articulatory Precision"
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318999188.mp4" },
+    ],
+    transFemale: [
+      // Exercises - Vowel Production
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667389547030.mp4" },
+      // Swipe left to proceed to the next section: "Articulatory Precision"
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318973390.mp4" },
+      // Exercises – Precision
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667389714097.mp4" },
+    ],
+    transMale: [
+      // Swipe left to proceed to the next section: "Vowel Production"
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318865788.mp4" },
+      // Exercises - Vowel Production
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667389591339.mp4" },
+      // Swipe left to proceed to the next section: "Articulatory Precision"
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318983732.mp4" },
+      // Exercises – Precision
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667389800415.mp4" },
+    ],
+    nonBinary: [
+      // Swipe left to proceed to the next section: "Vowel Production"
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318865788.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318851656.mp4" },
+      // Exercises - Vowel Production
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667389547030.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667389591339.mp4" },
+      // Swipe left to proceed to the next section: "Articulatory Precision"
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318973390.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318983732.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667318999188.mp4" },
+      // Exercises – Precision
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667389714097.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667389800415.mp4" },
+    ],
+  };
 
+  // Determine the set of videos to use based on gender identity
+  let videos;
+  switch (userData?.genderIdentity) {
+    case "Trans Female":
+      videos = [...allVideos.default, ...allVideos.transFemale];
+      break;
+    case "Trans Male":
+      videos = [...allVideos.default, ...allVideos.transMale];
+      break;
+    case "Non-Binary":
+    case "Gender Non-Conforming":
+      videos = [...allVideos.default, ...allVideos.nonBinary];
+      break;
+    default:
+      videos = allVideos.default;
+      break;
+  }
   const pages = [
     ...videos.map((video) => <Page navigation={navigation} video={video} />),
     <HomeworkThankyouScreen navigation={navigation} />,

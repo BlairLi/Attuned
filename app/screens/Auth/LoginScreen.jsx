@@ -6,6 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import React from "react";
 import image from "../../../assets/images/Splash.jpg";
@@ -30,6 +32,13 @@ export default function LoginScreen({ navigation }) {
     try {
       const { createdSessionId, signIn, signUp, setActive } =
         await startOAuthFlow();
+
+      console.log("OAuth Flow Response: ", {
+        createdSessionId,
+        signIn,
+        signUp,
+        setActive,
+      });
 
       if (createdSessionId) {
         setActive({ session: createdSessionId });
@@ -61,7 +70,10 @@ export default function LoginScreen({ navigation }) {
   };
   return (
     <ImageBackground source={image} style={styles.imageBackground}>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
         <Text style={styles.title}>Attuned</Text>
         <Text style={styles.subTitle}>Find your voice here</Text>
         <View style={styles.inputContainer}>
@@ -95,7 +107,9 @@ export default function LoginScreen({ navigation }) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.newHereButton}
-            onPress={() => navigation.navigate("screens/Auth/ForgetPasswordScreen")}
+            onPress={() =>
+              navigation.navigate("screens/Auth/ForgetPasswordScreen")
+            }
           >
             <Text style={styles.newHereText}>Forget Password?</Text>
           </TouchableOpacity>
@@ -104,7 +118,7 @@ export default function LoginScreen({ navigation }) {
           <Image source={google} style={styles.socialLoginIcon} />
           <Text style={styles.socialLoginText}>Login in with Google</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 }
@@ -114,14 +128,11 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
     justifyContent: "center",
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   container: {
     display: "flex",
-    alignItems: "center",
-    height: 400,
-    width: "100%",
     padding: 20,
   },
   inputContainer: {

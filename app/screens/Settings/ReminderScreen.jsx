@@ -14,7 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import * as Notifications from "expo-notifications";
 import { Colors } from "@/constants/Colors";
-
+import Toast from "react-native-toast-message";
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -26,6 +26,8 @@ const ReminderScreen = () => {
   const [isReminderEnabled, setIsReminderEnabled] = useState(false);
   const [reminderMessage, setReminderMessage] = useState("");
   const [date, setDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
   useEffect(() => {
     const loadSettings = async () => {
@@ -120,7 +122,13 @@ const ReminderScreen = () => {
       },
     });
 
-    Alert.alert("Reminder Set", "Your reminder has been scheduled.");
+    Toast.show({
+      type: "success",
+      text1: "Reminder Scheduled",
+      text2: "Your reminder has been scheduled successfully.",
+    });
+
+    setReminderMessage("");
   };
 
   return (

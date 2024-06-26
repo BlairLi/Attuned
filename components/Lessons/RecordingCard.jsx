@@ -11,13 +11,15 @@ import {
 import { Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Colors } from "@/constants/Colors";
-import { RecordingsContext } from '../../contexts/RecordingsContext';
+import { RecordingsContext } from "../../contexts/RecordingsContext";
+import Toast from "react-native-toast-message";
 const RecordingCard = () => {
   const [recording, setRecording] = useState(null);
   const { recordings, setRecordings } = useContext(RecordingsContext);
   const [hasPermission, setHasPermission] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [recordingName, setRecordingName] = useState("Recording");
+  const [recordingUri, setRecordingUri] = useState(null);
 
   useEffect(() => {
     const requestPermissions = async () => {
@@ -32,15 +34,19 @@ const RecordingCard = () => {
       Alert.alert("No permission to record audio");
       return;
     }
+    if (recording) {
+      console.log("Stopping existing recording before starting a new one");
+      await stopRecording(); // Ensure the existing recording is stopped before starting a new one
+    }
     try {
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
       });
-      const { recording } = await Audio.Recording.createAsync(
+      const { recording: newRecording } = await Audio.Recording.createAsync(
         Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
       );
-      setRecording(recording);
+      setRecording(newRecording);
       console.log("Recording started");
     } catch (err) {
       console.error("Failed to start recording", err);
@@ -48,29 +54,44 @@ const RecordingCard = () => {
   };
 
   const stopRecording = async () => {
+    if (!recording) return;
     try {
       await recording.stopAndUnloadAsync();
-      const { sound, status } = await recording.createNewLoadedSoundAsync();
+      const { status } = await recording.createNewLoadedSoundAsync();
       const duration = getDurationFormatted(status.durationMillis);
       console.log("Duration:", duration);
 
-      if (duration == "0:00") {
+      if (duration === "0:00") {
         Alert.alert("Your recording is too short! Please try again.");
         setRecording(null);
-        setModalVisible(!modalVisible);
+        setModalVisible(false);
         return;
       }
 
       const uri = recording.getURI();
+      setRecordingUri(uri);
       console.log("Recording stopped and stored at", uri);
+      setModalVisible(true);
+    } catch (error) {
+      console.error("Failed to stop recording", error);
+      setRecording(null);
+    }
+  };
+
+  const saveRecording = async () => {
+    if (!recordingUri) return;
+
+    try {
+      const { sound, status } = await recording.createNewLoadedSoundAsync();
+      const duration = getDurationFormatted(status.durationMillis);
 
       const newRecording = {
         id: new Date().toISOString(),
         title: recordingName,
         time: new Date().toLocaleString(),
         sound: sound,
-        duration: getDurationFormatted(status.durationMillis),
-        file: uri,
+        duration: duration,
+        file: recordingUri,
       };
 
       const updatedRecordings = [...recordings, newRecording];
@@ -80,11 +101,28 @@ const RecordingCard = () => {
         JSON.stringify(updatedRecordings)
       );
 
+      // Show toast message
+      Toast.show({
+        type: "success",
+        text1: "Recording saved successfully!",
+        visibilityTime: 3000,
+      });
+
       setRecording(null);
+      setRecordingUri(null);
       setModalVisible(false);
     } catch (error) {
-      console.error("Failed to stop recording", error);
+      console.error("Failed to save recording", error);
     }
+  };
+
+  const cancelRecording = () => {
+    if (recording) {
+      recording.stopAndUnloadAsync().catch(() => {}); // Ensure recording is stopped
+      setRecording(null);
+      setRecordingUri(null);
+    }
+    setModalVisible(false);
   };
 
   const getDurationFormatted = (milliseconds) => {
@@ -97,13 +135,13 @@ const RecordingCard = () => {
     <View style={styles.card}>
       <TouchableOpacity
         style={[
-          styles.recordButton,
+          styles.roundButton,
           recording ? styles.stopRecordingButton : styles.startRecordingButton,
         ]}
-        onPress={recording ? () => setModalVisible(true) : startRecording}
+        onPress={recording ? stopRecording : startRecording}
       >
         <Text style={styles.recordButtonText}>
-          {recording ? "Stop Recording" : "Start Recording"}
+          {recording ? "Stop" : "Start"}
         </Text>
       </TouchableOpacity>
       <Modal
@@ -128,16 +166,13 @@ const RecordingCard = () => {
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={[styles.button, styles.buttonCancel]}
-                onPress={() => {
-                  setRecording(null);
-                  setModalVisible(false);
-                }}
+                onPress={cancelRecording}
               >
                 <Text style={styles.textStyle}>Cancel</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.buttonSave]}
-                onPress={stopRecording}
+                onPress={saveRecording}
               >
                 <Text style={styles.textStyle}>Save</Text>
               </TouchableOpacity>
@@ -155,23 +190,27 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
   },
+  roundButton: {
+    backgroundColor: Colors.secondary,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    borderColor: "lightgrey",
+    borderWidth: 5,
+  },
+  recordButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontFamily: "outfit-bold",
+  },
   startRecordingButton: {
     backgroundColor: Colors.secondary,
   },
   stopRecordingButton: {
     backgroundColor: "red",
-  },
-  recordButton: {
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 20,
-  },
-  recordButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontFamily: "outfit-bold",
   },
   centeredView: {
     flex: 1,
@@ -219,8 +258,8 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center",
-    fontSize: 18,
-    fontWeight: "bold",
+    fontSize: 20,
+    fontFamily: "outfit-bold",
   },
   textInput: {
     width: 300,

@@ -88,6 +88,7 @@ const RecordingDetailScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{selectedRecording.title}</Text>
+      <Text style={styles.detail}>{selectedRecording.time}</Text>
       <View style={styles.detailContainer}>
         <Text style={styles.detail}>
           Min Frequency: {parseFloat(selectedRecording.min_frequency).toFixed(1)} Hz
@@ -103,7 +104,7 @@ const RecordingDetailScreen = () => {
           maximumValue={duration}
           value={position}
           minimumTrackTintColor={Colors.secondaryLight}
-          maximumTrackTintColor='black'
+          maximumTrackTintColor="black"
           thumbTintColor={Colors.secondaryLight}
           onValueChange={async (value) => {
             if (sound) {
@@ -174,9 +175,9 @@ const styles = StyleSheet.create({
     color: "grey",
   },
   playButton: {
-    alignItems: "center",
+    borderRadius: 50,
     justifyContent: "center",
-    marginTop: 20,
+    alignItems: "center",
   },
 });
 

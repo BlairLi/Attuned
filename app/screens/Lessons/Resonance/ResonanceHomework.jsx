@@ -5,16 +5,57 @@ import HomeworkThankyouScreen from "./HomeworkThankyouScreen";
 import React, { useState, useRef } from "react";
 import { Colors } from "@/constants/Colors";
 import RecordingCard from "@/components/Lessons/RecordingCard";
+import { useUserData } from "@/contexts/UserContext";
 
 export default function ResonanceHomework({ navigation }) {
   const [currentPage, setCurrentPage] = useState(0);
   const pagerRef = useRef(null);
-  const videos = [
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667307572624.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667391573310.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667391704150.mp4" },
-    { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667391717734.mp4" },
-  ];
+  const { userData } = useUserData(); // Use the context to get user data
+
+  const allVideos = {
+    default: [
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667307572624.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667391573310.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667391704150.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667391717734.mp4" },
+    ],
+    transFemale: [
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667310823706.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667440299800.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667440357038.mp4" },
+    ],
+    transMale: [
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667439335335.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667439361863.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667439823754.mp4" },
+    ],
+    nonBinary: [
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667310823706.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667440299800.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667440357038.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667439335335.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667439361863.mp4" },
+      { uri: "https://d1gkwtfyd0cwcv.cloudfront.net/common/1667439823754.mp4" },
+    ],
+  };
+
+  // Determine the set of videos to use based on gender identity
+  let videos;
+  switch (userData?.genderIdentity) {
+    case "Trans Female":
+      videos = [...allVideos.default, ...allVideos.transFemale];
+      break;
+    case "Trans Male":
+      videos = [...allVideos.default, ...allVideos.transMale];
+      break;
+    case "Non-Binary":
+    case "Gender Non-Conforming":
+      videos = [...allVideos.default, ...allVideos.nonBinary];
+      break;
+    default:
+      videos = allVideos.default;
+      break;
+  }
 
   const pages = [
     ...videos.map((video) => <Page navigation={navigation} video={video} />),
