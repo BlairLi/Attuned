@@ -9,6 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { Audio } from "expo-av";
+import axios from 'axios';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RecordingsContext } from "../../../contexts/RecordingsContext";
 import Piano from "./Piano";
@@ -66,6 +67,10 @@ export default function VoiceTrackScreen() {
       const uri = recording.getURI();
       console.log("Recording stopped and stored at", uri);
 
+      // Upload the recording
+      const [min, max] = await uploadRecording(uri);
+      console.log('Min:', min, 'Max:', max);
+
       const newRecording = {
         id: new Date().toISOString(),
         title: recordingName,
@@ -73,6 +78,8 @@ export default function VoiceTrackScreen() {
         sound: sound,
         duration: getDurationFormatted(status.durationMillis),
         file: uri,
+        min_frequency: min,
+        max_frequency: max,
       };
 
       const updatedRecordings = [...recordings, newRecording];
@@ -91,6 +98,29 @@ export default function VoiceTrackScreen() {
       setModalVisible(false);
     } catch (error) {
       console.error("Failed to stop recording", error);
+    }
+  };
+
+  const uploadRecording = async (uri) => {
+    const formData = new FormData();
+    formData.append('file', {
+      uri,
+      name: 'recording.m4a',
+      type: 'audio/m4a',
+    });
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Frequency analysis:', response.data);
+      const frequency= response.data
+      const min = frequency['min_frequency']
+      const max = frequency['max_frequency']
+      return [min, max];
+    } catch (error) {
+      console.error('Failed to upload recording:', error);
     }
   };
 

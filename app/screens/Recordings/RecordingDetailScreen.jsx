@@ -90,10 +90,10 @@ const RecordingDetailScreen = () => {
       <Text style={styles.title}>{selectedRecording.title}</Text>
       <View style={styles.detailContainer}>
         <Text style={styles.detail}>
-          Min Frequency: {selectedRecording.min_frequency} Hz
+          Min Frequency: {parseFloat(selectedRecording.min_frequency).toFixed(1)} Hz
         </Text>
         <Text style={styles.detail}>
-          Max Frequency: {selectedRecording.max_frequency} Hz
+          Max Frequency: {parseFloat(selectedRecording.max_frequency).toFixed(1)} Hz
         </Text>
       </View>
       <View style={styles.sliderContainer}>
