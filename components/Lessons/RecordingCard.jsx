@@ -12,7 +12,7 @@ import { Audio } from "expo-av";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Colors } from "@/constants/Colors";
 import { RecordingsContext } from "../../contexts/RecordingsContext";
-
+import Toast from "react-native-toast-message";
 const RecordingCard = () => {
   const [recording, setRecording] = useState(null);
   const { recordings, setRecordings } = useContext(RecordingsContext);
@@ -135,13 +135,13 @@ const RecordingCard = () => {
     <View style={styles.card}>
       <TouchableOpacity
         style={[
-          styles.recordButton,
+          styles.roundButton,
           recording ? styles.stopRecordingButton : styles.startRecordingButton,
         ]}
         onPress={recording ? stopRecording : startRecording}
       >
         <Text style={styles.recordButtonText}>
-          {recording ? "Stop Recording" : "Start Recording"}
+          {recording ? "Stop" : "Start"}
         </Text>
       </TouchableOpacity>
       <Modal
@@ -190,23 +190,27 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: "center",
   },
+  roundButton: {
+    backgroundColor: Colors.secondary,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    borderColor: "lightgrey",
+    borderWidth: 5,
+  },
+  recordButtonText: {
+    color: "white",
+    fontSize: 18,
+    fontFamily: "outfit-bold",
+  },
   startRecordingButton: {
     backgroundColor: Colors.secondary,
   },
   stopRecordingButton: {
     backgroundColor: "red",
-  },
-  recordButton: {
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 20,
-  },
-  recordButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontFamily: "outfit-bold",
   },
   centeredView: {
     flex: 1,

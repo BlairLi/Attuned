@@ -18,7 +18,7 @@ import * as ImageManipulator from "expo-image-manipulator";
 import { Colors } from "@/constants/Colors";
 import { storage } from "@/configs/FirebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
+import Toast from "react-native-toast-message";
 const ProfileScreen = () => {
   const { user, isLoaded } = useUser();
   const [isEditingName, setIsEditingName] = useState(false);
@@ -107,7 +107,11 @@ const ProfileScreen = () => {
       await user.update({ username: transformedUsername });
 
       setIsEditingName(false);
-      Alert.alert("Success", "Username updated successfully!");
+      Toast.show({
+        type: "success",
+        text1: "Username updated successfully!",
+        visibilityTime: 3000,
+      });
     } catch (error) {
       console.error("Error updating username:", error);
       console.log(user.username);

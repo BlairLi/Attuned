@@ -8,6 +8,8 @@ import {
   Alert,
   ImageBackground,
   StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import Checkbox from "expo-checkbox";
 import image from "../../../assets/images/Splash.jpg";
@@ -92,7 +94,10 @@ export default function SignUpScreen({ navigation }) {
   return (
     <ImageBackground source={image} style={styles.imageBackground}>
       {!pendingVerification && (
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
           <Text style={styles.title}>Attuned</Text>
           <Text style={styles.subTitle}>Join us and find your voice</Text>
           <View style={styles.inputContainer}>
@@ -137,7 +142,9 @@ export default function SignUpScreen({ navigation }) {
                 style={styles.checkbox}
               />
               <TouchableOpacity
-                onPress={() => navigation.navigate("screens/Settings/DisclaimerScreen")}
+                onPress={() =>
+                  navigation.navigate("screens/Settings/DisclaimerScreen")
+                }
               >
                 <Text style={styles.checkboxLabel}>
                   I accept the disclaimer
@@ -157,10 +164,13 @@ export default function SignUpScreen({ navigation }) {
               </Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       )}
       {pendingVerification && (
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+          style={styles.container}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
           <Text style={styles.title}>Verify your email here:</Text>
           <View style={styles.inputContainer}>
             <TextInput
@@ -173,7 +183,7 @@ export default function SignUpScreen({ navigation }) {
           <TouchableOpacity onPress={onPressVerify} style={styles.button}>
             <Text style={styles.buttonText}>Verify Email</Text>
           </TouchableOpacity>
-        </View>
+        </KeyboardAvoidingView>
       )}
     </ImageBackground>
   );
@@ -188,9 +198,6 @@ const styles = StyleSheet.create({
   },
   container: {
     display: "flex",
-    alignItems: "center",
-    height: 400,
-    width: "100%",
     padding: 20,
   },
   inputContainer: {

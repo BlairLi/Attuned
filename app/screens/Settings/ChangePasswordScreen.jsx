@@ -7,6 +7,8 @@ import {
   Alert,
   ActivityIndicator,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useSignIn } from "@clerk/clerk-expo";
 import { Colors } from "@/constants/Colors";
@@ -69,7 +71,10 @@ const ChangePasswordScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <Text style={styles.title}>Change Password</Text>
       {!successfulCreation ? (
         <View style={styles.inputContainer}>
@@ -130,7 +135,7 @@ const ChangePasswordScreen = ({ navigation }) => {
           )}
         </View>
       )}
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

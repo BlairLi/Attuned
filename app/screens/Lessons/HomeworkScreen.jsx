@@ -58,7 +58,7 @@ export default function HomeworkScreen({ navigation }) {
                 style={styles.button}
                 onPress={() => navigation.navigate("Basics")}
               >
-                <Text style={styles.buttonText}>Go to Next Lesson</Text>
+                <Text style={styles.buttonText}>Start Basic Lessons</Text>
               </TouchableOpacity>
             </>
           )}

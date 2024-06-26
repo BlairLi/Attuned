@@ -145,13 +145,13 @@ export default function VoiceTrackScreen() {
       <Piano />
       <TouchableOpacity
         style={[
-          styles.recordButton,
+          styles.roundButton,
           recording ? styles.stopRecordingButton : styles.startRecordingButton,
         ]}
         onPress={recording ? stopRecording : startRecording}
       >
         <Text style={styles.recordButtonText}>
-          {recording ? "Stop Recording" : "Start Recording"}
+          {recording ? "Stop" : "Start"}
         </Text>
       </TouchableOpacity>
 
@@ -213,7 +213,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.primaryDark,
     textAlign: "center",
-    marginBottom: 20,
+    marginBottom:20,
+    padding: 20,
   },
   startRecordingButton: {
     backgroundColor: Colors.secondary,
@@ -221,18 +222,21 @@ const styles = StyleSheet.create({
   stopRecordingButton: {
     backgroundColor: "red",
   },
-  recordButton: {
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 10,
+  roundButton: {
+    backgroundColor: Colors.secondary,
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    justifyContent: "center",
     alignItems: "center",
-    marginTop: 20,
     position: "absolute",
-    bottom: 50,
+    bottom: 30,
+    borderColor: "lightgrey",
+    borderWidth: 5,
   },
   recordButtonText: {
     color: "white",
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: "outfit-bold",
   },
   centeredView: {

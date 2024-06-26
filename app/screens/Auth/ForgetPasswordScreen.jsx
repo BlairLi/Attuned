@@ -8,6 +8,8 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   ImageBackground,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useSignIn } from "@clerk/clerk-expo";
 import image from "../../../assets/images/Splash.jpg";
@@ -63,7 +65,12 @@ const ForgetPasswordScreen = ({ navigation }) => {
             "Password Reset",
             "Your password has been reset successfully!",
             // [{ text: "OK", onPress: () => navigation.navigate("SignIn") }]
-            [{ text: "OK", onPress: () => navigation.navigate("screens/Auth/LoginScreen") }]
+            [
+              {
+                text: "OK",
+                onPress: () => navigation.navigate("screens/Auth/LoginScreen"),
+              },
+            ]
           );
         } else {
           setError("Password reset failed. Please try again.");
@@ -78,7 +85,10 @@ const ForgetPasswordScreen = ({ navigation }) => {
 
   return (
     <ImageBackground source={image} style={styles.imageBackground}>
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
         <Text style={styles.title}>Forgot Password?</Text>
         {!successfulCreation ? (
           <View style={styles.inputContainer}>
@@ -143,7 +153,7 @@ const ForgetPasswordScreen = ({ navigation }) => {
         >
           <Text style={styles.newHereText}>Go Back to Login</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 };
@@ -157,9 +167,6 @@ const styles = StyleSheet.create({
   },
   container: {
     display: "flex",
-    alignItems: "center",
-    height: 400,
-    width: "100%",
     padding: 20,
   },
   inputContainer: {
