@@ -17,6 +17,7 @@ import { RecordingsContext } from "../../../contexts/RecordingsContext";
 import Piano from "./Piano";
 import { Colors } from "@/constants/Colors";
 import Toast from "react-native-toast-message";
+import * as FileSystem from 'expo-file-system';
 
 export default function VoiceTrackScreen() {
   const [recording, setRecording] = useState(null);
@@ -137,25 +138,38 @@ export default function VoiceTrackScreen() {
   };
 
   const uploadRecording = async (uri) => {
+    const fileInfo = await FileSystem.getInfoAsync(uri);
+    const fileData = await FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 });
+  
     const formData = new FormData();
-    formData.append('file', {
-      uri,
+    formData.append('audio', {
+      uri: uri,
       name: 'recording.m4a',
       type: 'audio/m4a',
+      data: fileData,
     });
+  
     try {
-      const response = await axios.post('http://127.0.0.1:5000/upload', formData, {
+      // const response = await axios.post('http://127.0.0.1:3001/upload', formData, {
+      const response = await axios.post('http://voice-analysis-nodejs.vercel.app/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+  
+      const { minPitch, maxPitch } = response.data;
       console.log('Frequency analysis:', response.data);
-      const frequency= response.data
-      const min = frequency['min_frequency']
-      const max = frequency['max_frequency']
-      return [min, max];
+  
+      return [minPitch, maxPitch];
     } catch (error) {
-      console.error('Failed to upload recording:', error);
+      if (error.response) {
+        console.error('Server responded with an error:', error.response.data);
+      } else if (error.request) {
+        console.error('No response received from server:', error.request);
+      } else {
+        console.error('Error setting up the request:', error.message);
+      }
+      return null; // Or handle the error as needed
     }
   };
 
