@@ -11,14 +11,29 @@ import { LessonsProvider } from "@/contexts/LessonsContext";
 import { UserProvider } from "@/contexts/UserContext";
 import Toast from "react-native-toast-message";
 import CustomToast from "@/components/VoiceTracker/CustomToast";
+
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+if (!publishableKey) {
+  throw new Error('Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env')
+}
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 const tokenCache = {
   async getToken(key) {
     try {
-      return SecureStore.getItemAsync(key);
-    } catch (err) {
+      const item = await SecureStore.getItemAsync(key);
+      if (item) {
+        console.log(`${key} was used 🔐 \n`);
+      } else {
+        console.log("No values stored under key: " + key);
+      }
+      return item;
+    } catch (error) {
+      console.error("SecureStore get item error: ", error);
+      await SecureStore.deleteItemAsync(key);
       return null;
     }
   },
@@ -52,7 +67,7 @@ export default function RootLayout() {
 
   return (
     <ClerkProvider
-      publishableKey={process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      publishableKey={publishableKey}
       tokenCache={tokenCache}
     >
       <SignedIn>

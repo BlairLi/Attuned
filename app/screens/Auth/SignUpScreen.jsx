@@ -85,7 +85,12 @@ export default function SignUpScreen({ navigation }) {
         code,
       });
 
-      await setActive({ session: completeSignUp.createdSessionId });
+      if (completeSignUp.status === 'complete') {
+        await setActive({ session: completeSignUp.createdSessionId });
+        router.replace('/');
+      } else {
+        console.error(JSON.stringify(completeSignUp, null, 2));
+      }
     } catch (err) {
       console.error(JSON.stringify(err, null, 2));
     }

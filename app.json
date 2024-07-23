@@ -1,27 +1,28 @@
 {
   "expo": {
-    "name": "AttunedVoice",
+    "name": "Attuned",
     "slug": "Attuned",
-    "version": "1.0.0",
+    "version": "1.2.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/splash.gif",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.yuber.AttunedVoice"
+      "bundleIdentifier": "com.yuber.Attuned",
+      "buildNumber": "3"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.yuber.AttunedVoice"
+      "package": "com.yber.Attuned"
     },
     "web": {
       "bundler": "metro",
