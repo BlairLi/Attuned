@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.yuber.Attuned",
-      "buildNumber": "3"
+      "buildNumber": "6"
     },
     "android": {
       "adaptiveIcon": {

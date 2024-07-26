@@ -96,6 +96,9 @@ const RecordingDetailScreen = () => {
         <Text style={styles.detail}>
           Max Frequency: {parseFloat(selectedRecording.max_frequency).toFixed(1)} Hz
         </Text>
+        <Text style={styles.detail}>
+          Average Frequency: {parseFloat(selectedRecording.average_frequency).toFixed(1)} Hz
+        </Text>
       </View>
       <View style={styles.sliderContainer}>
         <Slider

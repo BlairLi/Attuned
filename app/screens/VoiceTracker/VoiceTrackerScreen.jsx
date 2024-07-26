@@ -92,7 +92,7 @@ export default function VoiceTrackScreen() {
       const duration = getDurationFormatted(status.durationMillis);
 
       // Upload the recording
-      const [min, max] = await uploadRecording(recordingUri);
+      const [min, max, average] = await uploadRecording(recordingUri);
       console.log('Min:', min, 'Max:', max);
 
       const newRecording = {
@@ -103,6 +103,7 @@ export default function VoiceTrackScreen() {
         duration: duration,
         file: recordingUri,
         min_frequency: min,
+        average_frequency: average,
         max_frequency: max,
       };
 
@@ -150,17 +151,17 @@ export default function VoiceTrackScreen() {
     });
   
     try {
-      // const response = await axios.post('http://127.0.0.1:3001/upload', formData, {
+      // const response = await axios.post('http://127.0.0.1:3002/upload', formData, {
       const response = await axios.post('http://voice-analysis-nodejs.vercel.app/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
   
-      const { minPitch, maxPitch } = response.data;
+      const { minPitch, maxPitch, averagePitch } = response.data;
       console.log('Frequency analysis:', response.data);
   
-      return [minPitch, maxPitch];
+      return [minPitch, maxPitch, averagePitch];
     } catch (error) {
       if (error.response) {
         console.error('Server responded with an error:', error.response.data);
