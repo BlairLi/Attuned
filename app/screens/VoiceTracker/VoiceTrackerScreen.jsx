@@ -63,6 +63,10 @@ export default function VoiceTrackScreen() {
     if (!recording) return;
     try {
       await recording.stopAndUnloadAsync();
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        playsInSilentModeIOS: true,
+      });
       const { status } = await recording.createNewLoadedSoundAsync();
       const duration = getDurationFormatted(status.durationMillis);
       console.log("Duration:", duration);

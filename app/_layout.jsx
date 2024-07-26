@@ -1,6 +1,6 @@
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import "react-native-reanimated";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import AuthNavigator from "./navigation/AuthNavigator";
@@ -11,6 +11,7 @@ import { LessonsProvider } from "@/contexts/LessonsContext";
 import { UserProvider } from "@/contexts/UserContext";
 import Toast from "react-native-toast-message";
 import CustomToast from "@/components/VoiceTracker/CustomToast";
+import EntryScreen from "./screens/Auth/EntryScreen";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
@@ -54,6 +55,7 @@ export default function RootLayout() {
     "outfit-light": require("../assets/fonts/Outfit-Light.ttf"),
     "outfit-semibold": require("../assets/fonts/Outfit-SemiBold.ttf"),
   });
+  const [accessGranted, setAccessGranted] = useState(false);
 
   useEffect(() => {
     if (fontsLoaded) {
@@ -80,7 +82,7 @@ export default function RootLayout() {
         </RecordingsProvider>
       </SignedIn>
       <SignedOut>
-        <AuthNavigator />
+        {!accessGranted ? <EntryScreen onAccessGranted={() => setAccessGranted(true)} /> : <AuthNavigator />}
       </SignedOut>
       <Toast
         config={{
