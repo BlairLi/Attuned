@@ -11,15 +11,15 @@ import {
   Platform,
 } from "react-native";
 import { Audio } from "expo-av";
-import axios from 'axios';
+import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RecordingsContext } from "../../../contexts/RecordingsContext";
 import Piano from "./Piano";
 import { Colors } from "@/constants/Colors";
 import Toast from "react-native-toast-message";
-import * as FileSystem from 'expo-file-system';
-
-export default function VoiceTrackScreen() {
+import * as FileSystem from "expo-file-system";
+import Icon from "react-native-vector-icons/Foundation";
+export default function VoiceTrackScreen({ navigation }) {
   const [recording, setRecording] = useState(null);
   const { recordings, setRecordings } = useContext(RecordingsContext);
   const [hasPermission, setHasPermission] = useState(false);
@@ -87,7 +87,8 @@ export default function VoiceTrackScreen() {
       setRecording(null);
     }
   };
-
+  // Save the recording to the device using AsyncStorage
+  // after uploading it to the server for frequency analysis
   const saveRecording = async () => {
     if (!recordingUri) return;
 
@@ -95,9 +96,9 @@ export default function VoiceTrackScreen() {
       const { sound, status } = await recording.createNewLoadedSoundAsync();
       const duration = getDurationFormatted(status.durationMillis);
 
-      // Upload the recording
+      // Upload the recording to get the frequency analysis
       const [min, max, average] = await uploadRecording(recordingUri);
-      console.log('Min:', min, 'Max:', max);
+      console.log("Min:", min, "Max:", max);
 
       const newRecording = {
         id: new Date().toISOString(),
@@ -141,38 +142,44 @@ export default function VoiceTrackScreen() {
     }
     setModalVisible(false);
   };
-
+  // Upload the recording to the server for frequency analysis
   const uploadRecording = async (uri) => {
     const fileInfo = await FileSystem.getInfoAsync(uri);
-    const fileData = await FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 });
-  
+    const fileData = await FileSystem.readAsStringAsync(uri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
     const formData = new FormData();
-    formData.append('audio', {
+    formData.append("audio", {
       uri: uri,
-      name: 'recording.m4a',
-      type: 'audio/m4a',
+      name: "recording.m4a",
+      type: "audio/m4a",
       data: fileData,
     });
-  
+
     try {
       // const response = await axios.post('http://127.0.0.1:3002/upload', formData, {
-      const response = await axios.post('http://voice-analysis-nodejs.vercel.app/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-  
+      const response = await axios.post(
+        "http://voice-analysis-nodejs.vercel.app/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       const { minPitch, maxPitch, averagePitch } = response.data;
-      console.log('Frequency analysis:', response.data);
-  
+      console.log("Frequency analysis:", response.data);
+
       return [minPitch, maxPitch, averagePitch];
     } catch (error) {
       if (error.response) {
-        console.error('Server responded with an error:', error.response.data);
+        console.error("Server responded with an error:", error.response.data);
       } else if (error.request) {
-        console.error('No response received from server:', error.request);
+        console.error("No response received from server:", error.request);
       } else {
-        console.error('Error setting up the request:', error.message);
+        console.error("Error setting up the request:", error.message);
       }
       return null; // Or handle the error as needed
     }
@@ -192,6 +199,24 @@ export default function VoiceTrackScreen() {
         skills demonstrated in the exercises.
       </Text>
       <Piano />
+      <TouchableOpacity
+        style={styles.graphContainer}
+        onPress={() => {
+          navigation.navigate("Pitch Trend");
+        }}
+      >
+        <Icon name="graph-trend" size={50} color="gray" />
+        <Text
+          style={{
+            fontFamily: "outfit",
+            fontSize: 14,
+            color: "gray",
+            textAlign: "center",
+          }}
+        >
+          Pitch Trend
+        </Text>
+      </TouchableOpacity>
       <TouchableOpacity
         style={[
           styles.roundButton,
@@ -254,7 +279,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: "white",
-    justifyContent: "center",
     alignItems: "center",
   },
   instructions: {
@@ -262,8 +286,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.primaryDark,
     textAlign: "center",
-    marginBottom:20,
+    marginVertical: 40,
     padding: 20,
+  },
+  graphContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 40,
   },
   startRecordingButton: {
     backgroundColor: Colors.secondary,

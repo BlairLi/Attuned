@@ -6,6 +6,7 @@ import {
   TextInput,
 } from "react-native";
 import React, { useState, useEffect } from "react";
+import SymptomCheckbox from "./SymptomCheckbox";
 import { Colors } from "@/constants/Colors";
 export default function PronounSelectionScreen({
   goToNext,
@@ -16,52 +17,50 @@ export default function PronounSelectionScreen({
   const [customPronoun, setCustomPronoun] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
 
+  const [pronouns, setPronouns] = useState({
+    "She / Her / Hers": false,
+    "He / Him / His": false,
+    "They / Them / Theirs": false,
+  });
+
   useEffect(() => {
     if (currentAnswer) {
       setSelectedOption(currentAnswer);
     }
   }, [currentAnswer]);
 
-  const handleOptionPress = (option) => {
-    setSelectedOption(option);
+  const maxSelection = 3;
+  const selectedCount = Object.values(pronouns).filter(Boolean).length;
+
+  const handleCheckboxChange = (name, value) => {
+    if (pronouns[name] || selectedCount < maxSelection) {
+      setPronouns({ ...pronouns, [name]: value });
+    }
   };
 
   const handleSave = () => {
-    if (selectedOption || customPronoun) {
-      updateAnswer(selectedOption || customPronoun);
+    if (Object.values(pronouns).includes(true) || customPronoun) {
+      updateAnswer(selectedOption);
       goToNext();
     } else {
       alert("Please select an option.");
     }
   };
 
-  const options = [
-    "She / Her / Hers",
-    "He / Him / His",
-    "They / Them / Theirs",
-  ];
-
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Select the pronouns that you prefer:</Text>
-      {options.map((option) => (
-        <TouchableOpacity
-          key={option}
-          style={[
-            styles.button,
-            selectedOption === option && styles.selectedButton,
-          ]}
-          onPress={() => handleOptionPress(option)}
-        >
-          <Text
-            style={[
-              styles.buttonText,
-              selectedOption === option && styles.selectedButtonText,
-            ]}
-          >
-            {option}
-          </Text>
-        </TouchableOpacity>
+      <Text style={styles.subheading}>
+        You can select a maximum of {maxSelection}
+      </Text>
+      {Object.keys(pronouns).map((key) => (
+        <SymptomCheckbox
+          key={key}
+          label={key}
+          value={pronouns[key]}
+          onValueChange={(value) => handleCheckboxChange(key, value)}
+          disabled={!pronouns[key] && selectedCount >= maxSelection}
+        />
       ))}
       <Text style={styles.header}>OR</Text>
       <TextInput
@@ -89,6 +88,12 @@ const styles = StyleSheet.create({
     padding: 30,
     backgroundColor: "white",
   },
+  subheading: {
+    fontSize: 15,
+    color: "gray",
+    fontFamily: "outfit",
+    marginBottom: 10,
+  },
   buttonContainer: {
     width: "100%",
     flex: 1,
@@ -97,7 +102,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 18,
     textAlign: "center",
-    marginBottom: 20,
+    marginVertical: 20,
     fontFamily: "outfit-bold",
   },
   selectedButton: {

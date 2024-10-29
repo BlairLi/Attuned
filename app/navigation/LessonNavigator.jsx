@@ -135,7 +135,7 @@ export default function LessonNavigator() {
       <Stack.Screen name="Homework" component={HomeworkScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
-      <Stack.Screen name="Questionnarie" component={QuestionnaireScreen} />
+      <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
     </Stack.Navigator>
   );
 }

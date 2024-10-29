@@ -16,15 +16,17 @@ export default function SymptomScreen({
   currentAnswer,
 }) {
   const [symptoms, setSymptoms] = useState({
-    hoarseness: false,
-    breathiness: false,
-    bitter: false,
-    sing: false,
-    lost: false,
-    regurgitation: false,
-    morning: false,
-    badbreath: false,
-    heartburn: false,
+    "Hoarseness": false,
+    "Breathiness": false,
+    "Vocal Fatigue": false,
+    "Bitter/Acid Taste in Mouth": false,
+    "Can't Sing": false,
+    "Lost of Pitch Range": false,
+    "Regurgitation": false,
+    "Morning Hoarseness": false,
+    "Badbreath": false,
+    "Heartburn": false,
+    "None of the above": false,
   });
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export default function SymptomScreen({
       setSymptoms(currentAnswer);
     }
   }, [currentAnswer]);
-  const maxSelection = 3;
+  const maxSelection = 5;
   const selectedCount = Object.values(symptoms).filter(Boolean).length;
 
   const handleCheckboxChange = (name, value) => {
@@ -58,13 +60,11 @@ export default function SymptomScreen({
       <Text style={styles.subheading}>
         You can select a maximum of {maxSelection}
       </Text>
-      <ScrollView>
+      <ScrollView style={styles.scrollContainer}>
         {Object.keys(symptoms).map((key) => (
           <SymptomCheckbox
             key={key}
-            label={
-              key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, " ")
-            }
+            label={key}
             value={symptoms[key]}
             onValueChange={(value) => handleCheckboxChange(key, value)}
             disabled={!symptoms[key] && selectedCount >= maxSelection}
@@ -105,6 +105,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 20,
     fontFamily: "outfit-bold",
+  },
+  scrollContainer: {
+    width: "100%",
+    marginBottom: 80,
   },
   button: {
     backgroundColor: "#d3d3d3",

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   View,
+  Linking,
 } from "react-native";
 const image = require("../../../assets/images/Splash.jpg");
 
@@ -20,19 +21,26 @@ const DisclaimerScreen = ({ navigation }) => {
         <View style={styles.textContainer}>
           <Text style={styles.title}>Disclaimer</Text>
           <Text style={styles.text}>
-            This application is to be used as a tool for voice training for
-            transgender individuals. It is not intended to replace evaluation
-            and treatment by a physician or speech and language pathologist
-            (voice therapist).
+            Attuned is an app for gender-affirming voice and speech training. It
+            should not replace evaluation and treatment by a doctor or
+            speech-language pathologist (SLP)/speech therapist.
           </Text>
           <Text style={styles.text}>
             If you experience symptoms such as hoarseness, pain, frequent loss
-            of the voice, etc., please be evaluated by a physician and/or
-            speech-language pathologist.
+            of the voice, etc., we encourage you to visit a doctor or SLP.
           </Text>
           <Text style={styles.text}>
-            To find a physician or speech-language pathologist near you who
-            treats transgender patients, please visit the institute.
+            Here are some resources that can help you find one in your area:
+            <Text
+              style={{ color: "blue" }}
+              onPress={() =>
+                Linking.openURL(
+                  "https://www.google.com/maps/d/u/0/viewer?mid=1I-TFreYhH2_FZSlcUZNAihbqJNNOxgw&ll=38.55229055416233%2C-83.57966651292149&z=6"
+                )
+              }
+            >
+              Provider Map from the Vocal Congruence Project
+            </Text>
           </Text>
         </View>
       </ScrollView>

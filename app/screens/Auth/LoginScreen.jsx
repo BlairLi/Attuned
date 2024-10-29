@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   socialLoginText: {
     fontFamily: "outfit-semibold",
-    fontSize: 20,
+    fontSize: 16,
     textAlign: "center",
   },
   button: {

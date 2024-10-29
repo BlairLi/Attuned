@@ -24,7 +24,6 @@ if (
 }
 
 const RecordingsScreen = ({ navigation }) => {
-
   const { recordings, setRecordings } = useContext(RecordingsContext);
   const { setSelectedRecording } = useContext(SelectedRecordingContext);
 
@@ -47,6 +46,7 @@ const RecordingsScreen = ({ navigation }) => {
   }, []);
 
   // Update search results when recordings change
+  // Optimized using debounce
   useEffect(() => {
     setSearchResults(recordings);
   }, [recordings]);

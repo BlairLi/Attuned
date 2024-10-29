@@ -7,7 +7,6 @@ import {
   Alert,
   TouchableOpacity,
   KeyboardAvoidingView,
-  ScrollView,
   Platform,
 } from "react-native";
 import { db } from "../../../configs/FirebaseConfig";
@@ -56,7 +55,7 @@ export default function ContactUsScreen({ navigation }) {
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+      <View style={styles.inputContainer}>
         <Text style={styles.title}>Have Questions?</Text>
         <Text style={styles.subTitle}>We want to hear your voice</Text>
         <View style={styles.inputContainer}>
@@ -95,21 +94,20 @@ export default function ContactUsScreen({ navigation }) {
             <Text style={styles.buttonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "white",
-  },
-  scrollViewContainer: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: 20,
+    height: "100%",
+    width: "100%",
+    padding: 10,
+    backgroundColor: "white",
   },
   title: {
     fontSize: 24,

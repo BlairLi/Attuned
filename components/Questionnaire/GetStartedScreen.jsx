@@ -6,14 +6,14 @@ export default function GetStartedScreen({ goToNext }) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>
-        Please answer the following questions to help us set up your app
+        Please answer the following questions to help us set up your App
       </Text>
       <Icon
-        name="grin-wink"
+        name="mobile-alt"
         size={100}
         color={Colors.orange}
         style={{
-          marginTop: 20,
+          marginTop: 30,
         }}
       />
       <View style={styles.bottomButtonContainer}>
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   header: {
-    fontSize: 18,
+    fontSize: 20,
     textAlign: "center",
     marginBottom: 20,
     fontFamily: "outfit-bold",
