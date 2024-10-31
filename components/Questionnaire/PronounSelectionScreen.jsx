@@ -51,7 +51,7 @@ export default function PronounSelectionScreen({
     <View style={styles.container}>
       <Text style={styles.header}>Select the pronouns that you prefer:</Text>
       <Text style={styles.subheading}>
-        You can select a maximum of {maxSelection}
+        Select the pronouns that apply to you
       </Text>
       {Object.keys(pronouns).map((key) => (
         <SymptomCheckbox

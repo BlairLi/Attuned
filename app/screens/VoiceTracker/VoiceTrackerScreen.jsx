@@ -18,7 +18,7 @@ import Piano from "./Piano";
 import { Colors } from "@/constants/Colors";
 import Toast from "react-native-toast-message";
 import * as FileSystem from "expo-file-system";
-import Icon from "react-native-vector-icons/Foundation";
+import Icon from "react-native-vector-icons/AntDesign";
 export default function VoiceTrackScreen({ navigation }) {
   const [recording, setRecording] = useState(null);
   const { recordings, setRecordings } = useContext(RecordingsContext);
@@ -205,7 +205,7 @@ export default function VoiceTrackScreen({ navigation }) {
           navigation.navigate("Pitch Trend");
         }}
       >
-        <Icon name="graph-trend" size={50} color="gray" />
+        <Icon name="areachart" size={40} color={Colors.secondary} />
         <Text
           style={{
             fontFamily: "outfit",
@@ -243,9 +243,7 @@ export default function VoiceTrackScreen({ navigation }) {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>
-                Enter the name of your Recording
-              </Text>
+              <Text style={styles.modalText}>Name your recording</Text>
               <TextInput
                 style={styles.textInput}
                 onChangeText={setRecordingName}
@@ -286,12 +284,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.primaryDark,
     textAlign: "center",
-    marginVertical: 40,
+    marginVertical: 20,
     padding: 20,
   },
   graphContainer: {
     alignItems: "center",
-    justifyContent: "center",
+    marginTop: 10,
+    width: "100%",
     marginTop: 40,
   },
   startRecordingButton: {
@@ -326,8 +325,8 @@ const styles = StyleSheet.create({
   modalView: {
     margin: 20,
     backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
+    borderRadius: 10,
+    padding: 30,
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -345,15 +344,15 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 10,
-    padding: 10,
+    padding: 12,
     margin: 5,
     flex: 1,
   },
   buttonCancel: {
-    backgroundColor: Colors.secondaryLight,
+    backgroundColor: Colors.secondary,
   },
   buttonSave: {
-    backgroundColor: Colors.secondaryLight,
+    backgroundColor: Colors.secondary,
   },
   textStyle: {
     color: "white",
@@ -361,9 +360,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   modalText: {
-    marginBottom: 15,
+    marginBottom: 16,
     textAlign: "center",
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: "outfit-bold",
   },
   textInput: {
