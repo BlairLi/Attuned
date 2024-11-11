@@ -1,7 +1,7 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import VoiceTrackerScreen from "../screens/VoiceTracker/VoiceTrackerScreen";
-import PitchTrendScreen from "../screens/VoiceTracker/PitchTrendScreen";
+import PitchTrackerScreen from "../screens/VoiceTracker/PitchTrackerScreen";
 export default function VoiceTrackerNavigator() {
   const Stack = createNativeStackNavigator();
   return (
@@ -18,7 +18,7 @@ export default function VoiceTrackerNavigator() {
       initialRouteName="VoiceTracker"
     >
       <Stack.Screen name="VoiceTracker" component={VoiceTrackerScreen} />
-      <Stack.Screen name="Pitch Trend" component={PitchTrendScreen} />
+      <Stack.Screen name="Pitch Tracker" component={PitchTrackerScreen} />
     </Stack.Navigator>
   );
 }

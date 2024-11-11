@@ -94,7 +94,7 @@ const RecordingsScreen = ({ navigation }) => {
         <View>
           <Text style={styles.title}>{data.item.title}</Text>
           <Text style={styles.detail}>{data.item.time}</Text>
-          <Text style={styles.detail}>Time: {data.item.duration}</Text>
+          <Text style={styles.detail}>Duration: {data.item.duration}s</Text>
         </View>
         <View>
           <Icon name="play-circle" size={30} color="orange" />

@@ -202,7 +202,7 @@ export default function VoiceTrackScreen({ navigation }) {
       <TouchableOpacity
         style={styles.graphContainer}
         onPress={() => {
-          navigation.navigate("Pitch Trend");
+          navigation.navigate("Pitch Tracker");
         }}
       >
         <Icon name="areachart" size={40} color={Colors.secondary} />
@@ -214,7 +214,7 @@ export default function VoiceTrackScreen({ navigation }) {
             textAlign: "center",
           }}
         >
-          Pitch Trend
+          Pitch Tracker
         </Text>
       </TouchableOpacity>
       <TouchableOpacity

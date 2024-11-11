@@ -21,10 +21,10 @@ export default function SymptomScreen({
     "Vocal Fatigue": false,
     "Bitter/Acid Taste in Mouth": false,
     "Can't Sing": false,
-    "Lost of Pitch Range": false,
+    "Loss of Pitch Range": false,
     "Regurgitation": false,
     "Morning Hoarseness": false,
-    "Badbreath": false,
+    "Bad Breath": false,
     "Heartburn": false,
     "None of the above": false,
   });

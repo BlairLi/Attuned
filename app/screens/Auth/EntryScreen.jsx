@@ -1,16 +1,22 @@
 import React, { useState } from "react";
-import { Text, View, TextInput, Button, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 const image = require("../../../assets/images/Splash.jpg");
 
-
 const EntryScreen = ({ onAccessGranted }) => {
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState("");
 
   const verifyAccessCode = () => {
-    if (code === 'CORNELL123') {
+    if (code === "CORNELL123") {
       onAccessGranted();
     } else {
-      alert('Incorrect access code. Please try again.');
+      alert("Incorrect access code. Please try again.");
     }
   };
 
@@ -26,7 +32,8 @@ const EntryScreen = ({ onAccessGranted }) => {
     >
       <View style={styles.container}>
         <Text style={styles.text}>
-          If you are currently enrolled in the research study, please enter your access code below to access the app:
+          If you are currently enrolled in the research study, please enter your
+          access code below to access the app:
         </Text>
         <TextInput
           style={styles.input}
@@ -43,15 +50,20 @@ const EntryScreen = ({ onAccessGranted }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
   },
   text: {
-    // styles for the instructional text
+    fontSize: 20,
+    marginBottom: 20,
   },
   input: {
-    // styles for the text input
+    width: "80%",
+    padding: 10,
+    marginBottom: 20,
+    backgroundColor: "white",
+    borderRadius: 5,
   },
 });
 

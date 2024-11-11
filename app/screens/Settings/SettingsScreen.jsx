@@ -126,7 +126,7 @@ const SettingsScreen = ({ navigation }) => {
           style={styles.contactUsButton}
           onPress={() => navigation.navigate("Contact Us")}
         >
-          <Text style={styles.contactUsText}>Contact Us Here</Text>
+          <Text style={styles.contactUsText}>Contact Us</Text>
           <Icon
             name="chevron-forward-outline"
             size={20}

@@ -8,31 +8,68 @@ import {
 } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { Colors } from "@/constants/Colors";
-const weeklyData = {
-  labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-  datasets: [
-    {
-      data: [10, 45, 28, 80, 99, 43, 50],
-      color: (opacity = 1) => `#6acdd1`, // optional
-      strokeWidth: 1.5, // optional
-    },
-  ],
-};
+import useVoiceHistory from "@/hooks/useVoiceHistory";
 
-const monthlyData = {
-  labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-  datasets: [
-    {
-      data: [10, 45, 28, 80],
-      color: (opacity = 1) => `#6acdd1`, // optional
-      strokeWidth: 1.5, // optional
-    },
-  ],
-};
-function PitchTrendScreen() {
+function PitchTrackerScreen() {
   const [range, setRange] = useState("weekly");
+  const { frequencyData } = useVoiceHistory(range);
 
   const screenWidth = Dimensions.get("window").width;
+
+  // Helper function to format data based on range
+  const formatChartData = () => {
+    console.log("Current frequencyData:", frequencyData);
+    let labels = [];
+    let data = frequencyData.average;
+
+    // If no valid data is present, set default labels and data
+    if (data.length === 0 || data.some((d) => !isFinite(d))) {
+      labels = ["N/A"];
+      data = [0];
+    } else {
+      switch (range) {
+        case "weekly":
+          labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+          data = data.slice(-7);
+          break;
+        case "monthly":
+          labels = ["Week 1", "Week 2", "Week 3", "Week 4"];
+          data = data.slice(-4);
+          break;
+        case "yearly":
+          labels = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ];
+          data = data.slice(-12);
+          break;
+        default:
+          break;
+      }
+    }
+
+    return {
+      labels,
+      datasets: [
+        {
+          data,
+          color: (opacity = 1) => `#6acdd1`,
+          strokeWidth: 1.5,
+        },
+      ],
+    };
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.rangeContainer}>
@@ -56,15 +93,24 @@ function PitchTrendScreen() {
         >
           <Text style={styles.rangeButtonText}>Past Month</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          title="Past Week"
+          onPress={() => setRange("yearly")}
+          style={[
+            styles.rangeButton,
+            range === "yearly" && styles.selectedButton,
+          ]}
+        >
+          <Text style={styles.rangeButtonText}>Past Year</Text>
+        </TouchableOpacity>
       </View>
 
-      <Text style={styles.graphHeader}>Picth Frequency Graph</Text>
+      <Text style={styles.graphHeader}>Pitch Tracker (Hz)</Text>
       <View style={styles.chartContainer}>
         <LineChart
-          data={range === "weekly" ? weeklyData : monthlyData}
-          width={screenWidth * 0.9}
-          height={250}
-          yAxisSuffix="Hz"
+          data={formatChartData()}
+          width={screenWidth * 0.95}
+          height={280}
           chartConfig={{
             backgroundGradientFrom: "white",
             backgroundGradientTo: "white",
@@ -116,7 +162,7 @@ const styles = StyleSheet.create({
     backgroundColor: "lightgrey",
     padding: 10,
     borderRadius: 5,
-    width: "40%",
+    width: "30%",
     alignItems: "center",
   },
   selectedButton: {
@@ -128,4 +174,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PitchTrendScreen;
+export default PitchTrackerScreen;

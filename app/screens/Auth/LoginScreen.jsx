@@ -103,7 +103,7 @@ export default function LoginScreen({ navigation }) {
             // onPress={() => navigation.navigate("Signup")}
             onPress={() => navigation.navigate("screens/Auth/SignUpScreen")}
           >
-            <Text style={styles.buttonText}>Sign Up Here</Text>
+            <Text style={styles.buttonText}>Sign Up</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.newHereButton}
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     objectFit: "contain",
   },
   socialLoginText: {
-    fontFamily: "outfit-semibold",
+    fontFamily: "outfit",
     fontSize: 16,
     textAlign: "center",
   },

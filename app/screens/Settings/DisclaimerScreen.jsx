@@ -35,7 +35,7 @@ const DisclaimerScreen = ({ navigation }) => {
               style={{ color: "blue" }}
               onPress={() =>
                 Linking.openURL(
-                  "https://www.google.com/maps/d/u/0/viewer?mid=1I-TFreYhH2_FZSlcUZNAihbqJNNOxgw&ll=38.55229055416233%2C-83.57966651292149&z=6"
+                  "https://vocalcongruence.github.io/provider-map/"
                 )
               }
             >
