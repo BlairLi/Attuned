@@ -40,8 +40,14 @@
         "origin": false
       },
       "eas": {
-        "projectId": "ba1ba93f-8620-40ca-8583-2e44582f06bf"
+        "projectId": "a4702d71-eb7f-4b3c-8e81-98c8d61d907d"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/a4702d71-eb7f-4b3c-8e81-98c8d61d907d"
     }
   }
 }
