@@ -1,6 +1,4 @@
-# Welcome to your Expo app 👋
-
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# Welcome to your Attuned app 👋
 
 ## Get started
 
@@ -25,26 +23,101 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+## Build your app
 
-When you're ready, run:
+This guide provides step-by-step instructions for building and uploading an app to TestFlight using Expo EAS, along with solutions to potential errors you may encounter.
+
+### Prerequisites
+
+1. Apple Developer Account: Ensure you have access to an Apple Developer Account with proper roles (e.g., Admin, App Manager, or Developer).
+
+2. Expo EAS CLI: Install or update the EAS CLI to the latest version:
 
 ```bash
-npm run reset-project
+npm install -g eas-cli
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Configure the Project
 
-## Learn more
+1. Update Build Number in app.json before building it for iOS:
 
-To learn more about developing your project with Expo, look at the following resources:
+```json
+"ios": {
+  "buildNumber": "13" // Increment the build number
+}
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+2. Building the App
 
-## Join the community
+Run the following command to build the app for iOS:
 
-Join our community of developers creating universal apps.
+```bash
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+eas build --platform ios --profile production
+```
+
+Be sure to use Apple Developer Account of Attuned team.
+
+**Key Prompts**
+
+When asked: Generate a new Apple Distribution Certificate?
+
+- If you're unsure or need a fresh certificate, choose Yes (y).
+
+When asked: Generate a new Apple Provisioning Profile?
+
+- Typically, choose Yes (y) to ensure a valid profile.
+
+3. Upload to TestFlight
+
+After the build is completed, you'll get a link to download the .ipa file (e.g., https://expo.dev/artifacts/...). Use this file to upload to TestFlight:
+
+Using **Transporter**
+
+- Install the Transporter app from the Mac App Store.
+- Open Transporter and log in with your Apple Developer Account.
+- Drag and drop the .ipa file into Transporter.
+- Click Deliver to upload the build.
+
+4. TestFlight Setup
+
+   1. Log in to App Store Connect: https://appstoreconnect.apple.com/.
+   2. Enable Internal Testing:
+      • Go to the TestFlight tab.
+      • Add team members to Internal Testing.
+      • Select the build and click Enable Testing.
+   3. For External Testers:
+      • Submit the build for TestFlight Beta Review.
+
+5. Potential Errors and Solutions
+
+Error: The bundle version must be higher than the previously uploaded version
+
+- Cause: The ios.buildNumber in your configuration is the same or lower than a previous build.
+- Solution: Increment the buildNumber in your app.json or app.config.js and rebuild:
+
+```json
+   "ios": {
+      "buildNumber": "14"
+   }
+```
+
+Error: Missing Compliance
+
+- Cause: Apple requires you to confirm encryption compliance.
+- Solution:
+- Add the following key to app.json or app.config.js:
+
+```json
+      "ios": {
+         "infoPlist": {
+            "ITSAppUsesNonExemptEncryption": false
+         }
+      }
+```
+
+- Rebuild and upload the app.
+
+### Conclusion
+
+Once the app is uploaded to TestFlight, internal testers can immediately access the app, and external testers can join after TestFlight Beta Review is approved. Always increment your version and build numbers for subsequent uploads to avoid errors.
