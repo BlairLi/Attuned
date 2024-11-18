@@ -27,6 +27,9 @@
       "env": {
         "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY": "pk_test_c3BlY2lhbC1ncm91cGVyLTg2LmNsZXJrLmFjY291bnRzLmRldiQ"
       },
+      "ios": {
+        "buildNumber": "13"
+      },
       "channel": "production"
     }
   },
