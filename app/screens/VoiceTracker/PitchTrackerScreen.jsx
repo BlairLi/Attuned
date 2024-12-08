@@ -13,58 +13,32 @@ import useVoiceHistory from "@/hooks/useVoiceHistory";
 function PitchTrackerScreen() {
   const [range, setRange] = useState("weekly");
   const { frequencyData } = useVoiceHistory(range);
-
+  const [tooltip, setTooltip] = useState({
+    visible: false,
+    x: 0,
+    y: 0,
+    value: "",
+    label: "",
+  });
   const screenWidth = Dimensions.get("window").width;
 
-  // Helper function to format data based on range
+  // 修改格式化数据的函数
   const formatChartData = () => {
-    console.log("Current frequencyData:", frequencyData);
-    let labels = [];
-    let data = frequencyData.average;
-
-    // If no valid data is present, set default labels and data
-    if (data.length === 0 || data.some((d) => !isFinite(d))) {
-      labels = ["N/A"];
-      data = [0];
-    } else {
-      switch (range) {
-        case "weekly":
-          labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-          data = data.slice(-7);
-          break;
-        case "monthly":
-          labels = ["Week 1", "Week 2", "Week 3", "Week 4"];
-          data = data.slice(-4);
-          break;
-        case "yearly":
-          labels = [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ];
-          data = data.slice(-12);
-          break;
-        default:
-          break;
-      }
+    // 确保有数据
+    if (!frequencyData.average || frequencyData.average.length === 0) {
+      return {
+        labels: ["No Data"],
+        datasets: [{ data: [0] }],
+      };
     }
 
     return {
-      labels,
+      labels: frequencyData.timestamps,
       datasets: [
         {
-          data,
-          color: (opacity = 1) => `#6acdd1`,
-          strokeWidth: 1.5,
+          data: frequencyData.average,
+          color: (opacity = 1) => `rgba(106, 205, 209, ${opacity})`,
+          strokeWidth: 2,
         },
       ],
     };
@@ -72,63 +46,96 @@ function PitchTrackerScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.TrackerContainer}>
+        <Text style={styles.chartHeader}>Pitch Tracker (Hz)</Text>
+        <View style={styles.chartContainer}>
+          <LineChart
+            data={formatChartData()}
+            width={screenWidth}
+            height={280}
+            chartConfig={{
+              backgroundGradientFrom: "white",
+              backgroundGradientTo: "white",
+              fillShadowGradientToOpacity: 0,
+              fillShadowGradientFromOpacity: 0,
+              decimalPlaces: 0,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+              propsForDots: {
+                r: "6",
+                strokeWidth: "2",
+                stroke: Colors.primary,
+              },
+            }}
+            bezier
+            style={{
+              marginVertical: 8,
+              borderRadius: 16,
+            }}
+            onDataPointClick={(data) => {
+              const label = frequencyData.timestamps[data.index];
+              setTooltip({
+                visible: true,
+                x: data.x,
+                y: data.y,
+                value: `${Math.round(data.value)} Hz`,
+                label,
+              });
+            }}
+          />
+          {tooltip.visible && (
+            <View
+              style={[
+                styles.tooltip,
+                { top: tooltip.y - 300, left: tooltip.x },
+              ]}
+            >
+              <Text style={styles.tooltipText}>{tooltip.label}</Text>
+              <Text style={styles.tooltipText}>{tooltip.value}</Text>
+            </View>
+          )}
+        </View>
+      </View>
       <View style={styles.rangeContainer}>
         <TouchableOpacity
-          title="Past Week"
-          onPress={() => setRange("weekly")}
+          style={[
+            styles.rangeButton,
+            range === "daily" && styles.selectedButton,
+          ]}
+          onPress={() => setRange("daily")}
+        >
+          <Text style={styles.rangeButtonText}>Day</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={[
             styles.rangeButton,
             range === "weekly" && styles.selectedButton,
           ]}
+          onPress={() => setRange("weekly")}
         >
-          <Text style={styles.rangeButtonText}>Past Week</Text>
+          <Text style={styles.rangeButtonText}>Week</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          title="Past Month"
-          onPress={() => setRange("monthly")}
           style={[
             styles.rangeButton,
             range === "monthly" && styles.selectedButton,
           ]}
+          onPress={() => setRange("monthly")}
         >
-          <Text style={styles.rangeButtonText}>Past Month</Text>
+          <Text style={styles.rangeButtonText}>Month</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          title="Past Week"
-          onPress={() => setRange("yearly")}
           style={[
             styles.rangeButton,
             range === "yearly" && styles.selectedButton,
           ]}
+          onPress={() => setRange("yearly")}
         >
-          <Text style={styles.rangeButtonText}>Past Year</Text>
+          <Text style={styles.rangeButtonText}>Year</Text>
         </TouchableOpacity>
-      </View>
-
-      <Text style={styles.graphHeader}>Pitch Tracker (Hz)</Text>
-      <View style={styles.chartContainer}>
-        <LineChart
-          data={formatChartData()}
-          width={screenWidth * 0.95}
-          height={280}
-          chartConfig={{
-            backgroundGradientFrom: "white",
-            backgroundGradientTo: "white",
-            fillShadowGradientToOpacity: 0,
-            fillShadowGradientFromOpacity: 0,
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-            propsForDots: {
-              r: "6",
-              strokeWidth: "2",
-              stroke: Colors.primary,
-            },
-          }}
-        />
       </View>
     </View>
   );
@@ -137,32 +144,36 @@ function PitchTrackerScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "white",
+    alignItems: "center",
   },
-  graphHeader: {
+  TrackerContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 60,
+  },
+  chartHeader: {
     fontSize: 20,
-    fontWeight: "bold",
-    fontFamily: "outfit",
-    marginBottom: 30,
+    marginBottom: 10,
+    fontFamily: "outfit-bold",
   },
   chartContainer: {
-    marginVertical: 8,
-    borderRadius: 16,
+    marginTop: 20,
+    marginRight: 20,
   },
   rangeContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    width: "90%",
+    width: "95%",
     position: "absolute",
-    top: 40,
+    bottom: 50,
   },
   rangeButton: {
     backgroundColor: "lightgrey",
     padding: 10,
     borderRadius: 5,
-    width: "30%",
+    width: "20%",
     alignItems: "center",
   },
   selectedButton: {
@@ -170,7 +181,18 @@ const styles = StyleSheet.create({
   },
   rangeButtonText: {
     fontFamily: "outfit",
-    fontSize: 16,
+    fontSize: 15,
+  },
+  tooltip: {
+    width: 65,
+    backgroundColor: "white",
+    padding: 5,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: Colors.primary,
+  },
+  tooltipText: {
+    fontFamily: "outfit",
   },
 });
 

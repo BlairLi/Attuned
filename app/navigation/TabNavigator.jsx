@@ -1,7 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
+import { AntDesign, MaterialIcons, Feather } from "@expo/vector-icons";
 import { Colors } from "@/constants/Colors";
 import { Text } from "react-native";
 import LessonNavigator from "./LessonNavigator";

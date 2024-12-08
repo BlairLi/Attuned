@@ -311,7 +311,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: 150,
     margin: 10,
-    padding: 20,
+    marginTop: 0,
+    padding: 10,
     borderRadius: 10,
   },
 });

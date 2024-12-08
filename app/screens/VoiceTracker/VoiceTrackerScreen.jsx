@@ -21,7 +21,7 @@ import * as FileSystem from "expo-file-system";
 import Icon from "react-native-vector-icons/AntDesign";
 export default function VoiceTrackScreen({ navigation }) {
   const [recording, setRecording] = useState(null);
-  const { recordings, setRecordings } = useContext(RecordingsContext);
+  const { recordings, addRecording } = useContext(RecordingsContext);
   const [hasPermission, setHasPermission] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [recordingName, setRecordingName] = useState("Recording");
@@ -112,17 +112,11 @@ export default function VoiceTrackScreen({ navigation }) {
         max_frequency: max,
       };
 
-      const updatedRecordings = [...recordings, newRecording];
-      setRecordings(updatedRecordings);
-      await AsyncStorage.setItem(
-        "recordings",
-        JSON.stringify(updatedRecordings)
-      );
+      await addRecording(newRecording);
 
-      // Show toast message
       Toast.show({
-        type: "success",
-        text1: "Recording saved successfully!",
+        type: 'success',
+        text1: 'Recording saved successfully!',
         visibilityTime: 3000,
       });
 
@@ -130,7 +124,12 @@ export default function VoiceTrackScreen({ navigation }) {
       setRecordingUri(null);
       setModalVisible(false);
     } catch (error) {
-      console.error("Failed to stop recording", error);
+      console.error('Failed to save recording:', error);
+      Toast.show({
+        type: 'error',
+        text1: 'Failed to save recording',
+        visibilityTime: 3000,
+      });
     }
   };
 

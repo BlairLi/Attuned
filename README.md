@@ -23,7 +23,12 @@ In the output, you'll find options to open the app in a
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-## Build your app
+## Build or Update?
+
+- if you only changed JS code, update the app.
+- if you changed any native code, or dependencies, rebuild the app.
+
+### Build your app
 
 This guide provides step-by-step instructions for building and uploading an app to TestFlight using Expo EAS, along with solutions to potential errors you may encounter.
 
@@ -39,7 +44,7 @@ npm install -g eas-cli
 
 ### Configure the Project
 
-1. Update Build Number in app.json before building it for iOS:
+1. Update Build Number in **app.json** before building it for iOS:
 
 ```json
 "ios": {
@@ -76,7 +81,7 @@ Using **Transporter**
 
 - Install the Transporter app from the Mac App Store.
 - Open Transporter and log in with your Apple Developer Account.
-- Drag and drop the .ipa file into Transporter.
+- Drag and drop the .ipa (downloaded from expo) file into Transporter.
 - Click Deliver to upload the build.
 
 4. TestFlight Setup
@@ -121,3 +126,16 @@ Error: Missing Compliance
 ### Conclusion
 
 Once the app is uploaded to TestFlight, internal testers can immediately access the app, and external testers can join after TestFlight Beta Review is approved. Always increment your version and build numbers for subsequent uploads to avoid errors.
+
+## Update App Version
+
+1. Update the version in **app.json**
+
+```json
+"version": "1.2.1"
+```
+
+## Version 1.2.1
+
+- Fix the bug that the app crashed when the user didn't have any recording data.
+- Add the feature that allows users to view their voice graph in Pitch Tracker screen.

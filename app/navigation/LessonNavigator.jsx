@@ -4,6 +4,8 @@ import LessonsScreen from "../screens/Lessons/LessonsScreen";
 import NotificationsScreen from "../screens/Settings/NotificationsScreen";
 import ProfileScreen from "../screens/Settings/ProfileScreen";
 import QuestionnaireScreen from "../screens/Settings/QuestionnaireScreen";
+import { TouchableOpacity } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 // Lessons Screens Below
 // Intro Lesson and Homework
@@ -53,16 +55,21 @@ export default function LessonNavigator() {
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         headerTitleStyle: {
           fontSize: 20,
           fontWeight: "bold",
           padding: 20,
           fontFamily: "outfit-bold",
         },
-        headerBackButtonMenuEnabled: true,
-        headerBackTitleVisible: false,
-      }}
+        headerBackVisible: false,
+        headerLeft: ({ canGoBack }) =>
+          canGoBack ? (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons name="chevron-back" size={24} color="black" />
+            </TouchableOpacity>
+          ) : null,
+      })}
       initialRouteName="Lessons"
     >
       {/* <Stack.Screen name="screens/Lessons/LessonsScreen" component={LessonsScreen} /> */}

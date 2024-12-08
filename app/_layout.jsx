@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import "react-native-reanimated";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import AuthNavigator from "./navigation/AuthNavigator";
+import { NavigationContainer } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 import TabNavigator from "./navigation/TabNavigator";
 import { RecordingsProvider } from "../contexts/RecordingsContext";
@@ -12,11 +13,14 @@ import { UserProvider } from "@/contexts/UserContext";
 import Toast from "react-native-toast-message";
 import CustomToast from "@/components/VoiceTracker/CustomToast";
 import EntryScreen from "./screens/Auth/EntryScreen";
+import { StyleSheet } from "react-native";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 if (!publishableKey) {
-  throw new Error('Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env')
+  throw new Error(
+    "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env"
+  );
 }
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -68,22 +72,25 @@ export default function RootLayout() {
   }
 
   return (
-    <ClerkProvider
-      publishableKey={publishableKey}
-      tokenCache={tokenCache}
-    >
-      <SignedIn>
-        <RecordingsProvider>
-          <UserProvider>
-            <LessonsProvider>
-              <TabNavigator />
-            </LessonsProvider>
-          </UserProvider>
-        </RecordingsProvider>
-      </SignedIn>
-      <SignedOut>
-        {!accessGranted ? <EntryScreen onAccessGranted={() => setAccessGranted(true)} /> : <AuthNavigator />}
-      </SignedOut>
+    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+      <NavigationContainer>
+        <SignedIn>
+          <RecordingsProvider>
+            <UserProvider>
+              <LessonsProvider>
+                <TabNavigator />
+              </LessonsProvider>
+            </UserProvider>
+          </RecordingsProvider>
+        </SignedIn>
+        <SignedOut>
+          {!accessGranted ? (
+            <EntryScreen onAccessGranted={() => setAccessGranted(true)} />
+          ) : (
+            <AuthNavigator />
+          )}
+        </SignedOut>
+      </NavigationContainer>
       <Toast
         config={{
           success: (props) => <CustomToast {...props} />,
@@ -93,3 +100,9 @@ export default function RootLayout() {
     </ClerkProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
