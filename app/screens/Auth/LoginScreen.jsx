@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import React from "react";
 import image from "../../../assets/images/Splash.jpg";
-import google from "../../../assets/images/google.png";
 import { useSignIn } from "@clerk/clerk-expo";
 import * as WebBrowser from "expo-web-browser";
 import { useOAuth } from "@clerk/clerk-expo";
@@ -114,10 +113,14 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.newHereText}>Forget Password?</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.socialLogin} onPress={onPress}>
+        {/* <TouchableOpacity style={styles.socialLogin} onPress={onPress}>
           <Image source={google} style={styles.socialLoginIcon} />
-          <Text style={styles.socialLoginText}>Login in with Google</Text>
+          <Text style={styles.socialLoginText}>Google Login</Text>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.socialLogin} onPress={onPress}>
+          <Icon name="logo-apple" size={50} color="black" />
+          <Text style={styles.socialLoginText}>Apple Login</Text>
+        </TouchableOpacity> */}
       </KeyboardAvoidingView>
     </ImageBackground>
   );
@@ -165,6 +168,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   socialLogin: {
+    width: 180,
     backgroundColor: "white",
     alignSelf: "center",
     borderRadius: 99,
@@ -173,7 +177,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     gap: 10,
     justifyContent: "center",
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
     marginTop: 10,
   },
   socialLoginIcon: {

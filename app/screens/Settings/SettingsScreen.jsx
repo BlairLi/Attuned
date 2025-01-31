@@ -120,6 +120,12 @@ const SettingsScreen = ({ navigation }) => {
           title="SignOut"
           onPress={() => navigation.navigate("Sign Out")}
         />
+        <SettingItem
+          iconName="trash"
+          color="red"
+          title="Delete Account"
+          onPress={() => navigation.navigate("Delete Account")}
+        />
       </View>
       <View style={styles.contactUsContainer}>
         <TouchableOpacity

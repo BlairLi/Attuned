@@ -176,7 +176,7 @@ export default function SignUpScreen({ navigation }) {
           style={styles.container}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <Text style={styles.title}>Verify your email here:</Text>
+          <Text style={styles.title}>Verify your email:</Text>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}

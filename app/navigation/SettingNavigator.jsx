@@ -9,6 +9,7 @@ import ProfileScreen from "../screens/Settings/ProfileScreen";
 import ContactUsScreen from "../screens/Settings/ContactUsScreen";
 import QuestionnaireScreen from "../screens/Settings/QuestionnaireScreen";
 import SignOutScreen from "../screens/Settings/SignOutScreen";
+import DeleteAccountScreen from "../screens/Settings/DeleteAccountScreen";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -42,6 +43,7 @@ export default function SettingNavigation() {
       <Stack.Screen name="Contact Us" component={ContactUsScreen} />
       <Stack.Screen name="Questionnaire" component={QuestionnaireScreen} />
       <Stack.Screen name="Sign Out" component={SignOutScreen} />
+      <Stack.Screen name="Delete Account" component={DeleteAccountScreen} />
     </Stack.Navigator>
   );
 }

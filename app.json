@@ -13,11 +13,13 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.yuber.Attuned",
-      "buildNumber": "16",
+      "buildNumber": "19",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSMicrophoneUsageDescription": "Please let Attuned access your microphone so you can record your voice. Your recordings will stay on your phone.",
+        "UIRequiresFullScreen": true
       }
     },
     "android": {

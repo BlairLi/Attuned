@@ -42,6 +42,11 @@ const DisclaimerScreen = ({ navigation }) => {
               Provider Map from the Vocal Congruence Project
             </Text>
           </Text>
+          <Text style={styles.text}>
+            Your email address is used solely for account creation and
+            authentication purposes. It will not be shared with third parties or
+            used for any other purpose without your consent.
+          </Text>
         </View>
       </ScrollView>
       <TouchableOpacity
